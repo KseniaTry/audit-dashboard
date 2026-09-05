@@ -1,11 +1,10 @@
-import './App.css'
+
+import Table from './components/Table'
 
 function App() {
 
   return (
-    <>
-   <div>hi there it's audit dashboard</div>
-    </>
+   <Table />
   )
 }
 
