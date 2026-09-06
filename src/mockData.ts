@@ -5,8 +5,8 @@ export type Mock = {
     recommendation: string,
     status: 'open' | 'in_progress' | 'overdue' | 'closed' | 'removed',
     riskLevel: 'high' | 'medium' | 'low',
-    responsibleUnit: string | string[],
-    responsiblePerson: string | string[],
+    responsibleUnit: string[],
+    responsiblePerson: string[],
     scheduledDate: string,
     executionDate: string | null
 }
@@ -31,8 +31,8 @@ export const mockIssues: Mock[] = [
         recommendation: "Настроить автоматическое выставление претензий и расчет неустойки в ERP-системе согласно договорам",
         status: "overdue",
         riskLevel: "high",
-        responsibleUnit: "Управление казначейства и расчетов",
-        responsiblePerson: "Светлана Романова",
+        responsibleUnit: ["Управление казначейства и расчетов"],
+        responsiblePerson: ["Светлана Романова"],
         scheduledDate: "2026-08-15",
         executionDate: ""
     },
@@ -55,8 +55,8 @@ export const mockIssues: Mock[] = [
         recommendation: "Вынести сделку на повторный Риск-комитет для согласования индивидуального лимита или реструктуризации",
         status: "closed",
         riskLevel: "high",
-        responsibleUnit: "Департамент рисков",
-        responsiblePerson: "Екатерина Попова",
+        responsibleUnit: ["Департамент рисков"],
+        responsiblePerson: ["Екатерина Попова"],
         scheduledDate: "2026-08-30",
         executionDate: "2026-08-28"
     },
@@ -91,8 +91,8 @@ export const mockIssues: Mock[] = [
         recommendation: "Провести пересчет амортизационных отчислений, подать уточненные декларации по налогу на имущество",
         status: "open",
         riskLevel: "medium",
-        responsibleUnit: "Управление бухгалтерского учета",
-        responsiblePerson: "Татьяна Ильина",
+        responsibleUnit: ["Управление бухгалтерского учета"],
+        responsiblePerson: ["Татьяна Ильина"],
         scheduledDate: "2026-10-05",
         executionDate: ""
     },
@@ -103,8 +103,8 @@ export const mockIssues: Mock[] = [
         recommendation: "Внести изменения в регламент работы отдела взыскания, добавить автоматические email/SMS нотификации",
         status: "removed",
         riskLevel: "low",
-        responsibleUnit: "Отдел по работе с проблемными активами",
-        responsiblePerson: "Михаил Зубов",
+        responsibleUnit: ["Отдел по работе с проблемными активами"],
+        responsiblePerson: ["Михаил Зубов"],
         scheduledDate: "2026-07-20",
         executionDate: ""
     },
@@ -127,8 +127,8 @@ export const mockIssues: Mock[] = [
         recommendation: "Уведомить клиентов о готовности документов, организовать отправку курьерской службой",
         status: "closed",
         riskLevel: "low",
-        responsibleUnit: "Отдел сопровождения клиентов",
-        responsiblePerson: "Анна Киселева",
+        responsibleUnit: ["Отдел сопровождения клиентов"],
+        responsiblePerson: ["Анна Киселева"],
         scheduledDate: "2026-08-25",
         executionDate: "2026-08-25"
     }
