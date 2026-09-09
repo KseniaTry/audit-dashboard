@@ -16,6 +16,9 @@ export const resources = {
       table: {
         number: '№',
         inspection: 'Проверка',
+        startInspectionDate: 'Дата начала проверки',
+        endInspectionDate: 'Дата окончания проверки',
+        violationPeriod: 'Сроки проверки',
         violation: 'Нарушение',
         recommendation: 'Рекомендация',
         status: 'Статус',
