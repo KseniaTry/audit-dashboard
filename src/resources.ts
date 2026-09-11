@@ -2,8 +2,7 @@ export const resources = {
   ru: {
     translation: {
       statuses: {
-        open: 'Не исполнено',
-        in_progress: 'В работе',
+        open: 'В работе',
         overdue: 'Просрочено',
         closed: 'Исполнено',
         removed: 'Снято',
