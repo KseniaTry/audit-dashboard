@@ -7,15 +7,15 @@ const Cards = () => {
     const cardsClass = `
             grid grid-cols-4 gap-[10px] text-[10px] p-[15px] mb-[15px] my-[5px] w-full mx-auto bg-[#FFFFFF] 
             border border-[#EAE9E2] shadow-sm break-words border-l-4 border-l-[#1E40AF]
-            md:grid-cols-[40px_120px_80px_90px_180px_180px_110px_100px_120px_120px_100px_100px] 
-            md:gap-[5px] md:w-max md:max-w-none md:p-4 md:m-0 
+            md:grid-cols-[40px_120px_90px_90px_180px_180px_110px_100px_120px_120px_100px_100px] 
+            md:gap-2 md:w-max md:p-4 md:m-0 md:break-words
             md:text-xs md:text-gray-700 md:bg-white
             md:rounded-none md:shadow-none md:border-l-[#1E40AF]
-         md:border-r-0 md:border-t md:border-b md:border-[#EAE9E2]`
+            md:border-r-0 md:border-t md:border-b md:border-[#EAE9E2]`
     const labelClass = "md:hidden mb-[5px] text-[10px] text-[#9E9E9E] font-medium uppercase block tracking-wider"
     const inspectionMobileWrapper = "flex items-baseline gap-2 col-start-1 col-end-4 row-start-1 md:contents"
     const inspectionDatesClass = "flex gap-[5px] items-center"
-    const inspectionClass = "md:text-[#1A1A1A] md:font-normal text-[#9E9E9E] text-[14px] font-semibold tracking-tight leading-snug"
+    const inspectionClass = "md:text-[#1A1A1A] md:text-[13px] text-[#9E9E9E] text-[14px] font-semibold tracking-tight leading-snug"
     const recommendationClass = "mb-[5px] text-[13px] md:text-[12px] md:mb-0"
     const violationClass = "md:font-normal md:mb-0 font-bold mb-[5px] text-[12px]"
     const borderClass = "border-t border-[#EAE9E2] pt-4 md:border-none md:pt-0"
