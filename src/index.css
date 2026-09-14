@@ -1,1 +1,13 @@
+@import url('https://googleapis.com');
 @import "tailwindcss";
+
+@theme {
+  --breakpoint-xs: max-width(400px);
+  --font-sans: 'Rubik', system-ui, sans-serif;
+}
+
+body {
+  background-color: #F8F7F4;
+  color: #1A1A1A;
+  -webkit-font-smoothing: antialiased; /* сглаживание букв */
+}
