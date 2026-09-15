@@ -1,3 +1,6 @@
+export type Statuses = 'open' | 'overdue' | 'closed' | 'removed'
+export type RiskLevels = 'high' | 'medium' | 'low'
+
 export type Mock = {
     id: number,
     inspection: string,
@@ -5,8 +8,8 @@ export type Mock = {
     endInspectionDate: string,
     auditViolation: string,
     recommendation: string,
-    status: 'open' | 'overdue' | 'closed' | 'removed',
-    riskLevel: 'high' | 'medium' | 'low',
+    status: Statuses,
+    riskLevel: RiskLevels,
     responsibleUnit: string[],
     responsiblePerson: string[],
     scheduledDate: string,
