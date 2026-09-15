@@ -26,6 +26,16 @@ export const resources = {
         responsiblePerson: 'Ответственное лицо',
         scheduledDate: 'Плановая дата',
         executionDate: 'Фактическая дата'
+      },
+      filters: {
+        title: 'Фильтры',
+        search: 'Поиск...',
+        reset: 'Сбросить',
+        allUnits: 'Все ССП',
+        allYears: 'Все года',
+        allInspections: 'Все проверки',
+        allStatuses: 'Все статусы',
+        allRiskLevels: 'Все риски'
       }
     }
   }
