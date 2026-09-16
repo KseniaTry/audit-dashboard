@@ -1,10 +1,15 @@
 
 import Table from './components/Table'
+import Filters from './components/Filters'
+import { mockIssues } from './mockData'
 
 function App() {
 
   return (
-   <Table />
+    <>
+    <Filters inspections={mockIssues} />
+    <Table />
+    </>
   )
 }
 
