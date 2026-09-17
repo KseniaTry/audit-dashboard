@@ -11,11 +11,12 @@ interface AnalyticsProps {
 const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
     const { t } = useTranslation()
     const blockWrapperClass = "w-full flex flex-wrap gap-[0px]"
-    const cardClass = "w-full h-[130px] border border-[#EAE9E2] border-2 p-2 rounded-xl bg-white"
+    const cardClass = "w-full h-[130px] border border-[#EAE9E2] border-2 p-2 rounded-xl bg-white max-[450px]:w-[48%]"
     const cardsWrapperClass = "flex gap-2 flex-nowrap w-full"
-    const cardTitleClass = "font-bold uppercase tracking-widest"
-    const violationCountClass = "text-[25px] tracking-widest"
-    const buttonsWrapperClass = "flex w-full gap-2 flex-wrap whitespace-normal text-[13px]"
+    const cardsWrapperMobileClass = "max-[450px]:flex-wrap max-[450px]:gap-1 max-[450px]:justify-between" // отдельный класс для того чтобы применит перенос карточек тольок для статусов, а для рисков оставить 
+    const cardTitleClass = "font-bold uppercase tracking-widest max-[768px]:text-[10px]"
+    const violationCountClass = "text-[25px] tracking-widest max-[768px]:text-[18px]"
+    const buttonsWrapperClass = "flex w-full gap-2 flex-wrap whitespace-normal text-[13px] max-[768px]:text-[10px]"
     const bordersClass = "border border-[#EAE9E2] border-2 p-2 bg-white uppercase cursor-pointer"
     const buttonsClass = "text-[#9E9E9E] hover:border hover:border-2 hover:border-[#1E40AF]"
     const activeButtonClass = "bg-[#1E40AF] text-white"
@@ -98,7 +99,7 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
             {/* СТАТУСЫ */}
             <div className={blockWrapperClass}>
                 {/* блоки */}
-                <div className={cardsWrapperClass}>
+                <div className={twMerge(cardsWrapperClass, cardsWrapperMobileClass)}>
                     {statuses.map((status) => {
                         return <div key={status} className={twMerge(cardClass, statusesClass[status], "h-[80px]")}>
                             <h4 className={cardTitleClass}> {t(`statuses.${status}`)}</h4>
