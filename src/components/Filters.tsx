@@ -84,15 +84,15 @@ const Filters = ({ inspections }: FiltersProps) => {
                     </div>
 
                     <div className={buttonsWrapperClass}>
-                        <button className={twMerge(bordersClass, buttonsClass, activeButtonClass, 'border-[#1E40AF]')}>{t('filters.allStatuses')}</button>
+                        <button type="button" className={twMerge(bordersClass, buttonsClass, activeButtonClass, 'border-[#1E40AF]')}>{t('filters.allStatuses')}</button>
                         {allStatuses.map((status) => {
-                            return <button key={status} className={`${bordersClass} ${buttonsClass} ${statusesHoverClass[status]}`}>{t(`statuses.${status}`)}</button>
+                            return <button key={status} type="button" className={`${bordersClass} ${buttonsClass} ${statusesHoverClass[status]}`}>{t(`statuses.${status}`)}</button>
                         })
                         }
                     </div>
 
                     <div className={buttonsWrapperClass}>
-                        <button className={twMerge(bordersClass, buttonsClass, activeButtonClass, 'border-[#1E40AF]')}>{t('filters.allRiskLevels')}</button>
+                        <button type="button" className={twMerge(bordersClass, buttonsClass, activeButtonClass, 'border-[#1E40AF]')}>{t('filters.allRiskLevels')}</button>
                         {allRiskLevels.map((riskLevel) => {
                             return <button key={riskLevel} className={`${bordersClass} ${buttonsClass} ${riskLevelsHoverClass[riskLevel]}`}>{t(`riskLevels.${riskLevel}`)}</button>
                         })
