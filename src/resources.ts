@@ -1,6 +1,13 @@
 export const resources = {
   ru: {
     translation: {
+      mainTitle: 'Аудиторские рекомендации',
+      secondTitle: 'Трекер рекомендаций',
+      reportForDepartments: 'Отчет для ССП',
+      reportForManagement: 'Отчет для руководства',
+      headerTitle: 'Реестр аудиторских рекомендаций',
+      headerShortTitle: 'Аудит',
+      add: 'Добавить',
       statuses: {
         open: 'В работе',
         overdue: 'Просрочено',
