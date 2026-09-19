@@ -13,15 +13,15 @@ const Filters = ({ inspections }: FiltersProps) => {
     const bordersClass = "border border-[#EAE9E2] border-2 p-2 bg-white uppercase cursor-pointer"
     const buttonsClass = "text-[#9E9E9E] hover:border hover:border-2 hover:border-[#1E40AF]"
     const activeButtonClass = "bg-[#1E40AF] text-white"
-    const selectClass = "max-[768px]:w-full h-[36px]"
+    const selectClass = "sm:w-auto md:w-full h-[36px]"
     const formClass = "relative flex p-4 gap-4 flex-wrap justify-between items-center tracking-widest text-[10px] md:text-[12px]"
     const buttonsWrapperClass = "flex w-full gap-2 flex-wrap whitespace-normal"
     const selectsWrapperClass = "flex w-full gap-2 justify-start items-center flex-wrap"
     const resetButtonWrapperClass = "absolute right-0 top-[-15px] -translate-y-1/2 px-2 h-[14px] flex items-center"
-    const resetButtonClass = `flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-[11px]
-        text-[#9E9E9E] hover:text-[#1E40AF] transition-colors duration-150 cursor-pointer
-        ml-auto max-[768px]:w-full max-[768px]:justify-center max-[768px]:border max-[768px]:border-1 max-[768px]:border-[#1E40AF] 
-        max-[768px]:text-[#1E40AF] max-[768px]:rounded-lg max-[768px]:bg-white`
+    const resetButtonClass = `flex items-center justify-center gap-1.5 px-3 py-1.5 w-full
+        text-xs font-semibold uppercase tracking-widest text-[11px] text-[#1E40AF]
+        transition-colors duration-150 cursor-pointer border border-[#1E40AF] rounded-lg bg-white
+        md:ml-auto md:w-auto md:text-[#9E9E9E] md:border-none md:bg-transparent md:hover:text-[#1E40AF]`
     const statusesHoverClass: Record<string, string> = {
         open: "hover:text-blue-700  hover:border-blue-700",
         closed: "hover:text-green-800  hover:border-green-800",
