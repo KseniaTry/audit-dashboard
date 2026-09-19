@@ -3,10 +3,13 @@ export const resources = {
     translation: {
       mainTitle: 'Аудиторские рекомендации',
       secondTitle: 'Трекер рекомендаций',
-      reportForDepartments: 'Отчет для ССП',
-      reportForManagement: 'Отчет для руководства',
+      reports: {
+        reportForDepartments: 'Отчет для ССП',
+        reportForManagement: 'Отчет для руководства',
+      },
       headerTitle: 'Реестр аудиторских рекомендаций',
       headerShortTitle: 'Аудит',
+      logoTitle: 'AU',
       add: 'Добавить',
       statuses: {
         open: 'В работе',
