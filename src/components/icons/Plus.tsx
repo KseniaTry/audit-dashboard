@@ -1,8 +1,9 @@
+
 interface ClassName {
     className: string
 }
 
-const DownloadIcon = ({ className }: ClassName) => (
+const Plus = ({ className }: ClassName) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         width={800}
@@ -14,10 +15,9 @@ const DownloadIcon = ({ className }: ClassName) => (
         <path
             fill="currentColor"
             fillRule="evenodd"
-            d="m12 15.985 3.182-3.182-1.06-1.06-1.372 1.371V5.25h-1.5v7.864l-1.371-1.371-1.061 1.06L12 15.985Zm0-2.121Z"
+            d="M11.25 12.75V18h1.5v-5.25H18v-1.5h-5.25V6h-1.5v5.25H6v1.5h5.25Z"
             clipRule="evenodd"
         />
-        <path fill="currentColor" d="M18 17.25v1.5H6v-1.5h12Z" />
     </svg>
 )
-export default DownloadIcon
+export default Plus
