@@ -3,6 +3,31 @@ export type RiskLevels = 'high' | 'medium' | 'low'
 
 export const RISK_LEVELS: RiskLevels[] = ['low', 'medium', 'high']
 export const STATUSES: Statuses[] = ['open', 'overdue', 'closed', 'removed']
+export const DEPARTMENTS: string[] = [
+  "IT-отдел",
+  "АХО",
+  "Группа регистрации",
+  "Департамент изъятого имущества",
+  "Департамент мониторинга рисков",
+  "Отдел взыскания задолженности",
+  "Отдел страхования",
+  "Служба комплаенс-контроля",
+  "Сопровождение сделок",
+  "Управление безопасности",
+  "Управление продаж и партнерских программ",
+  "Управление риск-менеджмента",
+  "Финансово-аналитический департамент",
+  "Юридический департамент",
+  "Департамент казначейства",
+  "Управление бухгалтерского учета и отчетности",
+  "Отдел кадрового учета и подбора персонала (HR)",
+  "Маркетинг и PR-служба",
+  "Отдел клиентского сервиса и контроля качества",
+  "Управление фондирования и связей с инвесторами",
+  "Отдел логистики и оценки имущества",
+  "Служба внутреннего аудита"
+]
+
 
 export type Mock = {
     id: number,
@@ -13,7 +38,7 @@ export type Mock = {
     recommendation: string,
     status: Statuses,
     riskLevel: RiskLevels,
-    responsibleUnit: string[],
+    responsibleDepartment: string[],
     responsiblePerson: string[],
     scheduledDate: string,
     executionDate: string | null
@@ -29,7 +54,7 @@ export const mockIssues: Mock[] = [
         recommendation: "Направить лизингополучателю требование о восстановлении связи и провести внеплановый выездной осмотр техники.",
         status: "open",
         riskLevel: "high",
-        responsibleUnit: ["Департамент мониторинга рисков", "Управление безопасности"],
+        responsibleDepartment: ["Департамент мониторинга рисков", "Управление безопасности"],
         responsiblePerson: ["Иванов И.И.", "Сидоров С.С."],
         scheduledDate: "2026-09-15",
         executionDate: null
@@ -43,7 +68,7 @@ export const mockIssues: Mock[] = [
         recommendation: "Активировать процедуру автоматического пролонгирования страховки силами лизингодателя с выставлением счета клиентам.",
         status: "closed",
         riskLevel: "medium",
-        responsibleUnit: ["Отдел страхования", "Сопровождение сделок"],
+        responsibleDepartment: ["Отдел страхования", "Сопровождение сделок"],
         responsiblePerson: ["Петрова А.В."],
         scheduledDate: "2026-08-25",
         executionDate: "2026-08-24"
@@ -57,7 +82,7 @@ export const mockIssues: Mock[] = [
         recommendation: "Обновить программный модуль выгрузки в личном кабинете РФМ и провести переаттестацию сотрудников комплаенс.",
         status: "overdue",
         riskLevel: "high",
-        responsibleUnit: ["Служба комплаенс-контроля"],
+        responsibleDepartment: ["Служба комплаенс-контроля"],
         responsiblePerson: ["Козлов В.П.", "Григорьев Д.А."],
         scheduledDate: "2026-08-31",
         executionDate: null
@@ -71,7 +96,7 @@ export const mockIssues: Mock[] = [
         recommendation: "Ускорить передачу дел в юридический департамент и инициировать досудебное изъятие предметов лизинга.",
         status: "open",
         riskLevel: "high",
-        responsibleUnit: ["Отдел взыскания задолженности", "Юридический департамент"],
+        responsibleDepartment: ["Отдел взыскания задолженности", "Юридический департамент"],
         responsiblePerson: ["Морозов К.Э."],
         scheduledDate: "2026-10-01",
         executionDate: null
@@ -85,7 +110,7 @@ export const mockIssues: Mock[] = [
         recommendation: "Провести инвентаризацию стоянки и обязать подрядчика подписать акты под угрозой расторжения договора.",
         status: "closed",
         riskLevel: "low",
-        responsibleUnit: ["Департамент изъятого имущества", "АХО"],
+        responsibleDepartment: ["Департамент изъятого имущества", "АХО"],
         responsiblePerson: ["Васильев Н.О."],
         scheduledDate: "2026-08-10",
         executionDate: "2026-08-08"
@@ -99,7 +124,7 @@ export const mockIssues: Mock[] = [
         recommendation: "Скорректировать скоринговую модель в ERP-системе для снижения доли необоснованных отказов.",
         status: "open",
         riskLevel: "medium",
-        responsibleUnit: ["Управление риск-менеджмента", "IT-отдел"],
+        responsibleDepartment: ["Управление риск-менеджмента", "IT-отдел"],
         responsiblePerson: ["Павлова Е.Д.", "Федоров А.М."],
         scheduledDate: "2026-09-20",
         executionDate: null
@@ -113,7 +138,7 @@ export const mockIssues: Mock[] = [
         recommendation: "Запросить актуальные сведения из Росреестра и прикрепить скан-копии в карточку сделки CRM.",
         status: "open",
         riskLevel: "medium",
-        responsibleUnit: ["Юридический департамент"],
+        responsibleDepartment: ["Юридический департамент"],
         responsiblePerson: ["Смирнов Ю.Б."],
         scheduledDate: "2026-09-10",
         executionDate: null
@@ -127,7 +152,7 @@ export const mockIssues: Mock[] = [
         recommendation: "Аннулировать ошибочные калькуляции, обновить тарифную сетку и сделать перерасчет маржинальности.",
         status: "removed",
         riskLevel: "low",
-        responsibleUnit: ["Управление продаж и партнерских программ"],
+        responsibleDepartment: ["Управление продаж и партнерских программ"],
         responsiblePerson: ["Тихонов И.А."],
         scheduledDate: "2026-08-15",
         executionDate: null
@@ -141,7 +166,7 @@ export const mockIssues: Mock[] = [
         recommendation: "Выставить штрафные санкции согласно договору и обязать клиента предоставить СТС.",
         status: "closed",
         riskLevel: "low",
-        responsibleUnit: ["Сопровождение сделок", "Группа регистрации"],
+        responsibleDepartment: ["Сопровождение сделок", "Группа регистрации"],
         responsiblePerson: ["Дмитриева М.В."],
         scheduledDate: "2026-08-20",
         executionDate: "2026-08-19"
@@ -155,7 +180,7 @@ export const mockIssues: Mock[] = [
         recommendation: "Срочно пересобрать отчетность по льготному лизингу во избежание отказа в компенсации выпадающих доходов.",
         status: "overdue",
         riskLevel: "high",
-        responsibleUnit: ["Финансово-аналитический департамент"],
+        responsibleDepartment: ["Финансово-аналитический департамент"],
         responsiblePerson: ["Яковлев С.Н.", "Кузнецов Е.В."],
         scheduledDate: "2026-09-01",
         executionDate: null

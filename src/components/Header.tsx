@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
-import DownloadIcon from "./icons/DownloadIcon"
-import PlusIcon from "./icons/PlusIcon"
+import Download from "./icons/Download"
+import Plus from "./icons/Plus"
 import { twMerge } from "tailwind-merge"
 
 const Header = () => {
@@ -28,14 +28,14 @@ const Header = () => {
                 {/* КНОПКИ */}
                 <div className={buttonsWrapperClass}>
                     <button className={twMerge(buttonBaseClass, addButtonClass)} type="button">
-                        <PlusIcon className={addIconClass} />
+                        <Plus className={addIconClass} />
                         <span>{t('add')}</span>
                     </button>
                     <button className={twMerge(buttonBaseClass, reportButtonClass)} type="button">
-                        <DownloadIcon className={reportIconClass} />
+                        <Download className={reportIconClass} />
                         {t('reports.reportForDepartments')}</button>
                     <button className={twMerge(buttonBaseClass, reportButtonClass)} type="button">
-                        <DownloadIcon className={reportIconClass} />
+                        <Download className={reportIconClass} />
                         {t('reports.reportForManagement')}
                     </button>
                 </div>

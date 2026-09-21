@@ -3,14 +3,15 @@ export const resources = {
     translation: {
       mainTitle: 'Аудиторские рекомендации',
       secondTitle: 'Трекер рекомендаций',
-      reports: {
-        reportForDepartments: 'Отчет для ССП',
-        reportForManagement: 'Отчет для руководства',
-      },
+      cancel: 'Отмена',
       headerTitle: 'Реестр аудиторских рекомендаций',
       headerShortTitle: 'Аудит',
       logoTitle: 'AU',
       add: 'Добавить',
+      reports: {
+        reportForDepartments: 'Отчет для ССП',
+        reportForManagement: 'Отчет для руководства',
+      },
       statuses: {
         open: 'В работе',
         overdue: 'Просрочено',
@@ -32,7 +33,7 @@ export const resources = {
         recommendation: 'Рекомендация',
         status: 'Статус',
         riskLevel: 'Уровень риска',
-        responsibleUnit: 'Ответственное ССП',
+        responsibleDepartment: 'Ответственное ССП',
         responsiblePerson: 'Ответственное лицо',
         scheduledDate: 'Плановая дата',
         executionDate: 'Фактическая дата'
@@ -41,11 +42,15 @@ export const resources = {
         title: 'Фильтры',
         search: 'Поиск...',
         reset: 'Сбросить',
-        allUnits: 'Все ССП',
+        allDepartments: 'Все ССП',
         allYears: 'Все года',
         allInspections: 'Все проверки',
         allStatuses: 'Все статусы',
         allRiskLevels: 'Все риски'
+      },
+      addModal: {
+        title: 'Добавить рекомендацию',
+        secondTitle: 'Новая запись'
       }
     }
   }

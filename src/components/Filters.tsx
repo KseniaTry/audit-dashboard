@@ -39,7 +39,7 @@ const Filters = ({ inspections }: FiltersProps) => {
     const allRiskLevels = ['low', 'medium', 'high']
 
     const getAllResponsibleUnits = (inspections: Mock[]): string[] => {
-        const allUnits = inspections.map(inspection => inspection.responsibleUnit).flat()
+        const allUnits = inspections.map(inspection => inspection.responsibleDepartment).flat()
         return [...new Set(allUnits)].sort()
     }
 
@@ -69,7 +69,7 @@ const Filters = ({ inspections }: FiltersProps) => {
                         </select>
 
                         <select className={`${bordersClass} ${selectClass}`} name="units-filter">
-                            <option value="" selected>{t('filters.allUnits')}</option>
+                            <option value="" selected>{t('filters.allDepartments')}</option>
                             {allUnits.map((unit) => {
                                 return <option key={unit} value={unit}>{unit}</option>
                             })
