@@ -25,7 +25,7 @@ const Table = () => {
                         <div>{t('table.recommendation')}</div>
                         <div>{t('table.status')}</div>
                         <div>{t('table.riskLevel')}</div>
-                        <div>{t('table.responsibleUnit')}</div>
+                        <div>{t('table.responsibleDepartment')}</div>
                         <div>{t('table.responsiblePerson')}</div>
                         <div>{t('table.scheduledDate')}</div>
                         <div>{t('table.executionDate')}</div>

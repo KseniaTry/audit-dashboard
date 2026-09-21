@@ -75,9 +75,9 @@ const Cards = () => {
                     <p className={riskLevelStyles[issue.riskLevel]}>{t(`riskLevels.${issue.riskLevel}`)}</p>
                 </div>
                 <div className={`${resetMdClass} col-start-1 col-end-3 row-start-6`}>
-                    <p className={labelClass}>{t('table.responsibleUnit')}</p>
-                    {issue.responsibleUnit.map((unit) => {
-                        return <p className="text-xs md:mb-2">{unit}</p>
+                    <p className={labelClass}>{t('table.responsibleDepartment')}</p>
+                    {issue.responsibleDepartment.map((department) => {
+                        return <p className="text-xs md:mb-2">{department}</p>
                     })}
                 </div>
                 <div className={`${resetMdClass} col-start-3 col-end-5 row-start-6`}>
