@@ -26,7 +26,7 @@ const AddModal = ({ isOpen = false, riskLevels, departments }: AddModalProps) =>
 
 
     return (
-        <div className={`${modalDisplayClass} fixed inset-0 z-50 justify-center md:items-center md:p-4 bg-black/50 backdrop-blur-sm`}>
+        <div className={`${modalDisplayClass} hidden fixed inset-0 z-50 justify-center md:items-center md:p-4 bg-black/50 backdrop-blur-sm`}>
             <div className={modalMainClass}>
                 <header className={headerClass}>
                     <div className={headerWrapperClass}>
@@ -136,6 +136,7 @@ const AddModal = ({ isOpen = false, riskLevels, departments }: AddModalProps) =>
                         </button>
                     </div>
                 </form>
+                {/* КНОПКИ */}
                 <footer className="flex justify-end items-center gap-3 border-t border-[#EAE9E2] p-4">
                     <button className={twMerge(buttonBaseClass)} type="button">
                         <span>{t('cancel')}</span>
