@@ -21,7 +21,7 @@ const ChangeModal = () => {
     const buttonBaseClass = "flex items-center gap-1 p-2 border border-black w-max uppercase tracking-widest text-[14px] hover:bg-[#9E9E9E] hover:border-[#9E9E9E] hover:text-white transition-colors cursor-pointer"
 
     return (
-        <div className={`flex fixed inset-0 z-50 justify-center md:items-center md:p-4 bg-black/50 backdrop-blur-sm`}>
+        <div className={`hidden flex fixed inset-0 z-50 justify-center md:items-center md:p-4 bg-black/50 backdrop-blur-sm`}>
             <div className="w-full h-full flex flex-col justify-between md:w-[50%] md:h-max bg-white border rounded-xl overflow-y-auto">
                 {/* ШАПКА */}
                 <header className={headerClass}>
