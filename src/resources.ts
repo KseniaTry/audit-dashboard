@@ -8,6 +8,8 @@ export const resources = {
       headerShortTitle: 'Аудит',
       logoTitle: 'AU',
       add: 'Добавить',
+      status: 'Статус',
+      save: 'Сохранить',
       reports: {
         reportForDepartments: 'Отчет для ССП',
         reportForManagement: 'Отчет для руководства',
@@ -36,7 +38,9 @@ export const resources = {
         responsibleDepartment: 'Ответственное ССП',
         responsiblePerson: 'Ответственное лицо',
         scheduledDate: 'Плановая дата',
-        executionDate: 'Фактическая дата'
+        scheduledDateFull: 'Плановая дата исполнения',
+        executionDate: 'Фактическая дата',
+        executionDateFull: 'Фактическая дата исполнения'
       },
       filters: {
         title: 'Фильтры',
@@ -50,7 +54,14 @@ export const resources = {
       },
       addModal: {
         title: 'Добавить рекомендацию',
-        secondTitle: 'Новая запись'
+        new: 'Новая запись'
+      },
+      changeModal: {
+        title: 'обновить запись',
+        edit: 'Редактирование',
+        currentStatus: 'Статус после сохранения: ',
+        switchToRemoved: 'Отметить как "СНЯТО"',
+        removedChecked: 'Рекомендация снята с контроля'
       }
     }
   }
