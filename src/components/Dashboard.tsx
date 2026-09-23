@@ -5,6 +5,7 @@ import Analytics from './Analytics'
 import Header from './Header'
 import { useTranslation } from 'react-i18next'
 import AddModal from './AddModal'
+import ChangeModal from './ChangeModal'
 
 const Dashboard = () => {
     const { t } = useTranslation()
@@ -23,6 +24,7 @@ const Dashboard = () => {
             <Filters inspections={mockIssues} />
             <Table />
             <AddModal isOpen={true} riskLevels={RISK_LEVELS} departments={DEPARTMENTS} />
+            <ChangeModal />
         </>
     )
 }
