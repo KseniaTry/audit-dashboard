@@ -11,25 +11,25 @@ interface AnalyticsProps {
 const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
     const { t } = useTranslation()
     const blockWrapperClass = "w-full flex flex-wrap gap-[0px]"
-    const cardClass = "w-full h-[130px] border border-[#EAE9E2] border-2 p-2 rounded-xl bg-white max-[450px]:w-[48%]"
+    const cardClass = "w-full h-[130px] border border-border-warm border-2 p-2 rounded-xl bg-card-bg max-[450px]:w-[48%]"
     const cardsWrapperClass = "flex gap-2 flex-nowrap w-full"
-    const cardsWrapperMobileClass = "max-[450px]:flex-wrap max-[450px]:gap-1 max-[450px]:justify-between" // отдельный класс для того чтобы применит перенос карточек тольок для статусов, а для рисков оставить 
-    const cardTitleClass = "font-bold uppercase tracking-widest max-[768px]:text-[10px]"
-    const violationCountClass = "text-[25px] tracking-widest max-[768px]:text-[18px]"
+    const cardsWrapperMobileClass = "max-[450px]:flex-wrap max-[450px]:gap-1 max-[450px]:justify-between" // отдельный класс для того чтобы применить перенос карточек только для статусов, а для рисков - оставить 
+    const cardTitleClass = "font-bold uppercase tracking-widest text-[10px] md:text-[16px]"
+    const violationCountClass = "md:text-[25px] tracking-widest text-[18px]"
     const buttonsWrapperClass = "flex w-full gap-2 flex-wrap whitespace-normal text-[13px] max-[768px]:text-[10px]"
-    const bordersClass = "border border-[#EAE9E2] border-2 p-2 bg-white uppercase cursor-pointer"
-    const buttonsClass = "text-[#9E9E9E] hover:border hover:border-2 hover:border-[#1E40AF]"
-    const activeButtonClass = "bg-[#1E40AF] text-white"
+    const bordersClass = "border border-border-warm border-2 p-2 bg-field-bg uppercase cursor-pointer"
+    const buttonsClass = "text-text-muted hover:border hover:border-2 hover:border-accent"
+    const activeButtonClass = "bg-accent text-text-light"
     const riskLevelsClass = {
-        low: "bg-emerald-50 border-emerald-200 text-emerald-700",
-        medium: "bg-orange-50 border-orange-200 text-orange-700",
-        high: "bg-red-50 border-red-200 text-red-700"
+        low: "bg-risk-low/10 border-risk-low/20 text-risk-low",
+        medium: "bg-risk-medium/10 border-risk-medium/20 text-risk-medium",
+        high: "bg-risk-high/10 border-risk-high/20 text-risk-high"
     }
     const statusesClass = {
-        open: "text-blue-700 border border-blue-50",
-        closed: "border border-green-100 text-green-800",
-        removed: "text-gray-500 line-through-none",
-        overdue: "bg-rose-50 text-rose-600 border border-rose-100"
+        open: "bg-status-open/5 border border-status-open/20 text-status-open",
+        closed: "bg-status-closed/5 border border-status-closed/20 text-status-closed",
+        removed: "bg-status-removed/10 text-status-removed/80 border border-status-removed/20 line-through-none",
+        overdue: "bg-status-overdue/5 border border-status-overdue/20 text-status-overdue"
     }
     const allViolations = 15
     const lowRiskCount = 2
@@ -56,15 +56,15 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
 
     const stripeWrapperClass = "flex h-[7px] rounded-full overflow-hidden mt-1 w-full"
     const riskLevelsStripeColorsClass = {
-        low: "bg-emerald-400 transition-all duration-500",
-        medium: "bg-orange-400 transition-all duration-500",
-        high: "bg-red-400 transition-all duration-500"
+        low: "bg-risk-low transition-all duration-500",
+        medium: "bg-risk-medium transition-all duration-500",
+        high: "bg-risk-high transition-all duration-500"
     }
     const statusesStripeColorsClass = {
-        open: "bg-blue-300",
-        closed: "bg-green-600",
-        removed: "bg-gray-300",
-        overdue: "bg-rose-400"
+        open: "bg-status-open",
+        closed: "bg-status-closed/80",
+        removed: "bg-status-removed/20",
+        overdue: "bg-status-overdue"
     }
 
     return (

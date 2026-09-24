@@ -13,17 +13,16 @@ interface AddModalProps {
 const AddModal = ({ isOpen = false, riskLevels, departments }: AddModalProps) => {
     const { t } = useTranslation()
     const modalDisplayClass = isOpen ? 'flex' : 'hidden'
-    const modalMainClass = "w-full h-full md:w-[50%] md:h-[90%] bg-white border rounded-xl overflow-y-auto"
-    const headerClass = "bg-[#F4F3EF] p-4 border-b border-b-[#EAE9E2]"
+    const modalMainClass = "w-full h-full md:w-[50%] md:h-[90%] bg-modal-bg border rounded-xl overflow-y-auto"
+    const headerClass = "bg-light p-4 border-b border-b-border-warm"
     const headerWrapperClass = "flex flex-wrap items-center justify-between gap-3 md:gap-2"
     const headerTitleClass = "text-[20px] w-full max-[768px]:text-[23px]"
-    const closeButtonClass = "flex items-center justify-center w-10 h-10 hover:text-[#1E40AF] cursor-pointer"
+    const closeButtonClass = "flex items-center justify-center w-10 h-10 hover:text-accent cursor-pointer"
     const formClass = "flex flex-wrap justify-between items-center p-5 gap-3"
     const wrapperClass = "flex flex-col flex-wrap gap-2"
     const titleClass = "tracking-widest text-[13px]"
-    const inputClass = "w-full border border-[#EAE9E2] md:min-w-[150px] border-2 p-2 bg-white uppercase cursor-pointer text-[12px]"
-    const buttonBaseClass = "flex items-center gap-1 p-2 border border-black w-max uppercase tracking-widest text-[12px] cursor-pointer"
-
+    const inputClass = "w-full border border-border-warm md:min-w-[150px] border-2 p-2 bg-field-bg uppercase cursor-pointer text-[12px]"
+    const buttonBaseClass = "flex items-center gap-1 p-2 border border-border-dark w-max uppercase tracking-widest text-[12px] hover:bg-secondary-btn-bg/40 hover:text-text-main hover:border-secondary-btn-bg transition-colors cursor-pointer "
 
     return (
         <div className={`${modalDisplayClass} hidden fixed inset-0 z-50 justify-center md:items-center md:p-4 bg-black/50 backdrop-blur-sm`}>
@@ -31,11 +30,11 @@ const AddModal = ({ isOpen = false, riskLevels, departments }: AddModalProps) =>
                 <header className={headerClass}>
                     <div className={headerWrapperClass}>
                         <div>
-                            <p className="tracking-widest uppercase text-[10px] text-[#1E40AF] font-semibold">{t('addModal.secondTitle')}</p>
+                            <p className="tracking-widest uppercase text-[10px] text-accent font-semibold">{t('addModal.secondTitle')}</p>
                             <h1 className={headerTitleClass}>{t('addModal.title')}</h1>
                         </div>
                         <button className={closeButtonClass} type="button">
-                            <Close className="text-[#9E9E9E] w-5 h-5" />
+                            <Close className="text-text-muted hover:text-accent transition-colors h-5 w-5" />
                         </button>
                     </div>
                 </header>
@@ -117,31 +116,31 @@ const AddModal = ({ isOpen = false, riskLevels, departments }: AddModalProps) =>
                                 return <option>{department}</option>
                             })}
                         </select>
-                        <button className={twMerge(buttonBaseClass, 'bg-blue-100', 'border-[#1E40AF]')} type="button">
-                            <Plus className="w-4 h-4 text-[#1E40AF]" />
-                            <span className=" text-[#1E40AF]">{t('add')}</span>
+                        <button className={twMerge(buttonBaseClass, 'bg-accent/10', 'border-accent')} type="button">
+                            <Plus className="w-4 h-4 text-accent" />
+                            <span className=" text-accent">{t('add')}</span>
                         </button>
                     </div>
 
                     {/* ОТВЕТСТВЕННОЕ ЛИЦО */}
                     <div className={twMerge(wrapperClass, 'w-full')}>
                         <label className={titleClass} htmlFor="responsiblePerson">{t('table.responsiblePerson')}</label>
-                        <input className={inputClass} id='inspection' name='inspection' type='text' placeholder="" required></input>
+                        <input className={inputClass} id='inspection' name='inspection' type='text' placeholder={t('addModal.responsiblePerson')} required></input>
                         <button
-                            className={twMerge(buttonBaseClass, 'bg-blue-100', 'border-[#1E40AF]')}
+                            className={twMerge(buttonBaseClass, 'bg-accent/10', 'border-accent')}
                             type="button"
                         >
-                            <Plus className="w-4 h-4 text-[#1E40AF]" />
-                            <span className=" text-[#1E40AF]">{t('add')}</span>
+                            <Plus className="w-4 h-4 text-accent" />
+                            <span className="text-accent">{t('add')}</span>
                         </button>
                     </div>
                 </form>
                 {/* КНОПКИ */}
-                <footer className="flex justify-end items-center gap-3 border-t border-[#EAE9E2] p-4">
+                <footer className="flex justify-end items-center gap-3 border-t border-border-warm p-4">
                     <button className={twMerge(buttonBaseClass)} type="button">
                         <span>{t('cancel')}</span>
                     </button>
-                    <button className={twMerge(buttonBaseClass, 'bg-black', 'text-white')} type="submit">
+                    <button className={twMerge(buttonBaseClass, 'bg-btn-dark', 'text-text-light')} type="submit">
                         <span>{t('add')}</span>
                     </button>
                 </footer>

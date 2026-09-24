@@ -4,6 +4,40 @@
 @theme {
   --breakpoint-xs: max-width(400px);
   --font-sans: 'Rubik', system-ui, sans-serif;
+
+    /* --- Базовые цвета и фоны --- */
+  --color-page-bg: #F8F7F4;       /* главный фон страницы */
+  --color-light: #F4F3EF;         /* светлый фон, в основном идет как background */
+  --color-field-bg: #FFFFFF;      /* фон инпутов и текстовых полей */
+  --color-base-btn-bg: #FFFFFF;
+  --color-modal-bg: #FFFFFF;      /* фон модальных окон */
+  --color-table-header: #374151;
+  --color-card-bg: #FFFFFF;       /* карточки в аналитике и карточки в таблице */
+
+  /* --- Бордеры --- */
+  --color-border-warm: #EAE9E2;   /* границы серые */
+  --color-border-dark: #1A1A1A;
+  
+  /* --- Шрифты и текст --- */
+  --color-text-muted: #9E9E9E;    /* второстепенный текст / заголовки - темно-серые */
+  --color-text-main: #1A1A1A;     /* основной текст таблицы (text-text-main) */
+  --color-text-light: #FFFFFF;    /* светлый текст (если нужно выделить на темном фоне) */
+
+  /* --- Акценты --- */
+  --color-accent: #1E40AF;        /* акцентный синий */
+  --color-btn-dark: #11161B;      /* акцентная кнопка «+ Добавить» в шапке */
+  --color-secondary-btn-bg: #9E9E9E;
+
+    /* --- Статусы (Statuses) --- */
+  --color-status-open: #1d4ed8;     /* blue-700 */
+  --color-status-closed: #166534;   /* green-800 */
+  --color-status-removed: #6b7280;  /* gray-500 */
+  --color-status-overdue: #fda4af;  /* rose-300 */
+
+  /* --- Уровни риска (Risk Levels) --- */
+  --color-risk-low: #0f766e;        /* emerald-700 */
+  --color-risk-medium: #f59e0b;     /* amber-500 */
+  --color-risk-high: #b91c1c;       /* red-700 */
 }
 
 body {

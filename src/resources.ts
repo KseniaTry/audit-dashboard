@@ -54,7 +54,8 @@ export const resources = {
       },
       addModal: {
         title: 'Добавить рекомендацию',
-        new: 'Новая запись'
+        new: 'Новая запись',
+        responsiblePerson: 'Введите ответственное лицо'
       },
       changeModal: {
         title: 'обновить запись',

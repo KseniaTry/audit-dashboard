@@ -6,33 +6,33 @@ const Cards = () => {
 
     const cardsClass = `
             grid grid-cols-4 gap-[10px] text-[10px] p-[15px] mb-[15px] my-[5px] w-full mx-auto bg-[#FFFFFF] 
-            border border-[#EAE9E2] shadow-sm break-words border-l-4 border-l-[#1E40AF]
+            border border-border-warm shadow-sm break-words border-l-4 border-l-accent
             md:grid-cols-[40px_120px_90px_90px_180px_180px_110px_100px_120px_120px_100px_100px] 
             md:gap-2 md:w-max md:p-4 md:m-0 md:break-words
-            md:text-xs md:text-gray-700 md:bg-white
-            md:rounded-none md:shadow-none md:border-l-[#1E40AF]
-            md:border-r-0 md:border-t md:border-b md:border-[#EAE9E2]`
-    const labelClass = "md:hidden mb-[5px] text-[10px] text-[#9E9E9E] font-medium uppercase block tracking-wider"
+            md:text-xs md:text-gray-700 md:bg-card-bg
+            md:rounded-none md:shadow-none md:border-l-accent
+            md:border-r-0 md:border-t md:border-b md:border-border-warm`
+    const labelClass = "md:hidden mb-[5px] text-[10px] text-text-muted font-medium uppercase block tracking-wider"
     const inspectionMobileWrapper = "flex items-baseline gap-2 col-start-1 col-end-4 row-start-1 md:contents"
     const inspectionDatesClass = "flex gap-[5px] items-center"
-    const inspectionClass = "md:text-[#1A1A1A] md:text-[13px] text-[#9E9E9E] text-[14px] font-semibold tracking-tight leading-snug"
+    const inspectionClass = "md:text-text-main md:text-[13px] text-text-muted text-[14px] font-semibold tracking-tight leading-snug"
     const recommendationClass = "mb-[5px] text-[13px] md:text-[12px] md:mb-0"
     const violationClass = "md:font-normal md:mb-0 font-bold mb-[5px] text-[12px]"
-    const borderClass = "border-t border-[#EAE9E2] pt-4 md:border-none md:pt-0"
+    const borderClass = "border-t border-border-warm pt-4 md:border-none md:pt-0"
     const resetMdClass = "md:col-auto md:row-auto"
-    const buttonClass = "md:hidden col-start-4 row-start-1 border border-[#1E40AF] rounded-lg font-bold w-[25px] h-[25px] ml-auto"
+    const buttonClass = "md:hidden col-start-4 row-start-1 border border-accent rounded-lg font-bold w-[25px] h-[25px] ml-auto"
     // стили для рисков
     const riskLevelStyles = {
-        high: "p-1 bg-red-50 text-red-700 border border-red-200 uppercase",
-        medium: "p-1 bg-amber-50 text-amber-700 border border-amber-200 uppercase",
-        low: "p-1 bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase"
+        low: "p-1 bg-risk-low/10 text-risk-low border border-risk-low/50 uppercase",
+        medium: "p-1 bg-risk-medium/10 text-risk-medium border border-risk-medium/50 uppercase",
+        high: "p-1 bg-risk-high/10 text-risk-high border border-risk-high/50 uppercase"
     }
     // стили для статусов
     const statusStyles = {
-        open: "p-1 bg-blue-50 text-blue-700 border border-blue-50 uppercase",
-        closed: "p-1 bg-green-100 border border-green-100 text-green-800 uppercase",
-        removed: "p-1 bg-gray-100 text-gray-500 line-through-none uppercase",
-        overdue: "p-1 bg-rose-600 text-white border border-rose-300 uppercase"
+        open: "p-1 bg-status-open/10 text-status-open border border-status-open/10 uppercase",
+        closed: "p-1 bg-status-closed/10 border border-status-closed/10 text-status-closed uppercase",
+        removed: "p-1 bg-status-removed/10 text-status-removed line-through-none uppercase",
+        overdue: "p-1 bg-status-overdue text-text-light border border-status-overdue uppercase"
     }
 
     return (
