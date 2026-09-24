@@ -4,12 +4,12 @@ import { useTranslation } from "react-i18next"
 
 const Table = () => {
     const { t } = useTranslation()
-    const wrapperClass = "p-4 w-full overflow-x-auto bg-gray-50"
-    const tableClass = `hidden md:break-words md:border-l-4 md:border-l-[#1E40AF]
+    const wrapperClass = "p-4 w-full overflow-x-auto"
+    const tableClass = `hidden md:break-words md:border-l-4 md:border-l-accent
         md:text-[12px] md:grid md:w-max 
         md:grid-cols-[40px_120px_90px_90px_180px_180px_110px_100px_120px_120px_100px_100px] 
-        md:bg-gray-100 md:gap-2 md:p-4 md:font-bold 
-        md:text-gray-700 md:uppercase md:border-b md:border-gray-200`
+        md:bg-table-header/5 md:gap-2 md:p-4 md:font-bold 
+        md:text-table-header md:uppercase md:border-b md:border-border-warm`
 
     return (
         <>
