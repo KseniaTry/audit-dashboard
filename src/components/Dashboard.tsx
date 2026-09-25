@@ -6,6 +6,7 @@ import Header from './Header'
 import { useTranslation } from 'react-i18next'
 import AddModal from './AddModal'
 import ChangeModal from './ChangeModal'
+import DepartmentReviewModal from './DepartmentRewiewModal'
 
 const Dashboard = () => {
     const { t } = useTranslation()
@@ -25,6 +26,7 @@ const Dashboard = () => {
             <Table />
             <AddModal isOpen={true} riskLevels={RISK_LEVELS} departments={DEPARTMENTS} />
             <ChangeModal />
+            <DepartmentReviewModal departments={DEPARTMENTS} />
         </>
     )
 }
