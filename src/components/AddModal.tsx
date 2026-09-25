@@ -30,7 +30,7 @@ const AddModal = ({ isOpen = false, riskLevels, departments }: AddModalProps) =>
                 <header className={headerClass}>
                     <div className={headerWrapperClass}>
                         <div>
-                            <p className="tracking-widest uppercase text-[10px] text-accent font-semibold">{t('addModal.secondTitle')}</p>
+                            <p className="tracking-widest uppercase text-[10px] text-accent font-semibold">{t('modals.new')}</p>
                             <h1 className={headerTitleClass}>{t('addModal.title')}</h1>
                         </div>
                         <button className={closeButtonClass} type="button">
@@ -39,14 +39,13 @@ const AddModal = ({ isOpen = false, riskLevels, departments }: AddModalProps) =>
                     </div>
                 </header>
 
-
                 <form className={formClass}>
                     {/* ВЫБОР ПРОВЕРКИ */}
                     <div className={twMerge(wrapperClass, 'w-full')}>
                         <ul className="hidden">
                             {/* поменять на проверки!!!! */}
                             {departments.map((department) => {
-                                return <li>{department}</li>
+                                return <li key={department}>{department}</li>
                             })
                             }
 
@@ -99,7 +98,7 @@ const AddModal = ({ isOpen = false, riskLevels, departments }: AddModalProps) =>
                         <label className={titleClass}>{t('table.riskLevel')}</label>
                         <select className={inputClass} name="riskLevel">
                             {riskLevels.map((riskLevel) => {
-                                return <option>{t(`riskLevels.${riskLevel}`)}</option>
+                                return <option key={riskLevel}>{t(`riskLevels.${riskLevel}`)}</option>
                             })}
                         </select>
                     </div>
@@ -113,7 +112,7 @@ const AddModal = ({ isOpen = false, riskLevels, departments }: AddModalProps) =>
                         <label className={titleClass} htmlFor="department">{t('table.responsibleDepartment')}</label>
                         <select className={inputClass} name="riskLevel">
                             {departments.map((department) => {
-                                return <option>{department}</option>
+                                return <option key={department}>{department}</option>
                             })}
                         </select>
                         <button className={twMerge(buttonBaseClass, 'bg-accent/10', 'border-accent')} type="button">

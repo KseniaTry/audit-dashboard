@@ -27,7 +27,7 @@ const ChangeModal = () => {
                 <header className={headerClass}>
                     <div className={headerWrapperClass}>
                         <div>
-                            <p className="tracking-widest uppercase text-[10px] md:text-[11px] text-accent font-semibold">{t('changeModal.edit')}</p>
+                            <p className="tracking-widest uppercase text-[10px] md:text-[11px] text-accent font-semibold">{t('modals.change')}</p>
                             <h1 className={headerTitleClass}>{t('addModal.title')}</h1>
                         </div>
                         <button className={closeButtonClass} type="button">
