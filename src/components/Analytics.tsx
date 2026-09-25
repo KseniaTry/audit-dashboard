@@ -91,7 +91,7 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
                 {/* полоса */}
                 <div className={stripeWrapperClass}>
                     {riskLevels.map((riskLevel) => {
-                        return <div style={{ width: `${riskLevelsPercents[riskLevel]}%` }} className={twMerge(riskLevelsStripeColorsClass[riskLevel], "h-full")}></div>
+                        return <div key={riskLevel} style={{ width: `${riskLevelsPercents[riskLevel]}%` }} className={twMerge(riskLevelsStripeColorsClass[riskLevel], "h-full")}></div>
                     })}
                 </div>
             </div>
@@ -110,7 +110,7 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
                 {/* полоса */}
                 <div className={stripeWrapperClass}>
                     {statuses.map((status) => {
-                        return <div style={{ width: `${statusesPercents[status]}%` }} className={twMerge(statusesStripeColorsClass[status], "h-full")}></div>
+                        return <div key={status} style={{ width: `${statusesPercents[status]}%` }} className={twMerge(statusesStripeColorsClass[status], "h-full")}></div>
                     })}
                 </div>
             </div>
