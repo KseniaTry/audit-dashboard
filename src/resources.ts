@@ -10,6 +10,7 @@ export const resources = {
       add: 'Добавить',
       status: 'Статус',
       save: 'Сохранить',
+      download: 'Скачать .xls',
       reports: {
         reportForDepartments: 'Отчет для ССП',
         reportForManagement: 'Отчет для руководства',
@@ -52,17 +53,24 @@ export const resources = {
         allStatuses: 'Все статусы',
         allRiskLevels: 'Все риски'
       },
+      modals: {
+        new: 'Новая запись',
+        change: 'Редактирование',
+        review: 'Выгрузка',
+      },
       addModal: {
         title: 'Добавить рекомендацию',
-        new: 'Новая запись',
         responsiblePerson: 'Введите ответственное лицо'
       },
       changeModal: {
-        title: 'обновить запись',
-        edit: 'Редактирование',
+        title: 'Обновить запись',
         currentStatus: 'Статус после сохранения: ',
         switchToRemoved: 'Отметить как "СНЯТО"',
         removedChecked: 'Рекомендация снята с контроля'
+      },
+      departmentReviewModal: {
+        title: 'Отчет для ССП',
+        text: 'Выберите ССП — в отчёт войдут все рекомендации, где указанное ССП является ответственным.'
       }
     }
   }
