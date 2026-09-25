@@ -37,7 +37,7 @@ const Cards = () => {
 
     return (
         mockIssues.map((issue) => {
-            return <div className={cardsClass}>
+            return <div key={issue.id} className={cardsClass}>
                 {/* кнопка "добавить" на мобильной версии */}
                 <button className={buttonClass}>+</button>
                 {/* обертка для карточки на мобилке (чтобы № и название проверки были вплотную) */}
@@ -77,13 +77,13 @@ const Cards = () => {
                 <div className={`${resetMdClass} col-start-1 col-end-3 row-start-6`}>
                     <p className={labelClass}>{t('table.responsibleDepartment')}</p>
                     {issue.responsibleDepartment.map((department) => {
-                        return <p className="text-xs md:mb-2">{department}</p>
+                        return <p key={department} className="text-xs md:mb-2">{department}</p>
                     })}
                 </div>
                 <div className={`${resetMdClass} col-start-3 col-end-5 row-start-6`}>
                     <p className={labelClass}>{t('table.responsiblePerson')}</p>
                     {issue.responsiblePerson.map((person) => {
-                        return <div className="text-xs md:mb-2">{person}</div>
+                        return <div key={person} className="text-xs md:mb-2">{person}</div>
                     })}
                 </div>
                 <div className={`${resetMdClass} col-start-1 col-end-3 row-start-7`}>
