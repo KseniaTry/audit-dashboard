@@ -6,7 +6,7 @@ import Header from './Header'
 import { useTranslation } from 'react-i18next'
 import AddModal from './AddModal'
 import ChangeModal from './ChangeModal'
-import DepartmentReviewModal from './DepartmentRewiewModal'
+import DepartmentReportModal from './DepartmentReportModal'
 import Modal from './Modal'
 
 const Dashboard = () => {
@@ -36,7 +36,7 @@ const Dashboard = () => {
             {/* <ChangeModal /> */}
             <Modal isOpen={false} onClose={closeModal} title={t('changeModal.title')} modalType='change'
                 submitButtonTitle={t('save')} onSubmit={submitModal}
-                children={<DepartmentReviewModal departments={DEPARTMENTS} />} size='dynamic' position='bottom' />
+                children={<DepartmentReportModal departments={DEPARTMENTS} />} size='dynamic' position='bottom' />
             <Modal isOpen={false} onClose={closeModal} title={t('changeModal.title')} modalType='change'
                 submitButtonTitle={t('save')} onSubmit={submitModal}
                 children={<ChangeModal />} size='dynamic' position='center' />

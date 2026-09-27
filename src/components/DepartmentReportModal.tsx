@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
-interface DepartmentReview {
+interface DepartmentReport {
     departments: string[]
 }
 
-const DepartmentReviewModal = ({ departments }: DepartmentReview) => {
+const DepartmentReportModal = ({ departments }: DepartmentReport) => {
     const { t } = useTranslation()
 
     const wrapperClass = "flex flex-col flex-wrap gap-2"
@@ -14,7 +14,7 @@ const DepartmentReviewModal = ({ departments }: DepartmentReview) => {
 
     return (
         <div className="flex flex-col flex-wrap p-5 gap-4">
-            <p className="tracking-wide">{t('departmentReviewModal.text')}</p>
+            <p className="tracking-wide">{t('departmentReportModal.text')}</p>
             <div className={twMerge(wrapperClass, 'w-full')}>
                 <label className={titleClass} htmlFor="department">{t('table.responsibleDepartment')}</label>
                 <select className={inputClass} name="riskLevel">
@@ -27,4 +27,4 @@ const DepartmentReviewModal = ({ departments }: DepartmentReview) => {
     )
 }
 
-export default DepartmentReviewModal
+export default DepartmentReportModal
