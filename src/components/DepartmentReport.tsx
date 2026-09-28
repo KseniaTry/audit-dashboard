@@ -5,7 +5,7 @@ interface DepartmentReport {
     departments: string[]
 }
 
-const DepartmentReportModal = ({ departments }: DepartmentReport) => {
+const DepartmentReport = ({ departments }: DepartmentReport) => {
     const { t } = useTranslation()
 
     const wrapperClass = "flex flex-col flex-wrap gap-2"
@@ -14,7 +14,7 @@ const DepartmentReportModal = ({ departments }: DepartmentReport) => {
 
     return (
         <div className="flex flex-col flex-wrap p-5 gap-4">
-            <p className="tracking-wide">{t('departmentReportModal.text')}</p>
+            <p className="tracking-wide">{t('departmentReport.text')}</p>
             <div className={twMerge(wrapperClass, 'w-full')}>
                 <label className={titleClass} htmlFor="department">{t('table.responsibleDepartment')}</label>
                 <select className={inputClass} name="riskLevel">
@@ -27,4 +27,4 @@ const DepartmentReportModal = ({ departments }: DepartmentReport) => {
     )
 }
 
-export default DepartmentReportModal
+export default DepartmentReport
