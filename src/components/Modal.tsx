@@ -7,12 +7,12 @@ interface ModalData {
     isOpen: boolean,
     onClose: () => void,
     title: string,
-    modalType: 'new' | 'change' | 'review',
+    modalType: 'new' | 'change' | 'report',
     submitButtonTitle: string,
     onSubmit: () => void | Promise<void>,
     children: ReactNode,
     size?: 'full' | 'dynamic',
-    position: 'bottom' | 'center'
+    position?: 'bottom' | 'center'
 }
 
 const Modal = ({ isOpen = true, onClose, title, modalType, submitButtonTitle, onSubmit, children, size = 'dynamic', position = 'center' }: ModalData) => {
@@ -24,7 +24,7 @@ const Modal = ({ isOpen = true, onClose, title, modalType, submitButtonTitle, on
 
     return (
         <div className={`${openClass} fixed inset-0 z-50 ${positionClass} justify-center md:items-center md:p-4 bg-black/20 backdrop-blur-sm`}>
-            <div className={`w-full h-full md:w-[50%] ${sizeClass} bg-modal-bg border rounded-xl overflow-y-auto`}>
+            <div className={`w-full h-full md:w-[50%] ${sizeClass} bg-modal-bg border border-border-warm rounded-xl overflow-y-auto`}>
                 {/* ЗАГОЛОВОК */}
                 <header className="bg-light p-4 border-b border-b-border-warm">
                     <div className="flex flex-wrap items-center justify-between gap-3 md:gap-2">

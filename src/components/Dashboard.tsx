@@ -6,8 +6,9 @@ import Header from './Header'
 import { useTranslation } from 'react-i18next'
 import AddModal from './AddModal'
 import ChangeModal from './ChangeModal'
-import DepartmentReviewModal from './DepartmentRewiewModal'
+import DepartmentReport from './DepartmentReport'
 import Modal from './Modal'
+import ManagementReport from './ManagementReport'
 
 const Dashboard = () => {
     const { t } = useTranslation()
@@ -33,16 +34,19 @@ const Dashboard = () => {
             <Analytics riskLevels={RISK_LEVELS} statuses={STATUSES} years={[2023, 2024, 2025, 2026]} />
             <Filters inspections={mockIssues} />
             <Table />
-            {/* <ChangeModal /> */}
+            {/* МОДАЛКИ */}
+            <Modal isOpen={false} onClose={closeModal} title={t('managementReport.title')} modalType='report'
+                submitButtonTitle={t('download')} onSubmit={submitModal}
+                children={<ManagementReport statuses={STATUSES} />} position='bottom' />
+            <Modal isOpen={false} onClose={closeModal} title={t('departmentReport.title')} modalType='report'
+                submitButtonTitle={t('download')} onSubmit={submitModal}
+                children={<DepartmentReport departments={DEPARTMENTS} />} position='bottom' />
             <Modal isOpen={false} onClose={closeModal} title={t('changeModal.title')} modalType='change'
                 submitButtonTitle={t('save')} onSubmit={submitModal}
-                children={<DepartmentReviewModal departments={DEPARTMENTS} />} size='dynamic' position='bottom' />
-            <Modal isOpen={false} onClose={closeModal} title={t('changeModal.title')} modalType='change'
-                submitButtonTitle={t('save')} onSubmit={submitModal}
-                children={<ChangeModal />} size='dynamic' position='center' />
+                children={<ChangeModal />} />
             <Modal isOpen={false} onClose={closeModal} title={t('addModal.title')} modalType='new'
                 submitButtonTitle={t('add')} onSubmit={submitModal}
-                children={<AddModal riskLevels={RISK_LEVELS} departments={DEPARTMENTS} />} size='full' position='center' />
+                children={<AddModal riskLevels={RISK_LEVELS} departments={DEPARTMENTS} />} size='full' />
         </>
     )
 }

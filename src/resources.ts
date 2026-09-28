@@ -11,6 +11,7 @@ export const resources = {
       status: 'Статус',
       save: 'Сохранить',
       download: 'Скачать .xls',
+      reportDate: 'Дата отчета',
       reports: {
         reportForDepartments: 'Отчет для ССП',
         reportForManagement: 'Отчет для руководства',
@@ -56,7 +57,7 @@ export const resources = {
       modals: {
         new: 'Новая запись',
         change: 'Редактирование',
-        review: 'Выгрузка',
+        report: 'Выгрузка',
       },
       addModal: {
         title: 'Добавить рекомендацию',
@@ -68,9 +69,13 @@ export const resources = {
         switchToRemoved: 'Отметить как "СНЯТО"',
         removedChecked: 'Рекомендация снята с контроля'
       },
-      departmentReviewModal: {
+      departmentReport: {
         title: 'Отчет для ССП',
         text: 'Выберите ССП — в отчёт войдут все рекомендации, где указанное ССП является ответственным.'
+      },
+      managementReport: {
+        title: 'Отчет для руководства',
+        text: 'Файл включает сводную статистику и полный реестр рекомендаций на дату {{reportDate}}.'
       }
     }
   }
