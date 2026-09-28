@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
-interface DepartmentReport {
+interface DepartmentReportData {
     departments: string[]
 }
 
-const DepartmentReport = ({ departments }: DepartmentReport) => {
+const DepartmentReport = ({ departments }: DepartmentReportData) => {
     const { t } = useTranslation()
 
     const wrapperClass = "flex flex-col flex-wrap gap-2"

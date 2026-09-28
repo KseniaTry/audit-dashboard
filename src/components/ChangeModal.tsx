@@ -1,13 +1,12 @@
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
+import Input from "./Input"
 
 const ChangeModal = () => {
 
     const { t } = useTranslation()
-    const wrapperClass = "flex flex-col flex-wrap gap-2"
     const borderClass = "border border-border-warm bg-light p-4"
     const titleClass = "tracking-widest uppercase text-[14px]"
-    const inputClass = "w-full border border-border-warm md:min-w-[150px] border-2 p-2 bg-field-bg uppercase cursor-pointer text-[15px]"
     const statusStyles = {
         open: "p-1 bg-status-open/5 text-status-open border border-status-open uppercase",
         closed: "p-1 bg-status-closed/5 border border-status-closed text-status-closed uppercase",
@@ -23,15 +22,11 @@ const ChangeModal = () => {
                 <p>{t('table.number')} Номер проверки - Название текущей проверки</p>
             </div>
             {/* ПЛАНОВАЯ ДАТА (ДЛЯ ИНФО - ТОЛЬКО ДЛЯ ЧТЕНИЯ) */}
-            <div className={twMerge(wrapperClass, 'w-auto')}>
-                <label className={titleClass} htmlFor="date-start">{t('table.scheduledDateFull')}</label>
-                <input className={inputClass} id='date-start' name='date-start' type='text' readOnly></input>
-            </div>
+            <Input type={'text'} labelText={t('table.scheduledDateFull')} id={'scheduled-date'} widthClass={'w-auto'} readonly={true} />
+
             {/* ДАТА ИСПОЛНЕНИЯ */}
-            <div className={twMerge(wrapperClass, 'w-auto')}>
-                <label className={titleClass} htmlFor="date-start">{t('table.executionDateFull')}</label>
-                <input className={inputClass} id='date-start' name='date-start' type='date'></input>
-            </div>
+            <Input type={'date'} labelText={t('table.executionDateFull')} id={'execution-date'} widthClass={'w-auto'} required={true} />
+
             {/* ПЕРЕКЛЮЧЕНИЕ НА СТАТУС "СНЯТО" */}
             <div className={twMerge(borderClass, "bg-field-bg flex flex-col gap-3")}>
                 <p className={titleClass}>{t('status')} "{t('statuses.removed')}"</p>
