@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next"
-import { twMerge } from "tailwind-merge"
 import SelectInput from "./SelectInput"
 
 interface DepartmentReportData {
