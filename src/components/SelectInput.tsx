@@ -5,7 +5,7 @@ interface SelectInputData {
     name: string,
     optionsArrayData: string[],
     widthClass?: string,
-    translateFn?: (word: string) => string,
+    translateFn?: (word: string) => string, // если нужно вставить перевод i18n
     required?: boolean
 }
 
