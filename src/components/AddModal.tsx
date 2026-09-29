@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge"
 import { RiskLevels } from "../mockData"
 import Plus from "./icons/Plus"
 import Input from "./Input"
+import SelectInput from "./SelectInput"
 
 interface AddModalProps {
     riskLevels: RiskLevels[],
@@ -57,25 +58,15 @@ const AddModal = ({ riskLevels, departments }: AddModalProps) => {
                 ></textarea>
             </div>
             {/* УРОВНИ РИСКА */}
-            <div className={twMerge(wrapperClass, 'w-[45%]')}>
-                <label className={titleClass}>{t('table.riskLevel')}</label>
-                <select className={inputClass} name="riskLevel">
-                    {riskLevels.map((riskLevel) => {
-                        return <option key={riskLevel}>{t(`riskLevels.${riskLevel}`)}</option>
-                    })}
-                </select>
-            </div>
+            <SelectInput labelText={t('table.riskLevel')} name={'risk-level'} optionsArrayData={riskLevels} widthClass={'w-[45%]'} translateFn={(word) => t(`riskLevels.${word}`)} required={true} />
+
             {/* ПЛАНОВАЯ ДАТА */}
             <Input type={'date'} labelText={t('table.scheduledDate')} id={'sheduled-date'} widthClass={'w-[45%]'} required={true} />
 
             {/* ОТВЕТСТВЕННОЕ ССП */}
             <div className={twMerge(wrapperClass, 'w-full')}>
-                <label className={titleClass} htmlFor="department">{t('table.responsibleDepartment')}</label>
-                <select className={inputClass} name="riskLevel">
-                    {departments.map((department) => {
-                        return <option key={department}>{department}</option>
-                    })}
-                </select>
+                <SelectInput labelText={t('table.responsibleDepartment')} name={'department'} optionsArrayData={departments} required={true} />
+
                 <button className={twMerge(buttonBaseClass, 'bg-accent/10', 'border-accent')} type="button">
                     <Plus className="w-4 h-4 text-accent" />
                     <span className=" text-accent">{t('add')}</span>
