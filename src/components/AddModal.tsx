@@ -1,8 +1,9 @@
 import { useTranslation } from "react-i18next"
-// import Close from "./icons/Close"
 import { twMerge } from "tailwind-merge"
 import { RiskLevels } from "../mockData"
 import Plus from "./icons/Plus"
+import Input from "./Input"
+import SelectInput from "./SelectInput"
 
 interface AddModalProps {
     riskLevels: RiskLevels[],
@@ -29,21 +30,14 @@ const AddModal = ({ riskLevels, departments }: AddModalProps) => {
                     }
 
                 </ul>
-                <label className={titleClass} htmlFor="inspection">{t('table.inspection')}</label>
-                <input className={inputClass} id='inspection' name='inspection' type='text' placeholder="Название проверки" required></input>
+                <Input type={'text'} labelText={t('table.inspection')} id={'inspection'} placeholder="Название проверки" required={true} />
             </div>
 
             {/* ДАТА НАЧАЛА ПРОВЕРКИ */}
-            <div className={twMerge(wrapperClass, 'w-[45%]')}>
-                <label className={titleClass} htmlFor="date-start">{t('table.startInspectionDate')}</label>
-                <input className={inputClass} id='date-start' name='date-start' type='date'></input>
-            </div>
+            <Input type={'date'} labelText={t('table.startInspectionDate')} id={'date-start'} widthClass={'w-[45%]'} required={true} />
 
             {/* ДАТА ОКОНЧАНИЯ ПРОВЕРКИ */}
-            <div className={twMerge(wrapperClass, 'w-[45%]')}>
-                <label className={titleClass} htmlFor="date-end">{t('table.endInspectionDate')}</label>
-                <input className={inputClass} id='date-end' name='date-end' type='date'></input>
-            </div>
+            <Input type={'date'} labelText={t('table.endInspectionDate')} id={'date-end'} widthClass={'w-[45%]'} required={true} />
 
             {/* НАРУШЕНИЕ */}
             <div className={twMerge(wrapperClass, 'w-full')}>
@@ -63,37 +57,16 @@ const AddModal = ({ riskLevels, departments }: AddModalProps) => {
                     required
                 ></textarea>
             </div>
-            {/* СТАТУС */}
-            {/* <div className={wrapperClass}>
-                        <label className={titleClass}>{t('table.status')}</label>
-                        <select className={inputClass} name="status">
-                            {statuses.map((status) => {
-                                return <option>{t(`statuses.${status}`)}</option>
-                            })}
-                        </select>
-                    </div> */}
             {/* УРОВНИ РИСКА */}
-            <div className={twMerge(wrapperClass, 'w-[45%]')}>
-                <label className={titleClass}>{t('table.riskLevel')}</label>
-                <select className={inputClass} name="riskLevel">
-                    {riskLevels.map((riskLevel) => {
-                        return <option key={riskLevel}>{t(`riskLevels.${riskLevel}`)}</option>
-                    })}
-                </select>
-            </div>
+            <SelectInput labelText={t('table.riskLevel')} name={'risk-level'} optionsArrayData={riskLevels} widthClass={'w-[45%]'} translateFn={(word) => t(`riskLevels.${word}`)} required={true} />
+
             {/* ПЛАНОВАЯ ДАТА */}
-            <div className={twMerge(wrapperClass, 'w-[45%]')}>
-                <label className={titleClass} htmlFor="inspection">{t('table.scheduledDate')}</label>
-                <input className={inputClass} id='inspection' name='inspection' type='date' placeholder="" required></input>
-            </div>
+            <Input type={'date'} labelText={t('table.scheduledDate')} id={'sheduled-date'} widthClass={'w-[45%]'} required={true} />
+
             {/* ОТВЕТСТВЕННОЕ ССП */}
             <div className={twMerge(wrapperClass, 'w-full')}>
-                <label className={titleClass} htmlFor="department">{t('table.responsibleDepartment')}</label>
-                <select className={inputClass} name="riskLevel">
-                    {departments.map((department) => {
-                        return <option key={department}>{department}</option>
-                    })}
-                </select>
+                <SelectInput labelText={t('table.responsibleDepartment')} name={'department'} optionsArrayData={departments} required={true} />
+
                 <button className={twMerge(buttonBaseClass, 'bg-accent/10', 'border-accent')} type="button">
                     <Plus className="w-4 h-4 text-accent" />
                     <span className=" text-accent">{t('add')}</span>
@@ -102,8 +75,7 @@ const AddModal = ({ riskLevels, departments }: AddModalProps) => {
 
             {/* ОТВЕТСТВЕННОЕ ЛИЦО */}
             <div className={twMerge(wrapperClass, 'w-full')}>
-                <label className={titleClass} htmlFor="responsiblePerson">{t('table.responsiblePerson')}</label>
-                <input className={inputClass} id='inspection' name='inspection' type='text' placeholder={t('addModal.responsiblePerson')} required></input>
+                <Input type={'text'} labelText={t('table.responsiblePerson')} id={'responsible'} placeholder={t('addModal.responsiblePerson')} required={true} />
                 <button
                     className={twMerge(buttonBaseClass, 'bg-accent/10', 'border-accent')}
                     type="button"
