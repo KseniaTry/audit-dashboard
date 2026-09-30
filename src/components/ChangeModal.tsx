@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 import Input from "./ui/Input"
+import Switch from "./ui/Switch"
 
 const ChangeModal = () => {
-
     const { t } = useTranslation()
+
     const borderClass = "border border-border-warm bg-light p-4"
     const titleClass = "tracking-widest uppercase text-[14px]"
     const statusStyles = {
@@ -30,15 +31,7 @@ const ChangeModal = () => {
             {/* ПЕРЕКЛЮЧЕНИЕ НА СТАТУС "СНЯТО" */}
             <div className={twMerge(borderClass, "bg-field-bg flex flex-col gap-3")}>
                 <p className={titleClass}>{t('status')} "{t('statuses.removed')}"</p>
-                <label className={twMerge('flex justify-start items-center flex-wrap cursor-pointer')} htmlFor="removed-switch" >
-                    <input className="sr-only peer" id="removed-switch" name="removed-switch" type="checkbox"></input>
-                    <div className={`relative border w-[49px] h-[23px] rounded-xl border-border-warm bg-border-warm 
-                               peer-checked:bg-accent peer-checked:border-accent transition-colors duration-200
-                                after:content-[''] after:absolute after:top-[1px] after:left-[2px] after:w-[20px] after:h-[19px] after:bg-base-btn-bg after:border 
-                                after:rounded-full after:border-field-bg peer-checked:after:translate-x-6 after:transition-transform after:duration-200`}></div>
-                    <span className="ml-5 text-text-muted tracking-wide font-semibold ">{t('changeModal.switchToRemoved')}</span>
-                    {/* добавить смену текста если выбран чекбокс */}
-                </label>
+                <Switch text={t('changeModal.switchToRemoved')} id={'removed-switch'} name={'removed-switch'} />
             </div>
             {/* ПОКАЗ ТЕКУЩЕГО СТАТУСА */}
             <div className={borderClass}>

@@ -43,11 +43,11 @@ const Dashboard = () => {
                 submitButtonTitle={t('download')} onSubmit={submitModal}
                 children={<DepartmentReport departments={DEPARTMENTS} />} position='bottom' />
 
-            <Modal isOpen={false} onClose={closeModal} title={t('changeModal.title')} modalType='change'
+            <Modal isOpen={true} onClose={closeModal} title={t('changeModal.title')} modalType='change'
                 submitButtonTitle={t('save')} onSubmit={submitModal}
                 children={<ChangeModal />} position='bottom' />
 
-            <Modal isOpen={true} onClose={closeModal} title={t('addModal.title')} modalType='new'
+            <Modal isOpen={false} onClose={closeModal} title={t('addModal.title')} modalType='new'
                 submitButtonTitle={t('add')} onSubmit={submitModal}
                 children={<AddModal riskLevels={RISK_LEVELS} departments={DEPARTMENTS} />} size='full' />
         </>
