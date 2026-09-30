@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
-import Input from "./Input"
+import Input from "./ui/Input"
 
 const ChangeModal = () => {
 

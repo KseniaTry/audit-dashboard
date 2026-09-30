@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import Close from "./icons/Close"
+import Close from "../icons/Close"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 

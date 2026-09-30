@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import AddModal from './AddModal'
 import ChangeModal from './ChangeModal'
 import DepartmentReport from './DepartmentReport'
-import Modal from './Modal'
+import Modal from './ui/Modal'
 import ManagementReport from './ManagementReport'
 
 const Dashboard = () => {
@@ -38,13 +38,16 @@ const Dashboard = () => {
             <Modal isOpen={false} onClose={closeModal} title={t('managementReport.title')} modalType='report'
                 submitButtonTitle={t('download')} onSubmit={submitModal}
                 children={<ManagementReport statuses={STATUSES} />} position='bottom' />
-            <Modal isOpen={true} onClose={closeModal} title={t('departmentReport.title')} modalType='report'
+
+            <Modal isOpen={false} onClose={closeModal} title={t('departmentReport.title')} modalType='report'
                 submitButtonTitle={t('download')} onSubmit={submitModal}
                 children={<DepartmentReport departments={DEPARTMENTS} />} position='bottom' />
+
             <Modal isOpen={false} onClose={closeModal} title={t('changeModal.title')} modalType='change'
                 submitButtonTitle={t('save')} onSubmit={submitModal}
                 children={<ChangeModal />} position='bottom' />
-            <Modal isOpen={false} onClose={closeModal} title={t('addModal.title')} modalType='new'
+
+            <Modal isOpen={true} onClose={closeModal} title={t('addModal.title')} modalType='new'
                 submitButtonTitle={t('add')} onSubmit={submitModal}
                 children={<AddModal riskLevels={RISK_LEVELS} departments={DEPARTMENTS} />} size='full' />
         </>
