@@ -9,7 +9,7 @@ interface SelectInputData {
     required?: boolean
 }
 
-const SelectInput = ({ labelText, name, optionsArrayData, widthClass, translateFn, required }: SelectInputData) => {
+const SelectInput = ({ labelText, name, optionsArrayData, widthClass, translateFn, required = false }: SelectInputData) => {
     const wrapperClass = "flex flex-col flex-wrap gap-2"
     const titleClass = "tracking-widest uppercase text-[13px]"
     const inputClass = "w-full border border-border-warm md:min-w-[150px] border-2 p-2 bg-field-bg uppercase cursor-pointer text-[15px]"

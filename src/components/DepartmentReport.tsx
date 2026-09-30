@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next"
-import SelectInput from "./SelectInput"
+import SelectInput from "./ui/SelectInput"
 
 interface DepartmentReportData {
     departments: string[]

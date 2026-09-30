@@ -61,7 +61,9 @@ export const resources = {
       },
       addModal: {
         title: 'Добавить рекомендацию',
-        responsiblePerson: 'Введите ответственное лицо'
+        responsiblePerson: 'Введите ответственное лицо',
+        violationPlaceholder: 'Опишите выявленное нарушение',
+        recommendationPlaceholder: 'Опишите рекомендацию'
       },
       changeModal: {
         title: 'Обновить запись',

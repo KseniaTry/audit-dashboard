@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 import { Statuses } from "../mockData"
-import Input from "./Input"
+import Input from "./ui/Input"
 
 interface ManagementReportData {
     statuses: Statuses[]
