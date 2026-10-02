@@ -92,7 +92,7 @@ const AddModal = ({ riskLevels, departments }: AddModalProps) => {
                 <SelectInput labelText={t('table.responsibleDepartment')} name={'department'} optionsArrayData={departments} required={true} />
                 <Button
                     type="button"
-                    className="text-accent bg-accent/10 border-accent">
+                    className="text-accent bg-accent/10 border-accent hover:bg-field-bg">
                     <Plus className="w-4 h-4 text-accent" />
                     {t('add')}
                 </Button>
@@ -103,7 +103,7 @@ const AddModal = ({ riskLevels, departments }: AddModalProps) => {
                 <Input type={'text'} labelText={t('table.responsiblePerson')} id={'responsible'} placeholder={t('addModal.responsiblePerson')} required={true} />
                 <Button
                     type="button"
-                    className="text-accent bg-accent/10 border-accent">
+                    className="text-accent bg-accent/10 border-accent hover:bg-field-bg">
                     <Plus className="w-4 h-4 text-accent" />
                     {t('add')}
                 </Button>

@@ -33,7 +33,7 @@ const Modal = ({ isOpen = true, onClose, title, modalType, submitButtonTitle, on
                         </div>
                         <Button
                             type='button'
-                            className="hover:text-accent border-none bg-transparent"
+                            className="hover:text-accent border-none bg-transparent hover:bg-transparent"
                             onClick={onClose}>
                             <Close className="text-text-muted hover:text-accent transition-colors h-5 w-5" />
                         </Button>
