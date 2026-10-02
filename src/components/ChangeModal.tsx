@@ -28,7 +28,7 @@ const ChangeModal = () => {
                 labelText={t('table.scheduledDateFull')}
                 id={'scheduled-date'}
                 widthClass={'w-auto'}
-                readonly={true} />
+                readOnly={true} />
 
             {/* ДАТА ИСПОЛНЕНИЯ */}
             <Input

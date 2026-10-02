@@ -78,6 +78,7 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
                 {years.map((year) => {
                     return <Button
                         type="button"
+                        key={year}
                         className="md:text-[12px] text-[10px]">
                         {year}
                     </Button>
