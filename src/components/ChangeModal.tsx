@@ -23,15 +23,28 @@ const ChangeModal = () => {
                 <p>{t('table.number')} Номер проверки - Название текущей проверки</p>
             </div>
             {/* ПЛАНОВАЯ ДАТА (ДЛЯ ИНФО - ТОЛЬКО ДЛЯ ЧТЕНИЯ) */}
-            <Input type={'text'} labelText={t('table.scheduledDateFull')} id={'scheduled-date'} widthClass={'w-auto'} readonly={true} />
+            <Input
+                type={'text'}
+                labelText={t('table.scheduledDateFull')}
+                id={'scheduled-date'}
+                widthClass={'w-auto'}
+                readonly={true} />
 
             {/* ДАТА ИСПОЛНЕНИЯ */}
-            <Input type={'date'} labelText={t('table.executionDateFull')} id={'execution-date'} widthClass={'w-auto'} required={true} />
+            <Input
+                type={'date'}
+                labelText={t('table.executionDateFull')}
+                id={'execution-date'}
+                widthClass={'w-auto'}
+                required={true} />
 
             {/* ПЕРЕКЛЮЧЕНИЕ НА СТАТУС "СНЯТО" */}
             <div className={twMerge(borderClass, "bg-field-bg flex flex-col gap-3")}>
                 <p className={titleClass}>{t('status')} "{t('statuses.removed')}"</p>
-                <Switch text={t('changeModal.switchToRemoved')} id={'removed-switch'} name={'removed-switch'} />
+                <Switch
+                    text={t('changeModal.switchToRemoved')}
+                    id={'removed-switch'}
+                    name={'removed-switch'} />
             </div>
             {/* ПОКАЗ ТЕКУЩЕГО СТАТУСА */}
             <div className={borderClass}>

@@ -32,7 +32,7 @@ const Dashboard = () => {
                 <h2 className={secondTitleClass}>{t('secondTitle')}</h2>
             </div>
             <Analytics riskLevels={RISK_LEVELS} statuses={STATUSES} years={[2023, 2024, 2025, 2026]} />
-            <Filters inspections={mockIssues} />
+            <Filters inspections={mockIssues} statuses={STATUSES} riskLevels={RISK_LEVELS} departments={DEPARTMENTS} />
             <Table />
             {/* МОДАЛКИ */}
             <Modal isOpen={false} onClose={closeModal} title={t('managementReport.title')} modalType='report'
@@ -43,7 +43,7 @@ const Dashboard = () => {
                 submitButtonTitle={t('download')} onSubmit={submitModal}
                 children={<DepartmentReport departments={DEPARTMENTS} />} position='bottom' />
 
-            <Modal isOpen={true} onClose={closeModal} title={t('changeModal.title')} modalType='change'
+            <Modal isOpen={false} onClose={closeModal} title={t('changeModal.title')} modalType='change'
                 submitButtonTitle={t('save')} onSubmit={submitModal}
                 children={<ChangeModal />} position='bottom' />
 
