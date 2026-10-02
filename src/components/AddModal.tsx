@@ -28,26 +28,64 @@ const AddModal = ({ riskLevels, departments }: AddModalProps) => {
                     }
 
                 </ul>
-                <Input type={'text'} labelText={t('table.inspection')} id={'inspection'} placeholder="Название проверки" required={true} />
+                <Input
+                    type={'text'}
+                    labelText={t('table.inspection')}
+                    id={'inspection'}
+                    placeholder="Название проверки"
+                    required={true} />
             </div>
 
             {/* ДАТА НАЧАЛА ПРОВЕРКИ */}
-            <Input type={'date'} labelText={t('table.startInspectionDate')} id={'date-start'} widthClass={'w-[45%]'} required={true} />
+            <Input
+                type={'date'}
+                labelText={t('table.startInspectionDate')}
+                id={'date-start'}
+                widthClass={'w-[45%]'}
+                required={true} />
 
             {/* ДАТА ОКОНЧАНИЯ ПРОВЕРКИ */}
-            <Input type={'date'} labelText={t('table.endInspectionDate')} id={'date-end'} widthClass={'w-[45%]'} required={true} />
+            <Input
+                type={'date'}
+                labelText={t('table.endInspectionDate')}
+                id={'date-end'}
+                widthClass={'w-[45%]'}
+                required={true} />
 
             {/* НАРУШЕНИЕ */}
-            <Textarea labelText={t('table.violation')} name={'violation'} placeholder={t('addModal.violationPlaceholder')} rows={5} required={true} widthClass={'w-full'} />
+            <Textarea
+                labelText={t('table.violation')}
+                name={'violation'}
+                placeholder={t('addModal.violationPlaceholder')}
+                rows={5}
+                required={true}
+                widthClass={'w-full'} />
 
             {/* РЕКОМЕНДАЦИЯ */}
-            <Textarea labelText={t('table.recommendation')} name={'recommendation'} placeholder={t('addModal.recommendationPlaceholder')} rows={5} required={true} widthClass={'w-full'} />
+            <Textarea
+                labelText={t('table.recommendation')}
+                name={'recommendation'}
+                placeholder={t('addModal.recommendationPlaceholder')}
+                rows={5}
+                required={true}
+                widthClass={'w-full'} />
 
             {/* УРОВНИ РИСКА */}
-            <SelectInput labelText={t('table.riskLevel')} name={'risk-level'} optionsArrayData={riskLevels} widthClass={'w-[45%]'} translateFn={(word) => t(`riskLevels.${word}`)} required={true} />
+            <SelectInput
+                labelText={t('table.riskLevel')}
+                name={'risk-level'}
+                optionsArrayData={riskLevels}
+                widthClass={'w-[45%]'}
+                translateFn={(word) => t(`riskLevels.${word}`)}
+                required={true} />
 
             {/* ПЛАНОВАЯ ДАТА */}
-            <Input type={'date'} labelText={t('table.scheduledDate')} id={'sheduled-date'} widthClass={'w-[45%]'} required={true} />
+            <Input
+                type={'date'}
+                labelText={t('table.scheduledDate')}
+                id={'sheduled-date'}
+                widthClass={'w-[45%]'}
+                required={true} />
 
             {/* ОТВЕТСТВЕННОЕ ССП */}
             <div className={twMerge(wrapperClass, 'w-full')}>
