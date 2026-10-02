@@ -1,10 +1,9 @@
 import { useTranslation } from "react-i18next"
 import { Mock } from "../mockData"
-import Button from "./ui/Button";
 import { VARIANTS } from "../mockData";
 import { Statuses, RiskLevels } from "../mockData";
-import { twMerge } from "tailwind-merge";
-
+import Button from "./ui/Button";
+import SelectInput from "./ui/SelectInput";
 interface FiltersProps {
     inspections: Mock[];
     statuses: Statuses[],
@@ -17,7 +16,6 @@ const Filters = ({ inspections, statuses, riskLevels, departments }: FiltersProp
     const fieldsetClass = "border border-border-warm rounded-xl px-4 pb-4 pt-2.5 bg-field-bg shadow-sm w-full"
     const legendClass = "px-2 text-[11px] font-bold text-text-muted uppercase tracking-widest"
     const bordersClass = "border border-border-warm border-2 p-2 bg-field-bg uppercase cursor-pointer"
-    const selectClass = "w-full md:flex-1 min-w-0 max-w-full h-[36px]"
     const formClass = "relative flex p-4 gap-4 flex-wrap justify-between items-center tracking-widest text-[10px] md:text-[12px]"
     const buttonsWrapperClass = "flex md:w-full gap-2 flex-wrap whitespace-normal"
     const selectsWrapperClass = "flex flex-col md:flex-row gap-2 w-full"
@@ -58,25 +56,26 @@ const Filters = ({ inspections, statuses, riskLevels, departments }: FiltersProp
                             <input className={`${bordersClass} p-[7px] w-full px-3 text-black`} id="search" type="text" placeholder={t('filters.search')}></input>
                         </div>
 
-                        <select className={`${bordersClass} ${selectClass}`} name="inspections-filter">
-                            <option value="" selected>{t('filters.allInspections')}</option>
-                            <option value="1">Проверка 1</option>
-                            <option value="2">Проверка 2</option>
-                        </select>
+                        <SelectInput
+                            name="inspections-filter"
+                            className="h-[36px] text-[10px] md:text-[13px]"
+                            widthClass="w-full md:flex-1 min-w-0 max-w-full"
+                            optionsArrayData={['Все проверки', 'Проверка 1', 'Проверка 2']}
+                        />
 
-                        <select className={twMerge(bordersClass, selectClass, 'w-max-[300px]')} name="units-filter">
-                            <option value={t('filters.allDepartments')} selected>{t('filters.allDepartments')}</option>
-                            {departments.map((department) => {
-                                return <option key={department} value={department}>{department}</option>
-                            })
-                            }
-                        </select>
+                        <SelectInput
+                            name="departments-filter"
+                            className="h-[36px] text-[10px] md:text-[13px]"
+                            widthClass="w-full md:flex-1 min-w-0 max-w-full"
+                            optionsArrayData={[t('filters.allDepartments'), ...departments]}
+                        />
 
-                        <select className={`${bordersClass} ${selectClass}`} name="years-filter">
-                            <option value="" selected>{t('filters.allYears')}</option>
-                            <option value="1">2025</option>
-                            <option value="2">2026</option>
-                        </select>
+                        <SelectInput
+                            name="years-filter"
+                            className="h-[36px] text-[10px] md:text-[13px]"
+                            widthClass="w-full md:flex-1 min-w-0 max-w-full"
+                            optionsArrayData={[t('filters.allYears'), '2025', '2026']}
+                        />
                     </div>
 
                     <div className={buttonsWrapperClass}>

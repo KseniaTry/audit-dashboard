@@ -11,7 +11,12 @@ const DepartmentReport = ({ departments }: DepartmentReportData) => {
     return (
         <div className="flex flex-col flex-wrap p-5 gap-4">
             <p className="tracking-wide">{t('departmentReport.text')}</p>
-            <SelectInput labelText={t('table.responsibleDepartment')} name={'department'} optionsArrayData={departments} widthClass={'w-full'} required={true} />
+            <SelectInput
+                labelText={t('table.responsibleDepartment')}
+                name={'department'}
+                optionsArrayData={departments}
+                widthClass={'w-full'}
+                required={true} />
         </div>
     )
 }
