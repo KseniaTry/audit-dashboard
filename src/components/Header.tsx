@@ -1,43 +1,45 @@
 import { useTranslation } from "react-i18next"
 import Download from "./icons/Download"
 import Plus from "./icons/Plus"
-import { twMerge } from "tailwind-merge"
+import Button from "./ui/Button"
 
 const Header = () => {
     const { t } = useTranslation()
-    const headerClass = "p-4 bg-light border-b border-b-border-warm"
-    const headerWrapperClass = "flex flex-wrap items-center justify-between gap-3 md:gap-2"
-    const logoClass = "flex justify-center items-center w-[20px] h-[20px] bg-accent text-text-light p-4"
-    const headerTitleClass = "text-[11px] tracking-widest uppercase md:text-[15px]"
-    const logoWrapperClass = "flex flex-nowrap items-center justify-between gap-1 w-full lg:w-auto md:gap-3 lg:w-auto"
-    const buttonsWrapperClass = "flex gap-2 flex-wrap md:flex-nowrap"
-    const buttonBaseClass = "flex items-center gap-1 p-2 uppercase tracking-widest text-[12px] w-full cursor-pointer sm:w-auto"
-    const addButtonClass = "bg-btn-dark text-text-light"
-    const reportButtonClass = "bg-field-bg border border-border-warm"
     const reportIconClass = "text-text-main w-[30px] h-[30px]"
-    const addIconClass = "text-text-light w-[30px] h-[30px]"
 
     return (
-        <header className={headerClass}>
-            <div className={headerWrapperClass}>
+        <header className='p-4 bg-light border-b border-b-border-warm'>
+            <div className='flex flex-wrap items-center justify-between gap-3 md:gap-2'>
                 {/* ЛОГО */}
-                <div className={logoWrapperClass}>
-                    <div className={logoClass}><p>{t('logoTitle')}</p></div>
-                    <p className={headerTitleClass}>{t('headerTitle')}</p>
+                <div className='flex flex-nowrap items-center justify-between gap-1 w-full lg:w-auto md:gap-3 lg:w-auto'>
+                    <div className='flex justify-center items-center w-[20px] h-[20px] bg-accent text-text-light p-4'>
+                        <p>{t('logoTitle')}</p>
+                    </div>
+                    <p className='text-[11px] tracking-widest uppercase md:text-[15px]'>{t('headerTitle')}</p>
                 </div>
                 {/* КНОПКИ */}
-                <div className={buttonsWrapperClass}>
-                    <button className={twMerge(buttonBaseClass, addButtonClass)} type="button">
-                        <Plus className={addIconClass} />
-                        <span>{t('add')}</span>
-                    </button>
-                    <button className={twMerge(buttonBaseClass, reportButtonClass)} type="button">
+                <div className='flex gap-2 flex-wrap md:flex-nowrap'>
+                    <Button
+                        type='button'
+                        variant="secondary"
+                        className="w-full sm:w-auto">
+                        <Plus className='text-text-light w-[30px] h-[30px]' />
+                        {t('add')}
+                    </Button>
+
+                    <Button
+                        type='button'
+                        className="border-none w-full sm:w-auto">
                         <Download className={reportIconClass} />
-                        {t('reports.reportForDepartments')}</button>
-                    <button className={twMerge(buttonBaseClass, reportButtonClass)} type="button">
+                        {t('reports.reportForDepartments')}
+                    </Button>
+
+                    <Button
+                        type='button'
+                        className="border-none w-full sm:w-auto">
                         <Download className={reportIconClass} />
                         {t('reports.reportForManagement')}
-                    </button>
+                    </Button>
                 </div>
             </div>
 

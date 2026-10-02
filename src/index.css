@@ -28,16 +28,17 @@
   --color-btn-dark: #11161B;      /* акцентная кнопка «+ Добавить» в шапке */
   --color-secondary-btn-bg: #9E9E9E;
 
-    /* --- Статусы (Statuses) --- */
-  --color-status-open: #1d4ed8;     /* blue-700 */
-  --color-status-closed: #166534;   /* green-800 */
-  --color-status-removed: #6b7280;  /* gray-500 */
-  --color-status-overdue: #fda4af;  /* rose-300 */
+  /* SUCCESS (Статус: Исполнено / Низкий риск) */
+  --color-success: #166534;   /* Было #166534 (green-800) */
 
-  /* --- Уровни риска (Risk Levels) --- */
-  --color-risk-low: #0f766e;        /* emerald-700 */
-  --color-risk-medium: #f59e0b;     /* amber-500 */
-  --color-risk-high: #b91c1c;       /* red-700 */
+  /* WARNING (Статус: В работе / Средний риск) */
+  --color-warning: #D97706;     /* Сделали мягким оранжевым (amber-600) вместо синего */
+
+  /* DANGER (Статус: Просрочено / Высокий риск) */
+  --color-danger: #B91C1C;  /* Сделали насыщенным красным (red-700) вместо бледного rose-300 */
+
+  /* NEUTRAL (Статус: Снято) */
+  --color-neutral: #6B7280; 
 }
 
 body {

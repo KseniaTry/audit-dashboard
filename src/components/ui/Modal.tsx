@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 import Close from "../icons/Close"
 import { useTranslation } from "react-i18next"
-import { twMerge } from "tailwind-merge"
+import Button from "./Button"
 
 interface ModalData {
     isOpen: boolean,
@@ -20,7 +20,6 @@ const Modal = ({ isOpen = true, onClose, title, modalType, submitButtonTitle, on
     const openClass = isOpen ? 'flex' : 'hidden'
     const sizeClass = size === 'full' ? 'md:h-[90%]' : 'h-max'
     const positionClass = position === 'center' ? 'items-center' : 'items-end'
-    const buttonBaseClass = "flex items-center gap-1 p-2 border border-border-dark w-max uppercase tracking-widest text-[12px] hover:bg-secondary-btn-bg/40 hover:text-text-main hover:border-secondary-btn-bg transition-colors cursor-pointer"
 
     return (
         <div className={`${openClass} fixed inset-0 z-50 ${positionClass} justify-center md:items-center md:p-4 bg-black/20 backdrop-blur-sm`}>
@@ -32,12 +31,12 @@ const Modal = ({ isOpen = true, onClose, title, modalType, submitButtonTitle, on
                             <p className="tracking-widest uppercase text-[10px] text-accent font-semibold">{t(`modals.${modalType}`)}</p>
                             <h1 className="text-[20px] w-full max-[768px]:text-[23px]">{title}</h1>
                         </div>
-                        <button
-                            className="flex items-center justify-center w-10 h-10 hover:text-accent cursor-pointer"
-                            onClick={onClose}
-                            type="button">
+                        <Button
+                            type='button'
+                            className="hover:text-accent border-none bg-transparent"
+                            onClick={onClose}>
                             <Close className="text-text-muted hover:text-accent transition-colors h-5 w-5" />
-                        </button>
+                        </Button>
                     </div>
                 </header>
                 {/* ТЕЛО */}
@@ -46,18 +45,19 @@ const Modal = ({ isOpen = true, onClose, title, modalType, submitButtonTitle, on
 
                 {/* ФУТЕР: КНОПКИ */}
                 <footer className="flex justify-end items-center gap-3 border-t border-border-warm p-4">
-                    <button
-                        className={twMerge(buttonBaseClass)}
+                    <Button
+                        type='button'
                         onClick={onClose}
-                        type="button">
-                        <span>{t('cancel')}</span>
-                    </button>
-                    <button
-                        className={twMerge(buttonBaseClass, 'bg-btn-dark', 'text-text-light')}
+                    >
+                        {t('cancel')}
+                    </Button>
+                    <Button
+                        type='submit'
                         onClick={onSubmit}
-                        type="submit">
-                        <span>{submitButtonTitle}</span>
-                    </button>
+                        variant="secondary"
+                    >
+                        {submitButtonTitle}
+                    </Button>
                 </footer>
             </div>
         </div>

@@ -1,6 +1,7 @@
 import { RiskLevels, Statuses } from "../mockData"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge";
+import Button from "./ui/Button";
 
 interface AnalyticsProps {
     riskLevels: RiskLevels[];
@@ -16,10 +17,7 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
     const cardsWrapperMobileClass = "max-[450px]:flex-wrap max-[450px]:gap-1 max-[450px]:justify-between" // отдельный класс для того чтобы применить перенос карточек только для статусов, а для рисков - оставить 
     const cardTitleClass = "font-bold uppercase tracking-widest text-[10px] md:text-[16px]"
     const violationCountClass = "md:text-[25px] tracking-widest text-[18px]"
-    const buttonsWrapperClass = "flex w-full gap-2 flex-wrap whitespace-normal text-[13px] max-[768px]:text-[10px]"
-    const bordersClass = "border border-border-warm border-2 p-2 bg-field-bg uppercase cursor-pointer"
-    const buttonsClass = "text-text-muted hover:border hover:border-2 hover:border-accent"
-    const activeButtonClass = "bg-accent text-text-light"
+
     const riskLevelsClass = {
         low: "bg-risk-low/10 border-risk-low/20 text-risk-low",
         medium: "bg-risk-medium/10 border-risk-medium/20 text-risk-medium",
@@ -70,10 +68,19 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
     return (
         <section className="p-4 flex flex-wrap gap-[20px] w-full">
             {/* ГОДЫ */}
-            <div className={buttonsWrapperClass}>
-                <button className={twMerge(bordersClass, buttonsClass, activeButtonClass)} type="button">{t('filters.allYears')}</button>
+            <div className="flex w-full gap-2 flex-wrap whitespace-normal">
+                <Button
+                    type="button"
+                    isActive={true}
+                    className="md:text-[12px] text-[10px]">
+                    {t('filters.allYears')}
+                </Button>
                 {years.map((year) => {
-                    return <button key={year} className={twMerge(bordersClass, buttonsClass)}>{year}</button>
+                    return <Button
+                        type="button"
+                        className="md:text-[12px] text-[10px]">
+                        {year}
+                    </Button>
                 })
                 }
             </div>

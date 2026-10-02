@@ -5,6 +5,7 @@ import Plus from "./icons/Plus"
 import Input from "./ui/Input"
 import SelectInput from "./ui/SelectInput"
 import Textarea from "./ui/Textarea"
+import Button from "./ui/Button"
 
 interface AddModalProps {
     riskLevels: RiskLevels[],
@@ -14,7 +15,6 @@ interface AddModalProps {
 const AddModal = ({ riskLevels, departments }: AddModalProps) => {
     const { t } = useTranslation()
     const wrapperClass = "flex flex-col flex-wrap gap-2"
-    const buttonBaseClass = "flex items-center gap-1 p-2 border border-border-dark w-max uppercase tracking-widest text-[12px] hover:bg-secondary-btn-bg/40 hover:text-text-main hover:border-secondary-btn-bg transition-colors cursor-pointer"
 
     return (
         <form className='flex flex-wrap justify-between items-center p-5 gap-3'>
@@ -52,23 +52,23 @@ const AddModal = ({ riskLevels, departments }: AddModalProps) => {
             {/* ОТВЕТСТВЕННОЕ ССП */}
             <div className={twMerge(wrapperClass, 'w-full')}>
                 <SelectInput labelText={t('table.responsibleDepartment')} name={'department'} optionsArrayData={departments} required={true} />
-
-                <button className={twMerge(buttonBaseClass, 'bg-accent/10', 'border-accent')} type="button">
+                <Button
+                    type="button"
+                    className="text-accent bg-accent/10 border-accent">
                     <Plus className="w-4 h-4 text-accent" />
-                    <span className=" text-accent">{t('add')}</span>
-                </button>
+                    {t('add')}
+                </Button>
             </div>
 
             {/* ОТВЕТСТВЕННОЕ ЛИЦО */}
             <div className={twMerge(wrapperClass, 'w-full')}>
                 <Input type={'text'} labelText={t('table.responsiblePerson')} id={'responsible'} placeholder={t('addModal.responsiblePerson')} required={true} />
-                <button
-                    className={twMerge(buttonBaseClass, 'bg-accent/10', 'border-accent')}
+                <Button
                     type="button"
-                >
+                    className="text-accent bg-accent/10 border-accent">
                     <Plus className="w-4 h-4 text-accent" />
-                    <span className="text-accent">{t('add')}</span>
-                </button>
+                    {t('add')}
+                </Button>
             </div>
         </form>
     )

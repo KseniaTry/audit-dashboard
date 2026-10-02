@@ -1,5 +1,7 @@
 import { mockIssues } from "../mockData"
 import { useTranslation } from "react-i18next"
+import Button from "./ui/Button"
+import Plus from "./icons/Plus"
 
 const Cards = () => {
     const { t } = useTranslation()
@@ -20,7 +22,6 @@ const Cards = () => {
     const violationClass = "md:font-normal md:mb-0 font-bold mb-[5px] text-[12px]"
     const borderClass = "border-t border-border-warm pt-4 md:border-none md:pt-0"
     const resetMdClass = "md:col-auto md:row-auto"
-    const buttonClass = "md:hidden col-start-4 row-start-1 border border-accent rounded-lg font-bold w-[25px] h-[25px] ml-auto"
     // стили для рисков
     const riskLevelStyles = {
         low: "p-1 bg-risk-low/10 text-risk-low border border-risk-low/50 uppercase",
@@ -39,7 +40,12 @@ const Cards = () => {
         mockIssues.map((issue) => {
             return <div key={issue.id} className={cardsClass}>
                 {/* кнопка "добавить" на мобильной версии */}
-                <button className={buttonClass}>+</button>
+                <Button
+                    type='button'
+                    className="md:hidden p-1 col-start-4 row-start-1 border-accent rounded-lg font-bold w-[25px] h-[25px] ml-auto"
+                >
+                    <Plus className='text-accent' />
+                </Button>
                 {/* обертка для карточки на мобилке (чтобы № и название проверки были вплотную) */}
                 <div className={`${inspectionMobileWrapper}`}>
                     <div className='font-bold text-gray-400'>
