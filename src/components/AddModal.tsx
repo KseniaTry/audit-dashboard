@@ -41,7 +41,7 @@ const AddModal = ({ riskLevels, departments }: AddModalProps) => {
                 type={'date'}
                 labelText={t('table.startInspectionDate')}
                 id={'date-start'}
-                widthClass={'w-[45%]'}
+                wrapperExtraClass={'w-[45%]'}
                 required={true} />
 
             {/* ДАТА ОКОНЧАНИЯ ПРОВЕРКИ */}
@@ -49,7 +49,7 @@ const AddModal = ({ riskLevels, departments }: AddModalProps) => {
                 type={'date'}
                 labelText={t('table.endInspectionDate')}
                 id={'date-end'}
-                widthClass={'w-[45%]'}
+                wrapperExtraClass={'w-[45%]'}
                 required={true} />
 
             {/* НАРУШЕНИЕ */}
@@ -84,7 +84,7 @@ const AddModal = ({ riskLevels, departments }: AddModalProps) => {
                 type={'date'}
                 labelText={t('table.scheduledDate')}
                 id={'sheduled-date'}
-                widthClass={'w-[45%]'}
+                wrapperExtraClass={'w-[45%]'}
                 required={true} />
 
             {/* ОТВЕТСТВЕННОЕ ССП */}
