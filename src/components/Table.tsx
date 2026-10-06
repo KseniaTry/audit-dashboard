@@ -1,6 +1,7 @@
 
 import Cards from "./Cards"
 import Pagination from "./Pagination"
+import Input from "./ui/Input"
 import { useTranslation } from "react-i18next"
 
 const Table = () => {
@@ -15,8 +16,12 @@ const Table = () => {
     return (
         <>
             <section>
-                <div className="px-4 flex justify-between items-center">
-                    <p>date</p>
+                <div className="px-4 gap-3 flex md:justify-between items-center flex-col md:flex-row">
+                    <Input
+                        type='date'
+                        labelText={t('reportDate')}
+                        wrapperExtraClass="flex-row items-center normal-case flex-nowrap"
+                        className="w-auto" />
                     <Pagination currentPage={1} totalPages={5} itemsPerPage={10} />
                 </div>
                 <div className={wrapperClass}>
