@@ -28,7 +28,7 @@ const Button = ({ variant = 'primary', isActive, className, ...props }: ButtonDa
         warning: 'hover:text-warning  hover:border-warning',
         success: 'hover:text-success  hover:border-success',
         neutral: 'hover:text-neutral hover:border-neutral',
-        primary: 'bg-field-bg border-border-dark text-text-dark hover:bg-secondary-btn-bg/50', // белая кнопка с черным текстом
+        primary: 'bg-field-bg border-border-dark text-text-dark hover:opacity-50', // белая кнопка с черным текстом
         secondary: 'bg-btn-dark text-text-light', // черная кнопка с белым тесктом 
         delete: 'bg-danger text-text-light border-red'
     }
