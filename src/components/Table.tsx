@@ -1,5 +1,6 @@
 
 import Cards from "./Cards"
+import Pagination from "./Pagination"
 import { useTranslation } from "react-i18next"
 
 const Table = () => {
@@ -14,6 +15,10 @@ const Table = () => {
     return (
         <>
             <section>
+                <div className="px-4 flex justify-between items-center">
+                    <p>date</p>
+                    <Pagination currentPage={1} totalPages={5} itemsPerPage={10} />
+                </div>
                 <div className={wrapperClass}>
                     {/* шапка таблицы */}
                     <div className={tableClass}>
