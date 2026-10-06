@@ -12,7 +12,7 @@ const Pagination = ({ currentPage, totalPages, itemsPerPage }: PaginationData) =
     console.log(totalPagesArray)
     return (
         <div>
-            <ul className="flex justify-end">
+            <ul className="flex justify-center md:justify-end ">
                 {totalPagesArray.map((page) => {
                     const isActive = currentPage === page
                     return (<li key={page}>
