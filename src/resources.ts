@@ -4,6 +4,7 @@ export const resources = {
       mainTitle: 'Аудиторские рекомендации',
       secondTitle: 'Трекер рекомендаций',
       cancel: 'Отмена',
+      delete: 'Удалить',
       headerTitle: 'Реестр аудиторских рекомендаций',
       headerShortTitle: 'Аудит',
       logoTitle: 'AU',

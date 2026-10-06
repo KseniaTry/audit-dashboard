@@ -27,7 +27,7 @@ const ChangeModal = () => {
                 type={'text'}
                 labelText={t('table.scheduledDateFull')}
                 id={'scheduled-date'}
-                widthClass={'w-auto'}
+                wrapperExtraClass={'w-auto'}
                 readOnly={true} />
 
             {/* ДАТА ИСПОЛНЕНИЯ */}
@@ -35,7 +35,7 @@ const ChangeModal = () => {
                 type={'date'}
                 labelText={t('table.executionDateFull')}
                 id={'execution-date'}
-                widthClass={'w-auto'}
+                wrapperExtraClass={'w-auto'}
                 required={true} />
 
             {/* ПЕРЕКЛЮЧЕНИЕ НА СТАТУС "СНЯТО" */}
