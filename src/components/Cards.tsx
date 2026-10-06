@@ -2,6 +2,8 @@ import { mockIssues } from "../mockData"
 import { useTranslation } from "react-i18next"
 import Button from "./ui/Button"
 import Plus from "./icons/Plus"
+import { VARIANTS } from "../mockData"
+import { twMerge } from "tailwind-merge"
 
 const Cards = () => {
     const { t } = useTranslation()
@@ -15,30 +17,39 @@ const Cards = () => {
             md:rounded-none md:shadow-none md:border-l-accent
             md:border-r-0 md:border-t md:border-b md:border-border-warm`
     const labelClass = "md:hidden mb-[5px] text-[10px] text-text-muted font-medium uppercase block tracking-wider"
-    const inspectionMobileWrapper = "flex items-baseline gap-2 col-start-1 col-end-4 row-start-1 md:contents"
     const inspectionDatesClass = "flex gap-[5px] items-center"
-    const inspectionClass = "md:text-text-main md:text-[13px] text-text-muted text-[14px] font-semibold tracking-tight leading-snug"
     const recommendationClass = "mb-[5px] text-[13px] md:text-[12px] md:mb-0"
     const violationClass = "md:font-normal md:mb-0 font-bold mb-[5px] text-[12px]"
     const borderClass = "border-t border-border-warm pt-4 md:border-none md:pt-0"
     const resetMdClass = "md:col-auto md:row-auto"
-    // стили для рисков
-    const riskLevelStyles = {
-        low: "p-1 bg-risk-low/10 text-risk-low border border-risk-low/50 uppercase",
-        medium: "p-1 bg-risk-medium/10 text-risk-medium border border-risk-medium/50 uppercase",
-        high: "p-1 bg-risk-high/10 text-risk-high border border-risk-high/50 uppercase"
+
+    const statusVariants: Record<string, VARIANTS> = {
+        open: 'warning',
+        closed: 'success',
+        removed: 'neutral',
+        overdue: 'danger'
     }
-    // стили для статусов
-    const statusStyles = {
-        open: "p-1 bg-status-open/10 text-status-open border border-status-open/10 uppercase",
-        closed: "p-1 bg-status-closed/10 border border-status-closed/10 text-status-closed uppercase",
-        removed: "p-1 bg-status-removed/10 text-status-removed line-through-none uppercase",
-        overdue: "p-1 bg-status-overdue text-text-light border border-status-overdue uppercase"
+
+    const riskLevelVariants: Record<string, VARIANTS> = {
+        low: 'success',
+        medium: 'warning',
+        high: 'danger'
+    }
+
+    const baseBadgeClass = "p-1 uppercase border border-none font-bold rounded-xl text-center"
+    const colorClasses = {
+        warning: 'bg-warning/10 text-warning',
+        danger: ' bg-danger/10 text-danger',
+        success: 'bg-success/10 text-success',
+        neutral: 'bg-neutral/10 text-neutral'
     }
 
     return (
         mockIssues.map((issue) => {
-            return <div key={issue.id} className={cardsClass}>
+            const statusVariant = statusVariants[issue.status]
+            const riskLevelVariant = riskLevelVariants[issue.riskLevel]
+
+            return (<div key={issue.id} className={cardsClass}>
                 {/* кнопка "добавить" на мобильной версии */}
                 <Button
                     type='button'
@@ -47,62 +58,73 @@ const Cards = () => {
                     <Plus className='text-accent' />
                 </Button>
                 {/* обертка для карточки на мобилке (чтобы № и название проверки были вплотную) */}
-                <div className={`${inspectionMobileWrapper}`}>
+                <div className="flex items-baseline gap-2 col-start-1 col-end-4 row-start-1 md:contents">
                     <div className='font-bold text-gray-400'>
                         <p><span className="md:hidden">{t('table.number')}</span>{issue.id}</p>
                     </div>
                     <div>
-                        <p className={inspectionClass}>{issue.inspection}</p>
+                        <p className="md:text-text-main md:text-[13px] text-text-muted text-[14px] font-semibold tracking-tight leading-snug">
+                            {issue.inspection}
+                        </p>
                     </div>
                 </div>
                 {/* остальные колонки */}
                 <div className="md:hidden col-start-1 col-end-2 row-start-2">
                     <p className={labelClass}>{t('table.inspectionPeriod')}</p>
                 </div>
-                <div className={`${resetMdClass} ${inspectionDatesClass} justify-end col-start-2 row-start-2`}>
+                {/* ДАТА НАЧАЛА ПРОВЕРКИ */}
+                <div className={twMerge(resetMdClass, inspectionDatesClass, "justify-end col-start-2 row-start-2")}>
                     <p className="md:hidden">c</p>
                     <p>{issue.startInspectionDate}</p>
                 </div>
-                <div className={`${resetMdClass} ${inspectionDatesClass} justify-start m-auto col-start-3 row-start-2`}>
+                {/* ДАТА ОКОНЧАНИЯ ПРОВЕРКИ */}
+                <div className={twMerge(resetMdClass, inspectionDatesClass, "justify-start m-auto col-start-3 row-start-2")}>
                     <p className="md:hidden">по</p>
                     <p>{issue.endInspectionDate === null ? '-' : issue.endInspectionDate}</p>
                 </div>
-                <div className={`${resetMdClass} px-1 col-start-1 col-end-5 row-start-3`}>
+                {/* НАРУШЕНИЕ */}
+                <div className={twMerge(resetMdClass, "px-1 col-start-1 col-end-5 row-start-3")}>
                     <p className={violationClass}>{issue.auditViolation}</p>
                 </div>
-                <div className={`${borderClass} ${resetMdClass} ${recommendationClass} col-start-1 col-end-5 row-start-5`}>
+                {/* РЕКОМЕНДАЦИЯ */}
+                <div className={twMerge(borderClass, resetMdClass, recommendationClass, "col-start-1 col-end-5 row-start-5")}>
                     <p className={labelClass}>{t('table.recommendation')}</p>
                     <p>{issue.recommendation}</p>
                 </div>
-                <div className={`${resetMdClass} max-w-[100px] max-[400px]:col-end-3 col-start-1 col-end-2 row-start-4`}>
-                    <p className={statusStyles[issue.status]}>{t(`statuses.${issue.status}`)}</p>
+                {/* СТАТУСЫ */}
+                <div className={twMerge(resetMdClass, 'max-w-[100px] max-[400px]:col-end-3 col-start-1 col-end-2 row-start-4')}>
+                    <p className={twMerge(baseBadgeClass, colorClasses[statusVariant])}>{t(`statuses.${issue.status}`)}</p>
                 </div>
-                <div className={`${resetMdClass} max-w-[90px] max-[400px]:col-start-3 col-start-2 col-end-3 row-start-4`}>
-                    <p className={riskLevelStyles[issue.riskLevel]}>{t(`riskLevels.${issue.riskLevel}`)}</p>
+                {/* РИСКИ */}
+                <div className={twMerge(resetMdClass, "max-w-[90px] max-[400px]:col-start-3 col-start-2 col-end-3 row-start-4")}>
+                    <p className={twMerge(baseBadgeClass, colorClasses[riskLevelVariant])}>{t(`riskLevels.${issue.riskLevel}`)}</p>
                 </div>
-                <div className={`${resetMdClass} col-start-1 col-end-3 row-start-6`}>
+                {/* ОТВЕТСТВЕННОЕ ПОДРАЗДЕЛЕНИЕ */}
+                <div className={twMerge(resetMdClass, "col-start-1 col-end-3 row-start-6")}>
                     <p className={labelClass}>{t('table.responsibleDepartment')}</p>
                     {issue.responsibleDepartment.map((department) => {
                         return <p key={department} className="text-xs md:mb-2">{department}</p>
                     })}
                 </div>
-                <div className={`${resetMdClass} col-start-3 col-end-5 row-start-6`}>
+                {/* ОТВЕТСТВЕННОЕ ЛИЦО */}
+                <div className={twMerge(resetMdClass, "col-start-3 col-end-5 row-start-6")}>
                     <p className={labelClass}>{t('table.responsiblePerson')}</p>
                     {issue.responsiblePerson.map((person) => {
                         return <div key={person} className="text-xs md:mb-2">{person}</div>
                     })}
                 </div>
-                <div className={`${resetMdClass} col-start-1 col-end-3 row-start-7`}>
+                {/* ПЛАНОВАЯ ДАТА ИСПОЛНЕНИЯ */}
+                <div className={twMerge(resetMdClass, "col-start-1 col-end-3 row-start-7")}>
                     <p className={labelClass}>{t('table.scheduledDate')}</p>
                     <p> {issue.scheduledDate}</p>
                 </div>
-                <div className={`${resetMdClass} col-start-3 col-end-5 row-start-7`}>
+                {/* ФАКТИЧЕСКАЯ ДАТА ИСПОЛНЕНИЯ */}
+                <div className={twMerge(resetMdClass, "col-start-3 col-end-5 row-start-7")}>
                     <p className={labelClass}>{t('table.executionDate')}</p>
                     <p>{issue.executionDate === null ? '-' : issue.executionDate}</p>
                 </div>
-            </div>
+            </div>)
         })
-
     )
 }
 
