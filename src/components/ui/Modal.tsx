@@ -51,6 +51,11 @@ const Modal = ({ isOpen = true, onClose, title, modalType, submitButtonTitle, on
                     >
                         {t('cancel')}
                     </Button>
+                    {modalType === 'change' ?
+                        <Button
+                            variant="delete">
+                            {t('delete')}
+                        </Button> : ''}
                     <Button
                         type='submit'
                         onClick={onSubmit}
