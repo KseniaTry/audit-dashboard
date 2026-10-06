@@ -23,7 +23,12 @@ const ManagementReport = ({ statuses }: ManagementReportData) => {
         <div className="flex flex-col flex-wrap p-5 gap-4">
             <p className="tracking-wide">{t('managementReport.text', { reportDate: '01.01.2026' })}</p>
 
-            <Input type={'date'} labelText={t('reportDate')} id={'report-date'} widthClass={'w-auto'} required={true} />
+            <Input
+                type={'date'}
+                labelText={t('reportDate')}
+                id={'report-date'}
+                wrapperExtraClass={'w-auto'}
+                required={true} />
 
             <div className="border border-border-warm bg-light p-1">
                 <h2 className="tracking-widest uppercase text-[14px] p-1 my-2">Предпросмотр статистики</h2>
