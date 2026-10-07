@@ -1,4 +1,5 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit"
+import { DEPARTMENTS } from "../const"
 // import { RootState } from "../store"
 
 const issuesAdapter = createEntityAdapter()
@@ -8,7 +9,8 @@ const issuesSlice = createSlice({
     initialState: issuesAdapter.getInitialState({
         error: null,
         loadingStatus: false,
-        issuesEntites: []
+        issuesEntites: [],
+        departments: DEPARTMENTS
     }),
     reducers: {
         setAllIssues: (state, action) => {
