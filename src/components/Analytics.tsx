@@ -1,13 +1,13 @@
-import { RiskLevels, Statuses } from "../mockData"
+import { RiskLevels, Statuses } from "../const"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge";
 import Button from "./ui/Button";
-import { VARIANTS } from "../mockData";
+import { VARIANTS } from "../const";
 
 interface AnalyticsProps {
     riskLevels: RiskLevels[];
     statuses: Statuses[];
-    years: number[];
+    years: number[] | string[];
 }
 
 const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {

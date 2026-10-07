@@ -1,13 +1,12 @@
 import { useTranslation } from "react-i18next"
-import { Mock } from "../mockData"
-import { VARIANTS } from "../mockData";
-import { Statuses, RiskLevels } from "../mockData";
+import { VARIANTS } from "../const";
+import { Statuses, RiskLevels } from "../const";
 import Button from "./ui/Button";
 import SelectInput from "./ui/SelectInput";
 import Input from "./ui/Input";
 import { twMerge } from "tailwind-merge";
 interface FiltersProps {
-    inspections: Mock[];
+    inspections: string[];
     statuses: Statuses[],
     riskLevels: RiskLevels[],
     departments: string[]
@@ -54,7 +53,7 @@ const Filters = ({ inspections, statuses, riskLevels, departments }: FiltersProp
                             id='search'
                             name='search'
                             className={twMerge(inputClass, "p-[7px] px-3 text-text-main")}
-                            widthClass={widthClass}
+                            wrapperExtraClass={widthClass}
                             placeholder={t('filters.search')}
                         />
 
@@ -62,7 +61,7 @@ const Filters = ({ inspections, statuses, riskLevels, departments }: FiltersProp
                             name="inspections-filter"
                             className={inputClass}
                             widthClass={widthClass}
-                            optionsArrayData={['Все проверки', 'Проверка 1', 'Проверка 2']}
+                            optionsArrayData={['Все проверки', ...inspections]}
                         />
 
                         <SelectInput

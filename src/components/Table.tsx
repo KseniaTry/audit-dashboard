@@ -1,11 +1,15 @@
-
+import { useTranslation } from "react-i18next"
+import { Issue } from "../const"
 import Cards from "./Cards"
 import Pagination from "./Pagination"
 import Input from "./ui/Input"
-import { useTranslation } from "react-i18next"
+interface TableData {
+    allIssues: Issue[]
+}
 
-const Table = () => {
+const Table = ({ allIssues }: TableData) => {
     const { t } = useTranslation()
+
     const wrapperClass = "p-4 w-full overflow-x-auto"
     const tableClass = `hidden md:break-words md:border-l-4 md:border-l-accent
         md:text-[12px] md:grid md:w-max 
@@ -40,7 +44,7 @@ const Table = () => {
                         <div>{t('table.scheduledDate')}</div>
                         <div>{t('table.executionDate')}</div>
                     </div>
-                    <Cards />
+                    <Cards issues={allIssues} />
                 </div>
             </section>
         </>

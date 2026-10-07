@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
-import { RiskLevels } from "../mockData"
+import { RiskLevels } from "../const"
 import Plus from "./icons/Plus"
 import Input from "./ui/Input"
 import SelectInput from "./ui/SelectInput"
