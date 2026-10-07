@@ -29,8 +29,7 @@ export const DEPARTMENTS: string[] = [
   "Служба внутреннего аудита"
 ]
 
-
-export type Mock = {
+export type Issue = {
     id: number,
     inspection: string,
     startInspectionDate: string,
@@ -45,7 +44,7 @@ export type Mock = {
     executionDate: string | null
 }
 
-export const mockIssues: Mock[] = [
+export const mockIssues: Issue[] = [
     {
         id: 1,
         inspection: "Аудит мониторинга предметов лизинга (Автотранспорт)",
