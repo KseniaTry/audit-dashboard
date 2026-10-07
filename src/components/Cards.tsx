@@ -1,11 +1,15 @@
-import { mockIssues } from "../mockData"
+import { Issue } from "../mockData"
 import { useTranslation } from "react-i18next"
 import Button from "./ui/Button"
 import Plus from "./icons/Plus"
 import { VARIANTS } from "../mockData"
 import { twMerge } from "tailwind-merge"
 
-const Cards = () => {
+interface CardsData {
+    issues: Issue[]
+}
+
+const Cards = ({ issues }: CardsData) => {
     const { t } = useTranslation()
 
     const cardsClass = `
@@ -45,7 +49,7 @@ const Cards = () => {
     }
 
     return (
-        mockIssues.map((issue) => {
+        issues.map((issue) => {
             const statusVariant = statusVariants[issue.status]
             const riskLevelVariant = riskLevelVariants[issue.riskLevel]
 
