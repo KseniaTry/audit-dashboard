@@ -1,8 +1,8 @@
-import { Issue } from "../mockData"
+import { Issue } from "../const"
 import { useTranslation } from "react-i18next"
 import Button from "./ui/Button"
 import Plus from "./icons/Plus"
-import { VARIANTS } from "../mockData"
+import { VARIANTS } from "../const"
 import { twMerge } from "tailwind-merge"
 
 interface CardsData {
