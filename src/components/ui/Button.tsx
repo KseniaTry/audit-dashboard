@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge"
 import { ButtonHTMLAttributes } from "react"
-import { VARIANTS } from "../../mockData"
+import { VARIANTS } from "../../const"
 
 interface ButtonData extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: VARIANTS | 'primary' | 'secondary' | 'delete',
