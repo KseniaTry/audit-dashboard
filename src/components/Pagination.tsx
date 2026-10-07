@@ -9,7 +9,7 @@ interface PaginationData {
 
 const Pagination = ({ currentPage, totalPages, itemsPerPage }: PaginationData) => {
     const totalPagesArray = Array.from({ length: totalPages }, (_, index) => index + 1)
-    console.log(totalPagesArray)
+
     return (
         <div>
             <ul className="flex justify-center md:justify-end ">
