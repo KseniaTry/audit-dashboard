@@ -1,6 +1,7 @@
 export type Statuses = 'open' | 'overdue' | 'closed' | 'removed'
 export type RiskLevels = 'high' | 'medium' | 'low'
 export type VARIANTS = 'danger' | 'warning' | 'success' | 'neutral'
+export type ModalActiveType = 'change' | 'add' | 'departmentReport' | 'managementReport' | null;
 
 export const RISK_LEVELS: RiskLevels[] = ['low', 'medium', 'high']
 export const STATUSES: Statuses[] = ['open', 'overdue', 'closed', 'removed']
