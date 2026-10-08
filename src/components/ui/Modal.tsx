@@ -7,7 +7,7 @@ interface ModalData {
     isOpen: boolean,
     onClose: () => void,
     title: string,
-    modalType: 'new' | 'change' | 'report',
+    modalType: 'add' | 'change' | 'report',
     submitButtonTitle: string,
     onSubmit: () => void | Promise<void>,
     children: ReactNode,

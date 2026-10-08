@@ -37,7 +37,7 @@ const Button = ({ variant = 'primary', isActive, className, ...props }: ButtonDa
 
     return (
         <button
-            className={twMerge(buttonBaseClass, className, variantColorClass)}
+            className={twMerge(buttonBaseClass, variantColorClass, className)}
             {...props} />
     )
 }

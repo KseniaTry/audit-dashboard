@@ -2,8 +2,13 @@ import { useTranslation } from "react-i18next"
 import Download from "./icons/Download"
 import Plus from "./icons/Plus"
 import Button from "./ui/Button"
+import { ModalActiveType } from "../const"
 
-const Header = () => {
+interface HeaderData {
+    onModalOpen: (type: ModalActiveType) => void
+}
+
+const Header = ({ onModalOpen }: HeaderData) => {
     const { t } = useTranslation()
     const reportIconClass = "text-text-main w-[30px] h-[30px]"
 
@@ -22,6 +27,7 @@ const Header = () => {
                     <Button
                         type='button'
                         variant="secondary"
+                        onClick={() => onModalOpen('add')}
                         className="w-full sm:w-auto">
                         <Plus className='text-text-light w-[30px] h-[30px]' />
                         {t('add')}
@@ -29,14 +35,16 @@ const Header = () => {
 
                     <Button
                         type='button'
-                        className="border-none w-full sm:w-auto">
+                        className="border-none w-full sm:w-auto"
+                        onClick={() => onModalOpen('departmentReport')}>
                         <Download className={reportIconClass} />
                         {t('reports.reportForDepartments')}
                     </Button>
 
                     <Button
                         type='button'
-                        className="border-none w-full sm:w-auto">
+                        className="border-none w-full sm:w-auto"
+                        onClick={() => onModalOpen('managementReport')}>
                         <Download className={reportIconClass} />
                         {t('reports.reportForManagement')}
                     </Button>
