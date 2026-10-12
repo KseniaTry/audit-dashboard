@@ -4,10 +4,11 @@ import Cards from "./Cards"
 import Pagination from "./Pagination"
 import Input from "./ui/Input"
 interface TableData {
-    allIssues: Issue[]
+    allIssues: Issue[],
+    onIssueClick: (id: number | null) => void
 }
 
-const Table = ({ allIssues }: TableData) => {
+const Table = ({ allIssues, onIssueClick }: TableData) => {
     const { t } = useTranslation()
 
     const wrapperClass = "p-4 w-full overflow-x-auto"
@@ -44,7 +45,7 @@ const Table = ({ allIssues }: TableData) => {
                         <div>{t('table.scheduledDate')}</div>
                         <div>{t('table.executionDate')}</div>
                     </div>
-                    <Cards issues={allIssues} />
+                    <Cards issues={allIssues} onIssueClick={onIssueClick} />
                 </div>
             </section>
         </>

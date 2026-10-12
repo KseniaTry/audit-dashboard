@@ -1,26 +1,25 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit"
-import { DEPARTMENTS } from "../const"
-// import { RootState } from "../store"
+import { DEPARTMENTS, Issue } from "../const"
+import { RootState } from "../store"
 
-const issuesAdapter = createEntityAdapter()
+const issuesAdapter = createEntityAdapter<Issue>()
 
 const issuesSlice = createSlice({
     name: 'issues',
     initialState: issuesAdapter.getInitialState({
         error: null,
         loadingStatus: false,
-        issuesEntites: [],
         departments: DEPARTMENTS
     }),
     reducers: {
         setAllIssues: (state, action) => {
             issuesAdapter.setAll(state, action.payload)
-            state.issuesEntites = action.payload
         },
-        deleteIssues: (state, action) => {
+        deleteIssue: (state, action) => {
+            console.log(action.payload)
             issuesAdapter.removeOne(state, action.payload)
         },
-        addIssues: (state, action) => {
+        addIssue: (state, action) => {
             issuesAdapter.addOne(state, action.payload)
         },
         // renameIssue: (state, action) => {
@@ -28,14 +27,14 @@ const issuesSlice = createSlice({
     }
 })
 
-export const { deleteIssues, addIssues, setAllIssues } = issuesSlice.actions
+export const { deleteIssue, addIssue, setAllIssues } = issuesSlice.actions
 export default issuesSlice.reducer
 
-// const baseSelectors = issuesAdapter.getSelectors((state: RootState) => state.issues);
+const baseSelectors = issuesAdapter.getSelectors((state: RootState) => state.issues);
 
-// export const {
-//     selectAll: selectAllIssues      // Возвращает МАССИВ всех рекомендаций (уже готовый для .map)
-// } = baseSelectors;
+export const {
+    selectAll: selectAllIssues      // Возвращает МАССИВ всех рекомендаций (уже готовый для .map)
+} = baseSelectors;
 
 // export const selectInspections = () => createSelector(
 //   [selectAllMessages],

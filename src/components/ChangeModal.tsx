@@ -2,9 +2,21 @@ import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 import Input from "./ui/Input"
 import Switch from "./ui/Switch"
+import { useSelector } from "react-redux"
+import { useState } from "react"
+import { RootState } from "../store"
 
-const ChangeModal = () => {
+interface ChangeModalData {
+    issueId: number
+}
+
+const ChangeModal = ({ issueId }: ChangeModalData) => {
     const { t } = useTranslation()
+    const activeIssue = useSelector((state: RootState) => state.issues.entities[issueId])
+    const [currentScheduledDate, setSheduledDate] = useState<string | undefined>(activeIssue?.scheduledDate)
+    const [currentExecutionDate, setExecutionDate] = useState<string | null | undefined>(activeIssue?.executionDate)
+
+    if (!activeIssue) return null
 
     const borderClass = "border border-border-warm bg-light p-4"
     const titleClass = "tracking-widest uppercase text-[14px]"
@@ -20,13 +32,15 @@ const ChangeModal = () => {
             {/* НАЗВАНИЕ ПРОВЕРКИ */}
             <div className={twMerge(borderClass, 'flex flex-col gap-1')}>
                 <p className={titleClass}>{t('table.inspection')}</p>
-                <p>{t('table.number')} Номер проверки - Название текущей проверки</p>
+                <p>{t('table.number')} {issueId} - {activeIssue.inspection}</p>
             </div>
             {/* ПЛАНОВАЯ ДАТА (ДЛЯ ИНФО - ТОЛЬКО ДЛЯ ЧТЕНИЯ) */}
             <Input
                 type={'text'}
                 labelText={t('table.scheduledDateFull')}
                 id={'scheduled-date'}
+                value={currentScheduledDate ?? ''}
+                onChange={(e) => setSheduledDate(e.target.value)}
                 wrapperExtraClass={'w-auto'}
                 readOnly={true} />
 
@@ -35,6 +49,8 @@ const ChangeModal = () => {
                 type={'date'}
                 labelText={t('table.executionDateFull')}
                 id={'execution-date'}
+                value={currentExecutionDate ?? ''}
+                onChange={(e) => setExecutionDate(e.target.value)}
                 wrapperExtraClass={'w-auto'}
                 required={true} />
 

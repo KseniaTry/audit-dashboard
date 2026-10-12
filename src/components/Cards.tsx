@@ -6,10 +6,11 @@ import { VARIANTS } from "../const"
 import { twMerge } from "tailwind-merge"
 
 interface CardsData {
-    issues: Issue[]
+    issues: Issue[],
+    onIssueClick: (id: number | null) => void
 }
 
-const Cards = ({ issues }: CardsData) => {
+const Cards = ({ issues, onIssueClick }: CardsData) => {
     const { t } = useTranslation()
 
     const cardsClass = `
@@ -53,7 +54,7 @@ const Cards = ({ issues }: CardsData) => {
             const statusVariant = statusVariants[issue.status]
             const riskLevelVariant = riskLevelVariants[issue.riskLevel]
 
-            return (<div key={issue.id} className={cardsClass}>
+            return (<div key={issue.id} className={cardsClass} onClick={() => onIssueClick(issue.id)}>
                 {/* кнопка "добавить" на мобильной версии */}
                 <Button
                     type='button'
