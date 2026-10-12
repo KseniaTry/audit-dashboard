@@ -2,6 +2,8 @@ import { ReactNode } from "react"
 import Close from "../icons/Close"
 import { useTranslation } from "react-i18next"
 import Button from "./Button"
+import { useDispatch } from "react-redux"
+import { deleteIssue } from "../../slices/issuesSlice"
 
 interface ModalData {
     isOpen: boolean,
@@ -12,11 +14,13 @@ interface ModalData {
     onSubmit: () => void | Promise<void>,
     children: ReactNode,
     size?: 'full' | 'dynamic',
-    position?: 'bottom' | 'center'
+    position?: 'bottom' | 'center',
+    activeIssueId?: number | null
 }
 
-const Modal = ({ isOpen = true, onClose, title, modalType, submitButtonTitle, onSubmit, children, size = 'dynamic', position = 'center' }: ModalData) => {
+const Modal = ({ isOpen = true, onClose, title, modalType, submitButtonTitle, onSubmit, children, size = 'dynamic', position = 'center', activeIssueId }: ModalData) => {
     const { t } = useTranslation()
+    const dispatch = useDispatch()
     const openClass = isOpen ? 'flex' : 'hidden'
     const sizeClass = size === 'full' ? 'md:h-[90%]' : 'h-max'
     const positionClass = position === 'center' ? 'items-center' : 'items-end'
@@ -53,7 +57,11 @@ const Modal = ({ isOpen = true, onClose, title, modalType, submitButtonTitle, on
                     </Button>
                     {modalType === 'change' ?
                         <Button
-                            variant="delete">
+                            variant="delete"
+                            onClick={() => {
+                                onClose()
+                                dispatch(deleteIssue(activeIssueId))
+                            }}>
                             {t('delete')}
                         </Button> : ''}
                     <Button
