@@ -37,11 +37,11 @@ export type Issue = {
     endInspectionDate: string,
     auditViolation: string,
     recommendation: string,
-    status: Statuses,
     riskLevel: RiskLevels,
     responsibleDepartment: string[],
     responsiblePerson: string[],
     scheduledDate: string,
-    executionDate: string | null
+    executionDate?: string | null,
+    status?: Statuses,
+    isRemoved?: boolean
 }
-
