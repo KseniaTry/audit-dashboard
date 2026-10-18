@@ -1,8 +1,11 @@
 import { useTranslation } from "react-i18next"
 import { Issue } from "../const"
-import Cards from "./Cards"
+import Card from "./Card"
 import Pagination from "./Pagination"
 import Input from "./ui/Input"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../store"
+import { setReportDate } from "../slices/issuesSlice"
 interface TableData {
     allIssues: Issue[],
     onIssueClick: (id: number | null) => void
@@ -10,6 +13,8 @@ interface TableData {
 
 const Table = ({ allIssues, onIssueClick }: TableData) => {
     const { t } = useTranslation()
+    const dispatch = useDispatch()
+    const reportDate = useSelector((state: RootState) => state.issues.reportDate)
 
     const wrapperClass = "p-4 w-full overflow-x-auto"
     const tableClass = `hidden md:break-words md:border-l-4 md:border-l-accent
@@ -25,6 +30,8 @@ const Table = ({ allIssues, onIssueClick }: TableData) => {
                     <Input
                         type='date'
                         labelText={t('reportDate')}
+                        value={reportDate}
+                        onChange={(e) => dispatch(setReportDate(e.target.value))}
                         wrapperExtraClass="flex-row items-center normal-case flex-nowrap"
                         className="w-auto" />
                     <Pagination currentPage={1} totalPages={5} itemsPerPage={10} />
@@ -45,7 +52,9 @@ const Table = ({ allIssues, onIssueClick }: TableData) => {
                         <div>{t('table.scheduledDate')}</div>
                         <div>{t('table.executionDate')}</div>
                     </div>
-                    <Cards issues={allIssues} onIssueClick={onIssueClick} />
+                    {allIssues.map((issue) => {
+                        return <Card key={issue.id} issue={issue} onIssueClick={onIssueClick} />
+                    })}
                 </div>
             </section>
         </>
