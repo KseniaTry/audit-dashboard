@@ -70,8 +70,9 @@ const Dashboard = () => {
                     onClose={() => setModalActive(null)}
                     title={t('managementReport.title')}
                     modalType='report'
-                    children={<ManagementReport statuses={STATUSES} onClose={() => setModalActive(null)} />}
-                    position='bottom' /> : ''
+                    position='bottom' >
+                    <ManagementReport statuses={STATUSES} onClose={() => setModalActive(null)} />
+                </Modal> : ''
             }
 
             {modalActive === 'departmentReport' ?
@@ -80,8 +81,9 @@ const Dashboard = () => {
                     onClose={() => setModalActive(null)}
                     title={t('departmentReport.title')}
                     modalType='report'
-                    children={<DepartmentReport departments={departments} onClose={() => setModalActive(null)} />}
-                    position='bottom' /> : ''
+                    position='bottom'>
+                    <DepartmentReport departments={departments} onClose={() => setModalActive(null)} />
+                </Modal> : ''
             }
 
             {modalActive === 'change' && activeIssueId ?
@@ -93,11 +95,12 @@ const Dashboard = () => {
                     }}
                     title={t('changeModal.title')}
                     modalType='change'
-                    children={<ChangeModal issueId={activeIssueId} onClose={() => {
+                    position='bottom' >
+                    <ChangeModal issueId={activeIssueId} onClose={() => {
                         setModalActive(null)
                         setActiveIssueId(null)
-                    }} />}
-                    position='bottom' /> : ''
+                    }} />
+                </Modal> : ''
             }
 
             {modalActive === 'add' ?
@@ -106,8 +109,9 @@ const Dashboard = () => {
                     onClose={() => setModalActive(null)}
                     title={t('addModal.title')}
                     modalType='add'
-                    children={<AddModal riskLevels={RISK_LEVELS} departments={departments} onClose={() => setModalActive(null)} />}
-                    size='full' /> : ''
+                    size='full' >
+                    <AddModal riskLevels={RISK_LEVELS} departments={departments} onClose={() => setModalActive(null)} />
+                </Modal> : ''
             }
         </>
     )
