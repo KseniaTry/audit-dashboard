@@ -56,7 +56,7 @@ export const resources = {
         allRiskLevels: 'Все риски'
       },
       modals: {
-        new: 'Новая запись',
+        add: 'Новая запись',
         change: 'Редактирование',
         report: 'Выгрузка',
       },
