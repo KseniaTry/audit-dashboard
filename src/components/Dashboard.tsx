@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useTranslation } from 'react-i18next'
 import { RootState } from "../store"
 import { useEffect, useState } from "react"
-import { selectAllIssues, setAllIssues } from "../slices/issuesSlice"
+import { selectIssuesWithStatuses, setAllIssues, setReportDate } from "../slices/issuesSlice"
 import { format } from 'date-fns';
 import Analytics from './Analytics'
 import Header from './Header'
@@ -22,22 +22,20 @@ const Dashboard = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        const currentDate = format(Date.now(), "yyyy-MM-dd")
         dispatch(setAllIssues(mockIssues))
+        dispatch(setReportDate(currentDate))
     }, [dispatch])
 
     const [modalActive, setModalActive] = useState<ModalActiveType>(null)
     const [activeIssueId, setActiveIssueId] = useState<number | null>(null)
 
-    const allIssues = useSelector(selectAllIssues)
+    const allIssues = useSelector(selectIssuesWithStatuses)
     const allInspections = allIssues.map((issue) => issue.inspection)
     const allYears = allIssues.map((issue) => format(new Date(issue.startInspectionDate), "yyyy"))
     const inspections = [...new Set(allInspections)]
     const departments = useSelector((state: RootState) => state.issues.departments)
     const years = [...new Set(allYears)]
-
-    const submitModal = () => {
-        console.log('submit')
-    }
 
     const titleWrapperClass = "flex flex-wrap flex-col-reverse px-4 mt-4"
     const titleClass = "md:text-[40px] w-full text-[23px]"
@@ -72,9 +70,7 @@ const Dashboard = () => {
                     onClose={() => setModalActive(null)}
                     title={t('managementReport.title')}
                     modalType='report'
-                    submitButtonTitle={t('download')}
-                    onSubmit={submitModal}
-                    children={<ManagementReport statuses={STATUSES} />}
+                    children={<ManagementReport statuses={STATUSES} onClose={() => setModalActive(null)} />}
                     position='bottom' /> : ''
             }
 
@@ -84,9 +80,7 @@ const Dashboard = () => {
                     onClose={() => setModalActive(null)}
                     title={t('departmentReport.title')}
                     modalType='report'
-                    submitButtonTitle={t('download')}
-                    onSubmit={submitModal}
-                    children={<DepartmentReport departments={departments} />}
+                    children={<DepartmentReport departments={departments} onClose={() => setModalActive(null)} />}
                     position='bottom' /> : ''
             }
 
@@ -99,11 +93,11 @@ const Dashboard = () => {
                     }}
                     title={t('changeModal.title')}
                     modalType='change'
-                    submitButtonTitle={t('save')}
-                    onSubmit={submitModal}
-                    children={<ChangeModal issueId={activeIssueId} />}
-                    position='bottom'
-                    activeIssueId={activeIssueId} /> : ''
+                    children={<ChangeModal issueId={activeIssueId} onClose={() => {
+                        setModalActive(null)
+                        setActiveIssueId(null)
+                    }} />}
+                    position='bottom' /> : ''
             }
 
             {modalActive === 'add' ?
@@ -112,9 +106,7 @@ const Dashboard = () => {
                     onClose={() => setModalActive(null)}
                     title={t('addModal.title')}
                     modalType='add'
-                    submitButtonTitle={t('add')}
-                    onSubmit={submitModal}
-                    children={<AddModal riskLevels={RISK_LEVELS} departments={departments} />}
+                    children={<AddModal riskLevels={RISK_LEVELS} departments={departments} onClose={() => setModalActive(null)} />}
                     size='full' /> : ''
             }
         </>
