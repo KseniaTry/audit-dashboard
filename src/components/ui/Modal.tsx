@@ -2,25 +2,20 @@ import { ReactNode } from "react"
 import Close from "../icons/Close"
 import { useTranslation } from "react-i18next"
 import Button from "./Button"
-import { useDispatch } from "react-redux"
-import { deleteIssue } from "../../slices/issuesSlice"
 
 interface ModalData {
     isOpen: boolean,
     onClose: () => void,
     title: string,
     modalType: 'add' | 'change' | 'report',
-    submitButtonTitle: string,
-    onSubmit: () => void | Promise<void>,
     children: ReactNode,
     size?: 'full' | 'dynamic',
     position?: 'bottom' | 'center',
-    activeIssueId?: number | null
+    // activeIssueId?: number | null
 }
 
-const Modal = ({ isOpen = true, onClose, title, modalType, submitButtonTitle, onSubmit, children, size = 'dynamic', position = 'center', activeIssueId }: ModalData) => {
+const Modal = ({ isOpen = true, onClose, title, modalType, children, size = 'dynamic', position = 'center' }: ModalData) => {
     const { t } = useTranslation()
-    const dispatch = useDispatch()
     const openClass = isOpen ? 'flex' : 'hidden'
     const sizeClass = size === 'full' ? 'md:h-[90%]' : 'h-max'
     const positionClass = position === 'center' ? 'items-center' : 'items-end'
@@ -47,7 +42,7 @@ const Modal = ({ isOpen = true, onClose, title, modalType, submitButtonTitle, on
 
                 {children}
 
-                {/* ФУТЕР: КНОПКИ */}
+                {/* ФУТЕР: КНОПКИ
                 <footer className="flex justify-end items-center gap-3 border-t border-border-warm p-4">
                     <Button
                         type='button'
@@ -71,7 +66,7 @@ const Modal = ({ isOpen = true, onClose, title, modalType, submitButtonTitle, on
                     >
                         {submitButtonTitle}
                     </Button>
-                </footer>
+                </footer> */}
             </div>
         </div>
     )
