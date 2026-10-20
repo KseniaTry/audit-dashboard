@@ -41,6 +41,7 @@ const baseSelectors = issuesAdapter.getSelectors((state: RootState) => state.iss
 export const {
     selectAll: selectAllIssues,      // Возвращает МАССИВ всех рекомендаций (уже готовый для .map)
     selectById: selectIssueById,
+    selectTotal: selectTotalIssues
 } = baseSelectors;
 
 // 1. Простые селекторы для получения "сырых" данных из стейта

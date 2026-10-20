@@ -1,8 +1,11 @@
-import { RiskLevels, Statuses } from "../const"
+import { Issue, RiskLevels, Statuses } from "../const"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge";
 import Button from "./ui/Button";
 import { VARIANTS } from "../const";
+import { useSelector } from "react-redux";
+import { selectIssuesWithStatuses, selectTotalIssues } from "../slices/issuesSlice";
+import { useState } from "react";
 
 interface AnalyticsProps {
     riskLevels: RiskLevels[];
@@ -10,8 +13,67 @@ interface AnalyticsProps {
     years: number[] | string[];
 }
 
+const calculateRisksPercents = (counts: Record<RiskLevels, number>, totalCount: number) => {
+    if (totalCount === 0) {
+        return { low: 0, medium: 0, high: 0 };
+    }
+    return {
+        low: (counts.low / totalCount) * 100,
+        medium: (counts.medium / totalCount) * 100,
+        high: (counts.high / totalCount) * 100,
+    }
+}
+
+const calculateStatusesPercents = (counts: Record<Statuses, number>, totalCount: number) => {
+    if (totalCount === 0) {
+        return { low: 0, medium: 0, high: 0 };
+    }
+    return {
+        open: (counts.open / totalCount) * 100,
+        closed: (counts.closed / totalCount) * 100,
+        removed: (counts.removed / totalCount) * 100,
+        overdue: (counts.overdue / totalCount) * 100
+    }
+}
+
+const calculateCount = <K extends 'riskLevel' | 'status'>(
+    issues: Issue[],
+    category: K) => {
+    type PropertyValue = Issue[K] & string
+    return issues.reduce((acc, issue) => {
+        const key = issue[category] as PropertyValue
+
+        if (!key) return acc
+
+        if (key in acc) {
+            acc[key] += 1
+        } else {
+            acc[key] = 1
+        }
+        return acc
+    }, {} as Record<PropertyValue, number>)
+}
+
 const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
     const { t } = useTranslation()
+    const allIssues = useSelector(selectIssuesWithStatuses)
+    const allActiveIssues = allIssues.reduce((acc, issue) => {
+        if (issue.status === 'open' || issue.status === 'overdue') {
+            acc.push(issue)
+        }
+        return acc
+    }, [] as Issue[])
+
+    const [tabActive, setTabActive] = useState<'all' | 'active'>('all')
+
+    const totalIssues = useSelector(selectTotalIssues)
+    const totalActiveIssues = allActiveIssues.length
+
+    const allStatusesCounts = calculateCount(allIssues, 'status')
+    const allRisksCounts = calculateCount(allIssues, 'riskLevel')
+    const activeStatusesCounts = calculateCount(allActiveIssues, 'status')
+    const activeRisksCounts = calculateCount(allActiveIssues, 'riskLevel')
+
     const blockWrapperClass = "w-full flex flex-wrap gap-[0px]"
     const titleClass = 'uppercase tracking-widest font-bold text-[12px] mb-3'
     const cardClass = "w-full h-[130px] p-2 rounded-xl shadow-sm bg-card-bg max-[450px]:w-[48%]"
@@ -41,29 +103,6 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
         neutral: 'text-neutral bg-neutral/3 border-neutral'
     }
 
-    const allViolations = 15
-    const lowRiskCount = 2
-    const mediumRiskCount = 4
-    const highRiskCount = 9
-
-    const openedCount = 6
-    const closedCount = 4
-    const overdueCount = 3
-    const removedCount = 2
-
-    const riskLevelsPercents = {
-        low: (lowRiskCount / allViolations) * 100,
-        medium: (mediumRiskCount / allViolations) * 100,
-        high: (highRiskCount / allViolations) * 100,
-    }
-
-    const statusesPercents = {
-        open: (openedCount / allViolations) * 100,
-        closed: (closedCount / allViolations) * 100,
-        removed: (removedCount / allViolations) * 100,
-        overdue: (overdueCount / allViolations) * 100
-    }
-
     return (
         <section className="p-4 flex flex-wrap gap-[20px] w-full">
             {/* ГОДЫ */}
@@ -84,18 +123,26 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
                 })
                 }
             </div>
-            {/* РИСКИ */}
+            {/* ТАБЫ */}
+            <div className="flex gap-3">
+                <Button type='button' isActive={tabActive === 'all'} onClick={() => setTabActive('all')}>{t('analytics.totalIssues')} <span>({totalIssues})</span></Button>
+                <Button type='button' isActive={tabActive === 'active'} onClick={() => setTabActive('active')}>{t('analytics.totalActiveIssues')} <span>({totalActiveIssues})</span></Button>
+            </div>
+
+            {/* ВСЕ РИСКИ */}
             <div className={blockWrapperClass}>
                 {/* блоки */}
-                <h2 className={titleClass}>Сводка по рискам</h2>
+                <h2 className={titleClass}>{t('analytics.allRisks')}</h2>
                 <div className={cardsWrapperClass}>
                     {riskLevels.map((riskLevel) => {
                         const variant = riskLevelVariants[riskLevel]
+                        const array = tabActive === 'all' ? allRisksCounts : activeRisksCounts
+                        const count = array[riskLevel] ?? 0
                         return <div
                             key={riskLevel}
                             className={twMerge(cardClass)}>
                             <h3 className={cardTitleClass}>{t(`riskLevels.${riskLevel}`)}</h3>
-                            <p className={twMerge(violationCountClass, colorClasses[variant], 'bg-field-bg')}>5</p>
+                            <p className={twMerge(violationCountClass, colorClasses[variant], 'bg-field-bg')}>{count}</p>
                         </div>
                     })}
                 </div>
@@ -103,26 +150,29 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
                 <div className={stripeWrapperClass}>
                     {riskLevels.map((riskLevel) => {
                         const variant = riskLevelVariants[riskLevel]
+                        const percents = tabActive === 'all' ? calculateRisksPercents(allRisksCounts, totalIssues) : calculateRisksPercents(activeRisksCounts, totalActiveIssues)
                         return <div
                             key={riskLevel}
-                            style={{ width: `${riskLevelsPercents[riskLevel]}%` }}
+                            style={{ width: `${percents[riskLevel]}%` }}
                             className={twMerge(colorClasses[variant], "h-full")}></div>
                     })}
                 </div>
             </div>
 
-            {/* СТАТУСЫ */}
+            {/* ВСЕ СТАТУСЫ */}
             <div className={blockWrapperClass}>
                 {/* блоки */}
-                <h2 className={titleClass}>Сводка по статусам</h2>
+                <h2 className={titleClass}>{t('analytics.allStatuses')}</h2>
                 <div className={twMerge(cardsWrapperClass, cardsWrapperMobileClass)}>
                     {statuses.map((status) => {
                         const variant = statusVariants[status]
+                        const array = tabActive === 'all' ? allStatusesCounts : activeStatusesCounts
+                        const statusCount = array[status] ?? 0
                         return <div
                             key={status}
                             className={twMerge(cardClass, colorClasses[variant], "border-l-2 bg-field-bg text-text-dark h-[80px]")}>
                             <h4 className={cardTitleClass}> {t(`statuses.${status}`)}</h4>
-                            <p className={twMerge(violationCountClass, colorClasses[variant], "bg-transparent")}>10</p>
+                            <p className={twMerge(violationCountClass, colorClasses[variant], "bg-transparent")}>{statusCount}</p>
                         </div>
                     })}
                 </div>
@@ -130,9 +180,10 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
                 <div className={stripeWrapperClass}>
                     {statuses.map((status) => {
                         const variant = statusVariants[status]
+                        const percents = tabActive === 'all' ? calculateStatusesPercents(allStatusesCounts, totalIssues) : calculateStatusesPercents(activeStatusesCounts, totalActiveIssues)
                         return <div
                             key={status}
-                            style={{ width: `${statusesPercents[status]}%` }}
+                            style={{ width: `${percents[status]}%` }}
                             className={twMerge(colorClasses[variant], "h-full")}>
                         </div>
                     })}

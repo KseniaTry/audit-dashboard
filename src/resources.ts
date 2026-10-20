@@ -13,6 +13,14 @@ export const resources = {
       save: 'Сохранить',
       download: 'Скачать .xls',
       reportDate: 'Дата отчета',
+      analytics: {
+        totalIssues: 'Все',
+        totalActiveIssues: 'На контроле',
+        activeIssues: 'Открытые рекомендации',
+        allIssues: 'Все рекомендации',
+        allRisks: 'Сводка по рискам',
+        allStatuses: 'Сводка по статусам',
+      },
       reports: {
         reportForDepartments: 'Отчет для ССП',
         reportForManagement: 'Отчет для руководства',
