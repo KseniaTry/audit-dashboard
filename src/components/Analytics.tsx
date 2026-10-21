@@ -4,8 +4,9 @@ import { twMerge } from "tailwind-merge";
 import Button from "./ui/Button";
 import { VARIANTS } from "../const";
 import { useSelector } from "react-redux";
-import { selectIssuesWithStatuses, selectTotalIssues } from "../slices/issuesSlice";
+import { selectIssuesWithStatuses } from "../slices/issuesSlice";
 import { useState } from "react";
+import { format } from 'date-fns';
 
 interface AnalyticsProps {
     riskLevels: RiskLevels[];
@@ -56,6 +57,9 @@ const calculateCount = <K extends 'riskLevel' | 'status'>(
 
 const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
     const { t } = useTranslation()
+    const [activeYear, setActiveYear] = useState<number | null | string>(null)
+    const [tabActive, setTabActive] = useState<'all' | 'active'>('all')
+
     const allIssues = useSelector(selectIssuesWithStatuses)
     const allActiveIssues = allIssues.reduce((acc, issue) => {
         if (issue.status === 'open' || issue.status === 'overdue') {
@@ -64,15 +68,16 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
         return acc
     }, [] as Issue[])
 
-    const [tabActive, setTabActive] = useState<'all' | 'active'>('all')
+    const allFilteredIssues = activeYear === null ? allIssues : allIssues.filter((issue) => format(new Date(issue.startInspectionDate), "yyyy") === activeYear)
+    const allFilteredActiveIssues = activeYear === null ? allActiveIssues : allActiveIssues.filter((issue) => format(new Date(issue.startInspectionDate), "yyyy") === activeYear)
 
-    const totalIssues = useSelector(selectTotalIssues)
-    const totalActiveIssues = allActiveIssues.length
+    const totalIssues = allFilteredIssues.length
+    const totalActiveIssues = allFilteredActiveIssues.length
 
-    const allStatusesCounts = calculateCount(allIssues, 'status')
-    const allRisksCounts = calculateCount(allIssues, 'riskLevel')
-    const activeStatusesCounts = calculateCount(allActiveIssues, 'status')
-    const activeRisksCounts = calculateCount(allActiveIssues, 'riskLevel')
+    const allStatusesCounts = calculateCount(allFilteredIssues, 'status')
+    const allRisksCounts = calculateCount(allFilteredIssues, 'riskLevel')
+    const activeStatusesCounts = calculateCount(allFilteredActiveIssues, 'status')
+    const activeRisksCounts = calculateCount(allFilteredActiveIssues, 'riskLevel')
 
     const blockWrapperClass = "w-full flex flex-wrap gap-[0px]"
     const titleClass = 'uppercase tracking-widest font-bold text-[12px] mb-3'
@@ -109,7 +114,8 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
             <div className="flex w-full gap-2 flex-wrap whitespace-normal">
                 <Button
                     type="button"
-                    isActive={true}
+                    isActive={activeYear === null}
+                    onClick={() => setActiveYear(null)}
                     className="md:text-[12px] text-[10px]">
                     {t('filters.allYears')}
                 </Button>
@@ -117,6 +123,8 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
                     return <Button
                         type="button"
                         key={year}
+                        isActive={activeYear === year}
+                        onClick={() => setActiveYear(year)}
                         className="md:text-[12px] text-[10px]">
                         {year}
                     </Button>

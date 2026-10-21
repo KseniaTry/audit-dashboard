@@ -7,9 +7,9 @@ export const getStatus = (
     executionDate: string | null | undefined,
     reportDate: number | string,
     isRemoved: boolean): Statuses => {
-    if (!reportDate) {
-        throw new Error
-    }
+    // if (!reportDate) {
+    //     throw new Error
+    // }
 
     if (isRemoved) {
         return 'removed'
