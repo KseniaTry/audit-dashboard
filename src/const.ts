@@ -1,7 +1,4 @@
-export type Statuses = 'open' | 'overdue' | 'closed' | 'removed'
-export type RiskLevels = 'high' | 'medium' | 'low'
-export type VARIANTS = 'danger' | 'warning' | 'success' | 'neutral'
-export type ModalActiveType = 'change' | 'add' | 'departmentReport' | 'managementReport' | null;
+import { RiskLevels, Statuses } from "./types";
 
 export const RISK_LEVELS: RiskLevels[] = ['low', 'medium', 'high']
 export const STATUSES: Statuses[] = ['open', 'overdue', 'closed', 'removed']
@@ -30,18 +27,3 @@ export const DEPARTMENTS: string[] = [
     "Юридический департамент"
 ];
 
-export type Issue = {
-    id: number,
-    inspection: string,
-    startInspectionDate: string,
-    endInspectionDate: string,
-    auditViolation: string,
-    recommendation: string,
-    riskLevel: RiskLevels,
-    responsibleDepartment: string[],
-    responsiblePerson: string[],
-    scheduledDate: string,
-    executionDate?: string | null,
-    status?: Statuses,
-    isRemoved?: boolean
-}
