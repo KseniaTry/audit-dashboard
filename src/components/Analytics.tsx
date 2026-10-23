@@ -1,8 +1,7 @@
-import { Issue, RiskLevels, Statuses } from "../const"
+import { Issue, RiskLevels, Statuses, Variants } from "../types"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge";
 import Button from "./ui/Button";
-import { VARIANTS } from "../const";
 import { useSelector } from "react-redux";
 import { selectIssuesWithStatuses } from "../slices/issuesSlice";
 import { useState } from "react";
@@ -61,7 +60,7 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
     const [tabActive, setTabActive] = useState<'all' | 'active'>('all')
 
     const allIssues = useSelector(selectIssuesWithStatuses)
-    const allActiveIssues = allIssues.reduce((acc, issue) => {
+    const allActiveIssues: Issue[] = allIssues.reduce((acc, issue) => {
         if (issue.status === 'open' || issue.status === 'overdue') {
             acc.push(issue)
         }
@@ -88,14 +87,14 @@ const Analytics = ({ riskLevels, statuses, years }: AnalyticsProps) => {
     const violationCountClass = "md:text-[27px] tracking-widest text-[20px] font-bold"
     const stripeWrapperClass = "flex h-[7px] rounded-full overflow-hidden mt-1 w-full"
 
-    const statusVariants: Record<string, VARIANTS> = {
+    const statusVariants: Record<string, Variants> = {
         open: 'warning',
         closed: 'success',
         removed: 'neutral',
         overdue: 'danger'
     }
 
-    const riskLevelVariants: Record<string, VARIANTS> = {
+    const riskLevelVariants: Record<string, Variants> = {
         low: 'success',
         medium: 'warning',
         high: 'danger'
