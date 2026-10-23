@@ -1,8 +1,8 @@
-import { Issue } from "../const"
+import { Issue } from "../types"
 import { useTranslation } from "react-i18next"
 import Button from "./ui/Button"
 import Plus from "./icons/Plus"
-import { VARIANTS } from "../const"
+import { Variants } from "../types"
 import { twMerge } from "tailwind-merge"
 
 interface CardsData {
@@ -20,7 +20,7 @@ const Card = ({ issue, onIssueClick }: CardsData) => {
             md:gap-2 md:w-max md:p-4 md:m-0 md:break-words
             md:text-xs md:text-gray-700 md:bg-card-bg
             md:rounded-none md:shadow-none md:border-l-accent
-            md:border-r-0 md:border-t md:border-b md:border-border-warm`
+            md:border-r-0 md:border-t md:border-b md:border-border-warm cursor-pointer`
     const labelClass = "md:hidden mb-[5px] text-[10px] text-text-muted font-medium uppercase block tracking-wider"
     const inspectionDatesClass = "flex gap-[5px] items-center"
     const recommendationClass = "mb-[5px] text-[13px] md:text-[12px] md:mb-0"
@@ -28,14 +28,14 @@ const Card = ({ issue, onIssueClick }: CardsData) => {
     const borderClass = "border-t border-border-warm pt-4 md:border-none md:pt-0"
     const resetMdClass = "md:col-auto md:row-auto"
 
-    const statusVariants: Record<string, VARIANTS> = {
+    const statusVariants: Record<string, Variants> = {
         open: 'warning',
         closed: 'success',
         removed: 'neutral',
         overdue: 'danger'
     }
 
-    const riskLevelVariants: Record<string, VARIANTS> = {
+    const riskLevelVariants: Record<string, Variants> = {
         low: 'success',
         medium: 'warning',
         high: 'danger'
@@ -57,7 +57,7 @@ const Card = ({ issue, onIssueClick }: CardsData) => {
     const riskLevelVariant = riskLevelVariants[issue.riskLevel]
 
     return (
-        < div key={issue.id} className={cardsClass} onClick={() => onIssueClick(issue.id)}>
+        <div key={issue.id} className={cardsClass} tabIndex={0} onClick={() => onIssueClick(issue.id)}>
             {/* кнопка "добавить" на мобильной версии */}
             < Button
                 type='button'
