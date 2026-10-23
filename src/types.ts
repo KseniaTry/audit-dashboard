@@ -4,12 +4,12 @@ export type Variants = 'danger' | 'warning' | 'success' | 'neutral'
 export type ModalActiveType = 'change' | 'add' | 'departmentReport' | 'managementReport' | null;
 
 export interface FilterState {
-    search: string | null,
-    inspection: string | null,
-    department: string | null,
-    inspectionYear: string | null,
-    status: Statuses | null,
-    riskLevel: RiskLevels | null,
+    search: string,
+    inspections: string[],
+    departments: string[],
+    inspectionYears: string[],
+    statuses: Statuses[],
+    riskLevels: RiskLevels[],
 }
 
 export type Issue = {
