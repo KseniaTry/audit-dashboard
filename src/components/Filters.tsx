@@ -1,27 +1,43 @@
 import { useTranslation } from "react-i18next"
-import { Variants } from "../types";
+import { FiltersData, Variants } from "../types";
 import { Statuses, RiskLevels } from "../types";
 import Button from "./ui/Button";
-import SelectInput from "./ui/SelectInput";
 import Input from "./ui/Input";
-import { twMerge } from "tailwind-merge";
 import { FilterState } from "../types";
 import Checkbox from "./ui/Checkbox";
+import { RISK_LEVELS, STATUSES } from "../const";
+import Close from "./icons/Close";
+
 interface FiltersProps {
     filters: FilterState,
-    onChange: (key: keyof FilterState, value: string[] | null | RiskLevels[] | Statuses[]) => void,
+    onChange: (key: keyof FilterState, value: FiltersData | string) => void, // изменение стейта выбранных фильтров
     onReset: () => void,
     inspections: string[];
     statuses: Statuses[],
     riskLevels: RiskLevels[],
-    departments: string[]
+    departments: string[],
+    years: string[]
 }
 
-const Filters = ({ filters, onChange, onReset, inspections, statuses, riskLevels, departments }: FiltersProps) => {
+const Filters = ({ filters, onChange, onReset, inspections, statuses, riskLevels, departments, years }: FiltersProps) => {
     const { t } = useTranslation()
 
+    const handleButtonClick = <T extends string>(value: T, allItems: T[], key: keyof FilterState) => {
+        let newValue: T[]
+        const currentValues = filters[key] as T[] // сужение типов, чтобы TS не думал, что я могу передать в key 'search' или 'departments' 
+        if (currentValues.includes(value)) {
+            newValue = currentValues.filter((item) => item !== value)
+        } else {
+            newValue = [...currentValues, value]
+        }
+
+        if (allItems.length === newValue.length) {
+            newValue = []
+        }
+        onChange(key, newValue)
+    }
+
     const widthClass = "w-full md:flex-1 min-w-0 max-w-full"
-    const inputClass = "h-[36px] text-[10px] md:text-[13px]"
 
     const statusVariants: Record<string, Variants> = {
         open: 'warning',
@@ -54,46 +70,60 @@ const Filters = ({ filters, onChange, onReset, inspections, statuses, riskLevels
                         </Button>
                     </div>
 
-                    <div className="flex flex-col md:flex-row gap-2 w-full">
-                        {/* ПОИСК */}
-                        <Input
-                            type='text'
-                            id='search'
-                            name='search'
-                            value={filters.search ?? ''}
-                            onChange={(e) => onChange('search', e.target.value)}
-                            className={twMerge(inputClass, "p-[7px] px-3 text-text-main")}
-                            wrapperExtraClass={widthClass}
-                            placeholder={t('filters.search')}
-                        />
+                    {/* <div className="flex flex-col md:flex-row gap-2 w-full"> */}
+                    {/* ПОИСК */}
+                    <div className="w-full flex flex-wrap gap-3">
+                        <div className="w-full flex gap-3">
+                            <Input
+                                type='text'
+                                id='search'
+                                name='search'
+                                value={filters.search ?? ''}
+                                onChange={(e) => onChange('search', e.target.value)}
+                                className="text-[10px] md:text-[13px] h-8 p-[7px] px-3 text-text-main"
+                                wrapperExtraClass={widthClass}
+                                placeholder={t('filters.search')}
+                            />
+                            <Button
+                                type='button'
+                                className="border-none h-[36px]"
+                                onClick={() => onChange('search', '')}
+                            >
+                                <Close className="text-text-muted hover:text-accent transition-colors h-5 w-5" />
+                            </Button>
+                        </div>
                         {/* ПРОВЕРКИ */}
-                        <Checkbox
-                            optionsArrayData={['Все проверки', ...inspections]}
-                            className={widthClass}
-                            onChange={(data: string[]) => onChange('inspections', data)}
-                        />
-                        {/* ОТДЕЛЫ */}
-                        <Checkbox
-                            optionsArrayData={[t('filters.allDepartments'), ...departments]}
-                            className={widthClass}
-                            onChange={(data: string[]) => onChange('departments', data)} />
-                        {/* ГОДЫ ПРОВЕРОК */}
-                        <SelectInput
-                            name="years-filter"
-                            className={inputClass}
-                            widthClass={widthClass}
-                            value={filters.inspectionYear ?? ''}
-                            onChange={(e) => onChange('inspectionYear', e.target.value)}
-                            optionsArrayData={[t('filters.allYears'), '2025', '2026']}
-                        />
+                        <div className="w-full flex gap-3 flex-wrap">
+                            <Checkbox
+                                options={inspections}
+                                placeholder={'все проверки'}
+                                value={filters.inspections ?? ''}
+                                className={widthClass}
+                                onChange={(data: string[]) => onChange('inspections', data)}
+                            />
+                            {/* ОТДЕЛЫ */}
+                            <Checkbox
+                                options={departments}
+                                placeholder={t('filters.allDepartments')}
+                                value={filters.departments}
+                                className={widthClass}
+                                onChange={(data: string[]) => onChange('departments', data)} />
+                            {/* ГОДЫ ПРОВЕРОК */}
+                            <Checkbox
+                                options={years}
+                                className={widthClass}
+                                placeholder={t('filters.allYears')}
+                                value={filters.inspectionYears}
+                                onChange={(years) => onChange('inspectionYears', years)}
+                            />
+                        </div>
                     </div>
-
                     {/* СТАТУСЫ */}
                     <div className="flex md:w-full gap-2 flex-wrap whitespace-normal">
                         <Button
                             type="button"
-                            isActive={filters.status === null}
-                            onClick={() => onChange('status', null)}
+                            isActive={filters.statuses.length === 0}
+                            onClick={() => onChange('statuses', [])}
                             className="text-[10px] md:text-[12px]">
                             {t('filters.allStatuses')}
                         </Button>
@@ -103,8 +133,8 @@ const Filters = ({ filters, onChange, onReset, inspections, statuses, riskLevels
                                 type='button'
                                 key={status}
                                 variant={variant}
-                                isActive={filters.status === status}
-                                onClick={() => onChange('status', status)}
+                                isActive={filters.statuses.includes(status)}
+                                onClick={() => handleButtonClick(status, STATUSES, 'statuses')}
                                 className="text-[10px] md:text-[12px]">
                                 {t(`statuses.${status}`)}
                             </Button>)
@@ -116,8 +146,8 @@ const Filters = ({ filters, onChange, onReset, inspections, statuses, riskLevels
                     <div className="flex md:w-full gap-2 flex-wrap whitespace-normal">
                         <Button
                             type="button"
-                            isActive={filters.riskLevel === null}
-                            onClick={() => onChange('riskLevel', null)}
+                            isActive={filters.riskLevels.length === 0}
+                            onClick={() => onChange('riskLevels', [])}
                             className="text-[10px] md:text-[12px]">
                             {t('filters.allRiskLevels')}
                         </Button>
@@ -126,8 +156,8 @@ const Filters = ({ filters, onChange, onReset, inspections, statuses, riskLevels
                             const variant = riskLevelVariants[riskLevel]
                             return (<Button
                                 type="button"
-                                isActive={filters.riskLevel === riskLevel}
-                                onClick={() => onChange('riskLevel', riskLevel)}
+                                isActive={filters.riskLevels.includes(riskLevel)}
+                                onClick={() => handleButtonClick(riskLevel, RISK_LEVELS, 'riskLevels')}
                                 key={riskLevel}
                                 variant={variant}
                                 className="text-[10px] md:text-[12px]">
@@ -140,9 +170,6 @@ const Filters = ({ filters, onChange, onReset, inspections, statuses, riskLevels
             </fieldset >
         </section >
     )
-
-
-
 }
 
 export default Filters
