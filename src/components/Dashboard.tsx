@@ -6,7 +6,7 @@ import { RootState } from "../store"
 import { useEffect, useState } from "react"
 import { selectIssuesWithStatuses, setAllIssues, setReportDate } from "../slices/issuesSlice"
 import { format } from 'date-fns';
-import { ModalActiveType, Statuses, RiskLevels, FilterState, Issue } from '../types'
+import { ModalActiveType, FilterState, Issue, FiltersData } from '../types'
 import Analytics from './Analytics'
 import Header from './Header'
 import AddModal from './AddModal'
@@ -19,9 +19,41 @@ import Filters from './Filters'
 
 const getFilteredIssues = (issues: Issue[], filters: FilterState): Issue[] => {
     const result = issues.filter((issue: Issue) => {
+        if (filters.departments.length > 0) {
+            const departmentsMatches = issue.responsibleDepartment.filter((item) => filters.departments.includes(item))
+            if (departmentsMatches.length === 0) return false
+        }
 
-    }
-    )
+        if (filters.inspections.length > 0) {
+            if (!filters.inspections.includes(issue.inspection)) return false
+        }
+
+        if (filters.inspectionYears.length > 0) {
+            const issueYear = format(new Date(issue.startInspectionDate), "yyyy")
+            if (!filters.inspectionYears.includes(issueYear)) return false
+        }
+
+        if (filters.riskLevels.length > 0) {
+            if (!filters.riskLevels.includes(issue.riskLevel)) return false
+        }
+
+        if (filters.statuses.length > 0) {
+            if (!filters.statuses.includes(issue.status)) return false
+        }
+
+        if (filters.search !== '') {
+            const searchText = filters.search.toLowerCase()
+            const searchMatches =
+                issue.auditViolation.includes(searchText) ||
+                issue.recommendation.includes(searchText) ||
+                issue.responsibleDepartment.includes(searchText) ||
+                issue.responsiblePerson.includes(searchText) ||
+                issue.inspection.includes(searchText)
+            if (!searchMatches) return false
+        }
+
+        return true
+    })
 
     return result
 }
@@ -49,7 +81,7 @@ const Dashboard = () => {
     const [activeIssueId, setActiveIssueId] = useState<number | null>(null)
     const [filters, setFilters] = useState<FilterState>(initialFiltersState)
 
-    const handleFiltersState = (key: keyof FilterState, value: string[] | RiskLevels[] | Statuses[]) => {
+    const handleFiltersState = (key: keyof FilterState, value: FiltersData | string) => {
         setFilters(prev => ({
             ...prev,
             [key]: value
@@ -95,7 +127,7 @@ const Dashboard = () => {
                 departments={departments}
                 years={years} />
             <Table
-                allIssues={allIssues}
+                allIssues={filteredIssues}
                 onIssueClick={(id) => {
                     setActiveIssueId(id)
                     setModalActive('change')
