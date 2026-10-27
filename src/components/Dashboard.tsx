@@ -6,6 +6,7 @@ import { RootState } from "../store"
 import { useEffect, useState } from "react"
 import { selectIssuesWithStatuses, setAllIssues, setReportDate } from "../slices/issuesSlice"
 import { format } from 'date-fns';
+import { ModalActiveType, Statuses, RiskLevels, FilterState, Issue } from '../types'
 import Analytics from './Analytics'
 import Header from './Header'
 import AddModal from './AddModal'
@@ -15,7 +16,15 @@ import Modal from './ui/Modal'
 import ManagementReport from './ManagementReport'
 import Table from './Table'
 import Filters from './Filters'
-import { ModalActiveType } from '../const'
+
+const getFilteredIssues = (issues: Issue[], filters: FilterState): Issue[] => {
+    const result = issues.filter((issue: Issue) => {
+
+    }
+    )
+
+    return result
+}
 
 const Dashboard = () => {
     const { t } = useTranslation()
@@ -27,8 +36,29 @@ const Dashboard = () => {
         dispatch(setReportDate(currentDate))
     }, [dispatch])
 
+    const initialFiltersState: FilterState = {
+        search: '',
+        inspections: [],
+        departments: [],
+        inspectionYears: [],
+        statuses: [],
+        riskLevels: []
+    }
+
     const [modalActive, setModalActive] = useState<ModalActiveType>(null)
     const [activeIssueId, setActiveIssueId] = useState<number | null>(null)
+    const [filters, setFilters] = useState<FilterState>(initialFiltersState)
+
+    const handleFiltersState = (key: keyof FilterState, value: string[] | RiskLevels[] | Statuses[]) => {
+        setFilters(prev => ({
+            ...prev,
+            [key]: value
+        }))
+    }
+
+    const handleFiltersReset = () => {
+        setFilters(initialFiltersState)
+    }
 
     const allIssues = useSelector(selectIssuesWithStatuses)
     const allInspections = allIssues.map((issue) => issue.inspection)
@@ -36,6 +66,9 @@ const Dashboard = () => {
     const inspections = [...new Set(allInspections)]
     const departments = useSelector((state: RootState) => state.issues.departments)
     const years = [...new Set(allYears)]
+
+    const filteredIssues = getFilteredIssues(allIssues, filters)
+    console.log(filteredIssues)
 
     const titleWrapperClass = "flex flex-wrap flex-col-reverse px-4 mt-4"
     const titleClass = "md:text-[40px] w-full text-[23px]"
@@ -53,10 +86,14 @@ const Dashboard = () => {
                 statuses={STATUSES}
                 years={years} />
             <Filters
+                filters={filters}
+                onChange={handleFiltersState}
+                onReset={handleFiltersReset}
                 inspections={inspections}
                 statuses={STATUSES}
                 riskLevels={RISK_LEVELS}
-                departments={departments} />
+                departments={departments}
+                years={years} />
             <Table
                 allIssues={allIssues}
                 onIssueClick={(id) => {
