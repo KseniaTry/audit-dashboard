@@ -11,7 +11,7 @@ export const resources = {
       add: 'Добавить',
       ok: 'Ок',
       status: 'Статус',
-      clear: 'Очистить',
+      clear: 'Cбросить',
       save: 'Сохранить',
       download: 'Скачать .xls',
       reportDate: 'Дата отчета',
