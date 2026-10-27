@@ -2,6 +2,7 @@ export type Statuses = 'open' | 'overdue' | 'closed' | 'removed'
 export type RiskLevels = 'high' | 'medium' | 'low'
 export type Variants = 'danger' | 'warning' | 'success' | 'neutral'
 export type ModalActiveType = 'change' | 'add' | 'departmentReport' | 'managementReport' | null;
+export type FiltersData = string[] | Statuses[] | RiskLevels[]
 
 export interface FilterState {
     search: string,
