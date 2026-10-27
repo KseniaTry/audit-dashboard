@@ -1,7 +1,8 @@
 import { createEntityAdapter, createSlice, createSelector } from "@reduxjs/toolkit"
-import { DEPARTMENTS, Issue } from "../const"
+import { DEPARTMENTS } from "../const"
 import { RootState } from "../store"
 import { getStatus } from "../utils"
+import { Issue } from "../types"
 
 const issuesAdapter = createEntityAdapter<Issue>()
 
