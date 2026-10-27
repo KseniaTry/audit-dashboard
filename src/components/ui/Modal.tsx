@@ -11,7 +11,6 @@ interface ModalData {
     children: ReactNode,
     size?: 'full' | 'dynamic',
     position?: 'bottom' | 'center',
-    // activeIssueId?: number | null
 }
 
 const Modal = ({ isOpen = true, onClose, title, modalType, children, size = 'dynamic', position = 'center' }: ModalData) => {
@@ -39,34 +38,7 @@ const Modal = ({ isOpen = true, onClose, title, modalType, children, size = 'dyn
                     </div>
                 </header>
                 {/* ТЕЛО */}
-
                 {children}
-
-                {/* ФУТЕР: КНОПКИ
-                <footer className="flex justify-end items-center gap-3 border-t border-border-warm p-4">
-                    <Button
-                        type='button'
-                        onClick={onClose}
-                    >
-                        {t('cancel')}
-                    </Button>
-                    {modalType === 'change' ?
-                        <Button
-                            variant="delete"
-                            onClick={() => {
-                                onClose()
-                                dispatch(deleteIssue(activeIssueId))
-                            }}>
-                            {t('delete')}
-                        </Button> : ''}
-                    <Button
-                        type='submit'
-                        onClick={onSubmit}
-                        variant="secondary"
-                    >
-                        {submitButtonTitle}
-                    </Button>
-                </footer> */}
             </div>
         </div>
     )

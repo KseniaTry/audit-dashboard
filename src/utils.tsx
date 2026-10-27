@@ -1,6 +1,6 @@
 
 import { differenceInDays, isAfter } from 'date-fns';
-import { Statuses } from './const';
+import { Statuses } from './types';
 
 export const getStatus = (
     scheduledDate: string,

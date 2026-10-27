@@ -1,9 +1,8 @@
 import { twMerge } from "tailwind-merge"
 import { ButtonHTMLAttributes } from "react"
-import { VARIANTS } from "../../const"
-
+import { Variants } from "../../types"
 interface ButtonData extends ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: VARIANTS | 'primary' | 'secondary' | 'delete',
+    variant?: Variants | 'primary' | 'secondary' | 'delete',
     isActive?: boolean
 }
 
