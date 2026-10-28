@@ -24,6 +24,11 @@ const getFilteredIssues = (issues: Issue[], filters: FilterState): Issue[] => {
             if (departmentsMatches.length === 0) return false
         }
 
+        if (filters.persons.length > 0) {
+            const personsMatches = issue.responsiblePerson.filter((item) => filters.persons.includes(item))
+            if (personsMatches.length === 0) return false
+        }
+
         if (filters.inspections.length > 0) {
             if (!filters.inspections.includes(issue.inspection)) return false
         }
@@ -44,11 +49,9 @@ const getFilteredIssues = (issues: Issue[], filters: FilterState): Issue[] => {
         if (filters.search !== '') {
             const searchText = filters.search.toLowerCase()
             const searchMatches =
-                issue.auditViolation.includes(searchText) ||
-                issue.recommendation.includes(searchText) ||
-                issue.responsibleDepartment.includes(searchText) ||
-                issue.responsiblePerson.includes(searchText) ||
-                issue.inspection.includes(searchText)
+                issue.auditViolation.toLowerCase().includes(searchText) ||
+                issue.recommendation.toLowerCase().includes(searchText) ||
+                issue.inspection.toLowerCase().includes(searchText)
             if (!searchMatches) return false
         }
 
@@ -71,6 +74,7 @@ const Dashboard = () => {
     const initialFiltersState: FilterState = {
         search: '',
         inspections: [],
+        persons: [],
         departments: [],
         inspectionYears: [],
         statuses: [],
@@ -94,9 +98,13 @@ const Dashboard = () => {
 
     const allIssues = useSelector(selectIssuesWithStatuses)
     const allInspections = allIssues.map((issue) => issue.inspection)
+    const allPersons = allIssues.map((issue) => issue.responsiblePerson)
     const allYears = allIssues.map((issue) => format(new Date(issue.startInspectionDate), "yyyy"))
     const inspections = [...new Set(allInspections)]
+    const persons = [...new Set(allPersons.flat())]
+    console.log(persons)
     const departments = useSelector((state: RootState) => state.issues.departments)
+
     const years = [...new Set(allYears)]
 
     const filteredIssues = getFilteredIssues(allIssues, filters)
@@ -122,6 +130,7 @@ const Dashboard = () => {
                 onChange={handleFiltersState}
                 onReset={handleFiltersReset}
                 inspections={inspections}
+                persons={persons}
                 statuses={STATUSES}
                 riskLevels={RISK_LEVELS}
                 departments={departments}

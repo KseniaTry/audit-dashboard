@@ -60,10 +60,12 @@ export const resources = {
         search: 'Поиск...',
         reset: 'Сбросить',
         allDepartments: 'Все ССП',
+        allPersons: 'Все ответственные',
         allYears: 'Все года',
         allInspections: 'Все проверки',
         allStatuses: 'Все статусы',
-        allRiskLevels: 'Все риски'
+        allRiskLevels: 'Все риски',
+        searchComment: '* поиск ощуествляется по категориям "Название проверки", "Нарушение", "Рекомендация"'
       },
       modals: {
         add: 'Новая запись',

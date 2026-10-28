@@ -8,6 +8,7 @@ export interface FilterState {
     search: string,
     inspections: string[],
     departments: string[],
+    persons: string[],
     inspectionYears: string[],
     statuses: Statuses[],
     riskLevels: RiskLevels[],
