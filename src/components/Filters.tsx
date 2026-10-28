@@ -12,14 +12,15 @@ interface FiltersProps {
     filters: FilterState,
     onChange: (key: keyof FilterState, value: FiltersData | string) => void, // изменение стейта выбранных фильтров
     onReset: () => void,
-    inspections: string[];
+    inspections: string[],
+    persons: string[],
     statuses: Statuses[],
     riskLevels: RiskLevels[],
     departments: string[],
     years: string[]
 }
 
-const Filters = ({ filters, onChange, onReset, inspections, statuses, riskLevels, departments, years }: FiltersProps) => {
+const Filters = ({ filters, onChange, onReset, inspections, persons, statuses, riskLevels, departments, years }: FiltersProps) => {
     const { t } = useTranslation()
 
     const handleButtonClick = <T extends string>(value: T, allItems: T[], key: keyof FilterState) => {
@@ -73,7 +74,7 @@ const Filters = ({ filters, onChange, onReset, inspections, statuses, riskLevels
                     {/* <div className="flex flex-col md:flex-row gap-2 w-full"> */}
                     {/* ПОИСК */}
                     <div className="w-full flex flex-wrap gap-3">
-                        <div className="w-full flex gap-3">
+                        <div className="w-full flex flex-wrap gap-2">
                             <Input
                                 type='text'
                                 id='search'
@@ -91,6 +92,7 @@ const Filters = ({ filters, onChange, onReset, inspections, statuses, riskLevels
                             >
                                 <Close className="text-text-muted hover:text-accent transition-colors h-5 w-5" />
                             </Button>
+                            <p className="w-full">{t('filters.searchComment')}</p>
                         </div>
                         {/* ПРОВЕРКИ */}
                         <div className="w-full flex gap-3 flex-wrap">
@@ -108,6 +110,14 @@ const Filters = ({ filters, onChange, onReset, inspections, statuses, riskLevels
                                 value={filters.departments}
                                 className={widthClass}
                                 onChange={(data: string[]) => onChange('departments', data)} />
+                            {/* ОТВЕТСТВЕННЫЕ ЛИЦА */}
+                            <Checkbox
+                                options={persons}
+                                placeholder={t('filters.allPersons')}
+                                value={filters.persons}
+                                className={widthClass}
+                                onChange={(data: string[]) => onChange('persons', data)} />
+
                             {/* ГОДЫ ПРОВЕРОК */}
                             <Checkbox
                                 options={years}
