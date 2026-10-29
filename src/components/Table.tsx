@@ -1,11 +1,12 @@
 import { useTranslation } from "react-i18next"
-import { Issue } from "../const"
+import { Issue } from "../types"
 import Card from "./Card"
 import Pagination from "./Pagination"
 import Input from "./ui/Input"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store"
 import { setReportDate } from "../slices/issuesSlice"
+import { useState } from "react"
 interface TableData {
     allIssues: Issue[],
     onIssueClick: (id: number | null) => void
@@ -15,6 +16,14 @@ const Table = ({ allIssues, onIssueClick }: TableData) => {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const reportDate = useSelector((state: RootState) => state.issues.reportDate)
+    const itemsPerPage = 10
+    const totalPages = Math.ceil(allIssues.length / itemsPerPage)
+    const [currentPage, setCurrentPage] = useState<number>(1)
+
+    const handlePaginationClick = (page: number) => {
+        setCurrentPage(page)
+    }
+    console.log(currentPage)
 
     const wrapperClass = "p-4 w-full overflow-x-auto"
     const tableClass = `hidden md:break-words md:border-l-4 md:border-l-accent
@@ -26,15 +35,20 @@ const Table = ({ allIssues, onIssueClick }: TableData) => {
     return (
         <>
             <section>
-                <div className="px-4 gap-3 flex md:justify-between items-center flex-col md:flex-row">
-                    <Input
-                        type='date'
-                        labelText={t('reportDate')}
-                        value={reportDate}
-                        onChange={(e) => dispatch(setReportDate(e.target.value))}
-                        wrapperExtraClass="flex-row items-center normal-case flex-nowrap"
-                        className="w-auto" />
-                    <Pagination currentPage={1} totalPages={5} itemsPerPage={10} />
+                <div className="px-4 items-start gap-3 flex md:justify-between md:items-center flex-col md:flex-row">
+                    <div className="flex flex-wrap items-center w-full gap-2 md:justify-start md:gap-5 md:justify-between">
+                        <Input
+                            type='date'
+                            labelText={t('reportDate')}
+                            value={reportDate}
+                            onChange={(e) => dispatch(setReportDate(e.target.value))}
+                            wrapperExtraClass="flex-row items-center normal-case flex-nowrap"
+                            className="w-auto" />
+                        <p className="normal-case tracking-widest text-[14px]">{t('totalIssues')}
+                            <span className="font-semibold">{allIssues.length}</span>
+                        </p>
+                    </div>
+                    <Pagination currentPage={currentPage} totalPages={totalPages} onButtonClick={handlePaginationClick} />
                 </div>
                 <div className={wrapperClass}>
                     {/* шапка таблицы */}
