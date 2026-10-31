@@ -1,16 +1,12 @@
 
 import { differenceInDays, isAfter } from 'date-fns';
-import { Statuses } from './types';
+import { Statuses, Issue } from './types';
 
 export const getStatus = (
     scheduledDate: string,
     executionDate: string | null | undefined,
     reportDate: number | string,
     isRemoved: boolean): Statuses => {
-    // if (!reportDate) {
-    //     throw new Error
-    // }
-
     if (isRemoved) {
         return 'removed'
     }
@@ -31,3 +27,12 @@ export const getStatus = (
 
     return difference <= 0 ? 'closed' : 'overdue'
 }
+
+export const divideIssues = (issues: Issue[], size: number): Issue[][] => {
+    const result: Issue[][] = [];
+    for (let i = 0; i < issues.length; i += size) {
+        result.push(issues.slice(i, i + size));
+    }
+    return result
+}
+

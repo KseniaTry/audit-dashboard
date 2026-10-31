@@ -16,6 +16,7 @@ export const resources = {
       download: 'Скачать .xls',
       reportDate: 'Дата отчета',
       totalIssues: 'Кол-во записей: ',
+      showMore: 'Показать еще',
       analytics: {
         totalIssues: 'Все',
         totalActiveIssues: 'На контроле',

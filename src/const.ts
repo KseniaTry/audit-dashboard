@@ -26,4 +26,7 @@ export const DEPARTMENTS: string[] = [
     "Финансово-аналитический департамент",
     "Юридический департамент"
 ];
+export const ITEMS_PER_PAGE = 10
+export const PAGINATION_STUB = '...'
+export const DEFAULT_PAGE = 1
 
