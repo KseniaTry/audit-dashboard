@@ -1,4 +1,4 @@
-import { RISK_LEVELS, STATUSES } from '../const'
+import { RISK_LEVELS, STATUSES, ITEMS_PER_PAGE, DEFAULT_PAGE } from '../const'
 import { mockIssues } from '../mocks'
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslation } from 'react-i18next'
@@ -16,6 +16,7 @@ import Modal from './ui/Modal'
 import ManagementReport from './ManagementReport'
 import Table from './Table'
 import Filters from './Filters'
+import { divideIssues } from '../utils'
 
 const getFilteredIssues = (issues: Issue[], filters: FilterState): Issue[] => {
     const result = issues.filter((issue: Issue) => {
@@ -42,7 +43,7 @@ const getFilteredIssues = (issues: Issue[], filters: FilterState): Issue[] => {
             if (!filters.riskLevels.includes(issue.riskLevel)) return false
         }
 
-        if (filters.statuses.length > 0) {
+        if ((issue.status) && filters.statuses.length > 0) {
             if (!filters.statuses.includes(issue.status)) return false
         }
 
@@ -64,13 +65,6 @@ const getFilteredIssues = (issues: Issue[], filters: FilterState): Issue[] => {
 const Dashboard = () => {
     const { t } = useTranslation()
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        const currentDate = format(Date.now(), "yyyy-MM-dd")
-        dispatch(setAllIssues(mockIssues))
-        dispatch(setReportDate(currentDate))
-    }, [dispatch])
-
     const initialFiltersState: FilterState = {
         search: '',
         inspections: [],
@@ -80,18 +74,33 @@ const Dashboard = () => {
         statuses: [],
         riskLevels: []
     }
-
     const [modalActive, setModalActive] = useState<ModalActiveType>(null)
     const [activeIssueId, setActiveIssueId] = useState<number | null>(null)
     const [filters, setFilters] = useState<FilterState>(initialFiltersState)
+    const [currentPage, setCurrentPage] = useState<number>(DEFAULT_PAGE)
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
+    useEffect(() => {
+        const currentDate = format(Date.now(), "yyyy-MM-dd")
+        dispatch(setAllIssues(mockIssues))
+        dispatch(setReportDate(currentDate))
+    }, [dispatch])
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    })
+
+    // ДЛЯ ФИЛЬТРОВ
+    // добавление в объект с результатами фильтрации
     const handleFiltersState = (key: keyof FilterState, value: FiltersData | string) => {
         setFilters(prev => ({
             ...prev,
             [key]: value
         }))
     }
-
+    // сброс фильтров
     const handleFiltersReset = () => {
         setFilters(initialFiltersState)
     }
@@ -102,14 +111,27 @@ const Dashboard = () => {
     const allYears = allIssues.map((issue) => format(new Date(issue.startInspectionDate), "yyyy"))
     const inspections = [...new Set(allInspections)]
     const persons = [...new Set(allPersons.flat())]
-    console.log(persons)
     const departments = useSelector((state: RootState) => state.issues.departments)
-
     const years = [...new Set(allYears)]
-
     const filteredIssues = getFilteredIssues(allIssues, filters)
-    console.log(filteredIssues)
 
+    // ДЛЯ ТАБЛИЦЫ ПАГИНАЦИЯ
+    const totalPages = Math.ceil(allIssues.length / ITEMS_PER_PAGE)
+    // для десктопа
+    const handlePaginationClick = (page: number) => {
+        setCurrentPage(page)
+    }
+    // для мобилки и планшета
+    const handleShowMoreClick = () => {
+        const newCurrentPage = currentPage === totalPages ? currentPage : currentPage + 1
+        setCurrentPage(newCurrentPage)
+    }
+
+    const visibleIssues = isMobile ?
+        divideIssues(filteredIssues, ITEMS_PER_PAGE) :
+        filteredIssues.slice(0, ITEMS_PER_PAGE * currentPage)
+
+    // СТИЛИ
     const titleWrapperClass = "flex flex-wrap flex-col-reverse px-4 mt-4"
     const titleClass = "md:text-[40px] w-full text-[23px]"
     const secondTitleClass = "md:text-[13px] tracking-widest uppercase font-semibold text-accent text-[10px]"
@@ -136,11 +158,15 @@ const Dashboard = () => {
                 departments={departments}
                 years={years} />
             <Table
-                allIssues={filteredIssues}
+                issues={visibleIssues}
                 onIssueClick={(id) => {
                     setActiveIssueId(id)
                     setModalActive('change')
-                }} />
+                }}
+                onShowMoreClick={handleShowMoreClick}
+                onPaginationClick={handlePaginationClick}
+                currentPage={currentPage}
+                totalPages={totalPages} />
             {/* МОДАЛКИ */}
             {modalActive === 'managementReport' ?
                 <Modal
