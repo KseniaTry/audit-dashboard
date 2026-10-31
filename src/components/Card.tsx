@@ -14,13 +14,13 @@ const Card = ({ issue, onIssueClick }: CardsData) => {
     const { t } = useTranslation()
 
     const cardsClass = `
-            grid grid-cols-4 gap-[10px] text-[10px] p-[15px] mb-[15px] my-[5px] w-full mx-auto bg-[#FFFFFF] 
+            grid grid-cols-4 gap-[10px] text-[10px] p-[15px] w-full mx-auto bg-[#FFFFFF] 
             border border-border-warm shadow-sm break-words border-l-4 border-l-accent
             md:grid-cols-[40px_120px_90px_90px_180px_180px_110px_100px_120px_120px_100px_100px] 
             md:gap-2 md:w-max md:p-4 md:m-0 md:break-words
             md:text-xs md:text-gray-700 md:bg-card-bg
             md:rounded-none md:shadow-none md:border-l-accent
-            md:border-r-0 md:border-t md:border-b md:border-border-warm cursor-pointer`
+            md:border-r-0 md:border-t md:border-b md:border-border-warm cursor-pointer animate-[fadeIn_0.2s_ease-in-out]`
     const labelClass = "md:hidden mb-[5px] text-[10px] text-text-muted font-medium uppercase block tracking-wider"
     const inspectionDatesClass = "flex gap-[5px] items-center"
     const recommendationClass = "mb-[5px] text-[13px] md:text-[12px] md:mb-0"
