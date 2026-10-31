@@ -3,29 +3,25 @@ import { Issue } from "../types"
 import Card from "./Card"
 import Pagination from "./Pagination"
 import Input from "./ui/Input"
+import Button from "./ui/Button"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store"
 import { setReportDate } from "../slices/issuesSlice"
-import { useState } from "react"
+
 interface TableData {
-    allIssues: Issue[],
-    onIssueClick: (id: number | null) => void
+    issues: Issue[] | Issue[][],
+    onIssueClick: (id: number | null) => void,
+    onShowMoreClick: () => void,
+    onPaginationClick: (page: number) => void,
+    currentPage: number,
+    totalPages: number
 }
 
-const Table = ({ allIssues, onIssueClick }: TableData) => {
+const Table = ({ issues, onIssueClick, onPaginationClick, onShowMoreClick, currentPage, totalPages }: TableData) => {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const reportDate = useSelector((state: RootState) => state.issues.reportDate)
-    const itemsPerPage = 10
-    const totalPages = Math.ceil(allIssues.length / itemsPerPage)
-    const [currentPage, setCurrentPage] = useState<number>(1)
 
-    const handlePaginationClick = (page: number) => {
-        setCurrentPage(page)
-    }
-    console.log(currentPage)
-
-    const wrapperClass = "p-4 w-full overflow-x-auto"
     const tableClass = `hidden md:break-words md:border-l-4 md:border-l-accent
         md:text-[12px] md:grid md:w-max 
         md:grid-cols-[40px_120px_90px_90px_180px_180px_110px_100px_120px_120px_100px_100px] 
@@ -45,12 +41,15 @@ const Table = ({ allIssues, onIssueClick }: TableData) => {
                             wrapperExtraClass="flex-row items-center normal-case flex-nowrap"
                             className="w-auto" />
                         <p className="normal-case tracking-widest text-[14px]">{t('totalIssues')}
-                            <span className="font-semibold">{allIssues.length}</span>
+                            <span className="font-semibold">{issues.length}</span>
                         </p>
                     </div>
-                    <Pagination currentPage={currentPage} totalPages={totalPages} onButtonClick={handlePaginationClick} />
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onButtonClick={onPaginationClick} />
                 </div>
-                <div className={wrapperClass}>
+                <div className='p-4 pb-0 w-full md:overflow-x-auto flex flex-col gap-[15px] md:block'>
                     {/* шапка таблицы */}
                     <div className={tableClass}>
                         <div>{t('table.number')}</div>
@@ -66,10 +65,17 @@ const Table = ({ allIssues, onIssueClick }: TableData) => {
                         <div>{t('table.scheduledDate')}</div>
                         <div>{t('table.executionDate')}</div>
                     </div>
-                    {allIssues.map((issue) => {
-                        return <Card key={issue.id} issue={issue} onIssueClick={onIssueClick} />
-                    })}
+                    {issues && issues[currentPage - 1] ?
+                        issues[currentPage - 1].map((issue) => (<Card key={issue.id} issue={issue} onIssueClick={onIssueClick} />)) :
+                        'Loading'}
                 </div>
+                <Button
+                    type='button'
+                    onClick={onShowMoreClick}
+                    className="md:hidden mx-auto my-5"
+                    disabled={currentPage === totalPages}>
+                    {t('showMore')}
+                </Button>
             </section>
         </>
     )
