@@ -1,40 +1,34 @@
-import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Button from './Button';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 
 interface CheckboxData<T extends string> {
+  id: string,
   options: T[]; // исходные данные (массив ССП / годов / проверок и тд)
   value: T[]; // приходит из state из компонента Filters
   placeholder: string; // исходное значение , например "Все ССП"
   className?: string; // если надо доп настройки внешнего вида
   onChange: (data: T[]) => void;
+  isOpen: boolean;
+  setCheckboxOpen: (state: string | null) => void;
 }
 
-const Checkbox = <T extends string>({
-  options,
-  value,
-  placeholder,
-  className,
-  onChange,
-}: CheckboxData<T>) => {
+const Checkbox = <T extends string>({ id, options, value, placeholder, className, onChange, isOpen, setCheckboxOpen }: CheckboxData<T>) => {
   const { t } = useTranslation();
-  const wrapperClass =
-    'relative flex items-center px-3 md:text-[13px] md:min-w-[150px] uppercase border border-border-warm border-2 bg-field-bg cursor-pointer';
-  const [fieldsetActive, setFieldsetActive] = useState<boolean>(false);
-  const isActiveOptionsClass = fieldsetActive ? 'flex' : 'hidden';
+  const wrapperClass = 'relative flex items-center px-3 md:text-[13px] md:min-w-[150px] uppercase border border-border-warm border-2 bg-field-bg cursor-pointer';
+  const isActiveOptionsClass = isOpen ? 'flex' : 'hidden';
   const choosenData = value.length === 0 ? placeholder : value.join(', ');
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    setFieldsetActive(false);
+    setCheckboxOpen(null);
     onChange(value);
   };
 
   const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    setFieldsetActive(false);
+    setCheckboxOpen(null);
     onChange([]);
   };
 
@@ -52,7 +46,7 @@ const Checkbox = <T extends string>({
   };
 
   return (
-    <fieldset onClick={() => setFieldsetActive(true)} className={twMerge(wrapperClass, className)}>
+    <fieldset onClick={() => isOpen ? setCheckboxOpen(null) : setCheckboxOpen(id)} className={twMerge(wrapperClass, className)}>
       <div className="flex items-center overflow-hidden h-7">{choosenData}</div>
       <div
         className={twMerge(
