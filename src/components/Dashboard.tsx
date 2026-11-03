@@ -19,234 +19,234 @@ import Filters from './Filters';
 import { divideIssues } from '../utils';
 
 const getFilteredIssues = (issues: Issue[], filters: FilterState): Issue[] => {
-  const result = issues.filter((issue: Issue) => {
-    if (filters.departments.length > 0) {
-      const departmentsMatches = issue.responsibleDepartment.filter((item) =>
-        filters.departments.includes(item),
-      );
-      if (departmentsMatches.length === 0) return false;
-    }
+    const result = issues.filter((issue: Issue) => {
+        if (filters.departments.length > 0) {
+            const departmentsMatches = issue.responsibleDepartment.filter((item) =>
+                filters.departments.includes(item),
+            );
+            if (departmentsMatches.length === 0) return false;
+        }
 
-    if (filters.persons.length > 0) {
-      const personsMatches = issue.responsiblePerson.filter((item) =>
-        filters.persons.includes(item),
-      );
-      if (personsMatches.length === 0) return false;
-    }
+        if (filters.persons.length > 0) {
+            const personsMatches = issue.responsiblePerson.filter((item) =>
+                filters.persons.includes(item),
+            );
+            if (personsMatches.length === 0) return false;
+        }
 
-    if (filters.inspections.length > 0) {
-      if (!filters.inspections.includes(issue.inspection)) return false;
-    }
+        if (filters.inspections.length > 0) {
+            if (!filters.inspections.includes(issue.inspection)) return false;
+        }
 
-    if (filters.inspectionYears.length > 0) {
-      const issueYear = format(new Date(issue.startInspectionDate), 'yyyy');
-      if (!filters.inspectionYears.includes(issueYear)) return false;
-    }
+        if (filters.inspectionYears.length > 0) {
+            const issueYear = format(new Date(issue.startInspectionDate), 'yyyy');
+            if (!filters.inspectionYears.includes(issueYear)) return false;
+        }
 
-    if (filters.riskLevels.length > 0) {
-      if (!filters.riskLevels.includes(issue.riskLevel)) return false;
-    }
+        if (filters.riskLevels.length > 0) {
+            if (!filters.riskLevels.includes(issue.riskLevel)) return false;
+        }
 
-    if (issue.status && filters.statuses.length > 0) {
-      if (!filters.statuses.includes(issue.status)) return false;
-    }
+        if (issue.status && filters.statuses.length > 0) {
+            if (!filters.statuses.includes(issue.status)) return false;
+        }
 
-    if (filters.search !== '') {
-      const searchText = filters.search.toLowerCase();
-      const searchMatches =
-        issue.auditViolation.toLowerCase().includes(searchText) ||
-        issue.recommendation.toLowerCase().includes(searchText) ||
-        issue.inspection.toLowerCase().includes(searchText);
-      if (!searchMatches) return false;
-    }
+        if (filters.search !== '') {
+            const searchText = filters.search.toLowerCase();
+            const searchMatches =
+                issue.auditViolation.toLowerCase().includes(searchText) ||
+                issue.recommendation.toLowerCase().includes(searchText) ||
+                issue.inspection.toLowerCase().includes(searchText);
+            if (!searchMatches) return false;
+        }
 
-    return true;
-  });
+        return true;
+    });
 
-  return result;
+    return result;
 };
 
 const Dashboard = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const initialFiltersState: FilterState = {
-    search: '',
-    inspections: [],
-    persons: [],
-    departments: [],
-    inspectionYears: [],
-    statuses: [],
-    riskLevels: [],
-  };
-  const [modalActive, setModalActive] = useState<ModalActiveType>(null);
-  const [activeIssueId, setActiveIssueId] = useState<number | null>(null);
-  const [filters, setFilters] = useState<FilterState>(initialFiltersState);
-  const [currentPage, setCurrentPage] = useState<number>(DEFAULT_PAGE);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const currentDate = format(Date.now(), 'yyyy-MM-dd');
-    dispatch(setAllIssues(mockIssues));
-    dispatch(setReportDate(currentDate));
-  }, [dispatch]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      setCurrentPage(DEFAULT_PAGE);
+    const { t } = useTranslation();
+    const dispatch = useDispatch();
+    const initialFiltersState: FilterState = {
+        search: '',
+        inspections: [],
+        persons: [],
+        departments: [],
+        inspectionYears: [],
+        statuses: [],
+        riskLevels: [],
     };
-    window.addEventListener('resize', handleResize);
+    const [modalActive, setModalActive] = useState<ModalActiveType>(null);
+    const [activeIssueId, setActiveIssueId] = useState<number | null>(null);
+    const [filters, setFilters] = useState<FilterState>(initialFiltersState);
+    const [currentPage, setCurrentPage] = useState<number>(DEFAULT_PAGE);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    useEffect(() => {
+        const currentDate = format(Date.now(), 'yyyy-MM-dd');
+        dispatch(setAllIssues(mockIssues));
+        dispatch(setReportDate(currentDate));
+    }, [dispatch]);
 
-  // ДЛЯ ФИЛЬТРОВ
-  // добавление в объект с результатами фильтрации
-  const handleFiltersState = (key: keyof FilterState, value: FiltersData | string) => {
-    setFilters((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
-  // сброс фильтров
-  const handleFiltersReset = () => {
-    setFilters(initialFiltersState);
-  };
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+            setCurrentPage(DEFAULT_PAGE);
+        };
+        window.addEventListener('resize', handleResize);
 
-  const allIssues = useSelector(selectIssuesWithStatuses);
-  const allInspections = allIssues.map((issue) => issue.inspection);
-  const allPersons = allIssues.map((issue) => issue.responsiblePerson);
-  const allYears = allIssues.map((issue) => format(new Date(issue.startInspectionDate), 'yyyy'));
-  const inspections = [...new Set(allInspections)];
-  const persons = [...new Set(allPersons.flat())];
-  const departments = useSelector((state: RootState) => state.issues.departments);
-  const years = [...new Set(allYears)];
-  const filteredIssues = getFilteredIssues(allIssues, filters);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
-  // ДЛЯ ТАБЛИЦЫ ПАГИНАЦИЯ
-  const totalPages = Math.ceil(allIssues.length / ITEMS_PER_PAGE);
-  // для десктопа
-  const handlePaginationClick = (page: number) => {
-    setCurrentPage(page);
-  };
-  // для мобилки и планшета
-  const handleShowMoreClick = () => {
-    const newCurrentPage = currentPage === totalPages ? currentPage : currentPage + 1;
-    setCurrentPage(newCurrentPage);
-  };
+    // ДЛЯ ФИЛЬТРОВ
+    // добавление в объект с результатами фильтрации
+    const handleFiltersState = (key: keyof FilterState, value: FiltersData | string) => {
+        setFilters((prev) => ({
+            ...prev,
+            [key]: value,
+        }));
+    };
+    // сброс фильтров
+    const handleFiltersReset = () => {
+        setFilters(initialFiltersState);
+    };
 
-  const visibleIssues = isMobile
-    ? filteredIssues.slice(0, ITEMS_PER_PAGE * currentPage)
-    : divideIssues(filteredIssues, ITEMS_PER_PAGE)[currentPage - 1];
+    const allIssues = useSelector(selectIssuesWithStatuses);
+    const allInspections = allIssues.map((issue) => issue.inspection);
+    const allPersons = allIssues.map((issue) => issue.responsiblePerson);
+    const allYears = allIssues.map((issue) => format(new Date(issue.startInspectionDate), 'yyyy'));
+    const inspections = [...new Set(allInspections)];
+    const persons = [...new Set(allPersons.flat())];
+    const departments = useSelector((state: RootState) => state.issues.departments);
+    const years = [...new Set(allYears)];
+    const filteredIssues = getFilteredIssues(allIssues, filters);
 
-  // СТИЛИ
-  const titleWrapperClass = 'flex flex-wrap flex-col-reverse px-4 mt-4';
-  const titleClass = 'md:text-[40px] w-full text-[23px]';
-  const secondTitleClass =
-    'md:text-[13px] tracking-widest uppercase font-semibold text-accent text-[10px]';
+    // ДЛЯ ТАБЛИЦЫ ПАГИНАЦИЯ
+    const totalPages = Math.ceil(allIssues.length / ITEMS_PER_PAGE);
+    // для десктопа
+    const handlePaginationClick = (page: number) => {
+        setCurrentPage(page);
+    };
+    // для мобилки и планшета
+    const handleShowMoreClick = () => {
+        const newCurrentPage = currentPage === totalPages ? currentPage : currentPage + 1;
+        setCurrentPage(newCurrentPage);
+    };
 
-  return (
-    <>
-      <Header onModalOpen={(type: ModalActiveType) => setModalActive(type)} />
-      <div className={titleWrapperClass}>
-        <h1 className={titleClass}>{t('mainTitle')}</h1>
-        <h2 className={secondTitleClass}>{t('secondTitle')}</h2>
-      </div>
-      <Analytics riskLevels={RISK_LEVELS} statuses={STATUSES} years={years} />
-      <Filters
-        filters={filters}
-        onChange={handleFiltersState}
-        onReset={handleFiltersReset}
-        inspections={inspections}
-        persons={persons}
-        statuses={STATUSES}
-        riskLevels={RISK_LEVELS}
-        departments={departments}
-        years={years}
-      />
-      <Table
-        issues={visibleIssues}
-        onIssueClick={(id) => {
-          setActiveIssueId(id);
-          setModalActive('change');
-        }}
-        onShowMoreClick={handleShowMoreClick}
-        onPaginationClick={handlePaginationClick}
-        currentPage={currentPage}
-        totalPages={totalPages}
-        totalIssues={filteredIssues.length}
-      />
-      {/* МОДАЛКИ */}
-      {modalActive === 'managementReport' ? (
-        <Modal
-          isOpen={modalActive === 'managementReport'}
-          onClose={() => setModalActive(null)}
-          title={t('managementReport.title')}
-          modalType="report"
-          position="bottom"
-        >
-          <ManagementReport statuses={STATUSES} onClose={() => setModalActive(null)} />
-        </Modal>
-      ) : (
-        ''
-      )}
+    const visibleIssues = isMobile
+        ? filteredIssues.slice(0, ITEMS_PER_PAGE * currentPage)
+        : divideIssues(filteredIssues, ITEMS_PER_PAGE)[currentPage - 1];
 
-      {modalActive === 'departmentReport' ? (
-        <Modal
-          isOpen={modalActive === 'departmentReport'}
-          onClose={() => setModalActive(null)}
-          title={t('departmentReport.title')}
-          modalType="report"
-          position="bottom"
-        >
-          <DepartmentReport departments={departments} onClose={() => setModalActive(null)} />
-        </Modal>
-      ) : (
-        ''
-      )}
+    // СТИЛИ
+    const titleWrapperClass = 'flex flex-wrap flex-col-reverse px-4 mt-4';
+    const titleClass = 'md:text-[40px] w-full text-[23px]';
+    const secondTitleClass =
+        'md:text-[13px] tracking-widest uppercase font-semibold text-accent text-[10px]';
 
-      {modalActive === 'change' && activeIssueId ? (
-        <Modal
-          isOpen={modalActive === 'change'}
-          onClose={() => {
-            setModalActive(null);
-            setActiveIssueId(null);
-          }}
-          title={t('changeModal.title')}
-          modalType="change"
-          position="bottom"
-        >
-          <ChangeModal
-            issueId={activeIssueId}
-            onClose={() => {
-              setModalActive(null);
-              setActiveIssueId(null);
-            }}
-          />
-        </Modal>
-      ) : (
-        ''
-      )}
+    return (
+        <>
+            <Header onModalOpen={(type: ModalActiveType) => setModalActive(type)} />
+            <div className={titleWrapperClass}>
+                <h1 className={titleClass}>{t('mainTitle')}</h1>
+                <h2 className={secondTitleClass}>{t('secondTitle')}</h2>
+            </div>
+            <Analytics riskLevels={RISK_LEVELS} statuses={STATUSES} years={years} />
+            <Filters
+                filters={filters}
+                onFiltersChange={handleFiltersState}
+                onReset={handleFiltersReset}
+                inspections={inspections}
+                persons={persons}
+                statuses={STATUSES}
+                riskLevels={RISK_LEVELS}
+                departments={departments}
+                years={years}
+            />
+            <Table
+                issues={visibleIssues}
+                onIssueClick={(id) => {
+                    setActiveIssueId(id);
+                    setModalActive('change');
+                }}
+                onShowMoreClick={handleShowMoreClick}
+                onPaginationClick={handlePaginationClick}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                totalIssues={filteredIssues.length}
+            />
+            {/* МОДАЛКИ */}
+            {modalActive === 'managementReport' ? (
+                <Modal
+                    isOpen={modalActive === 'managementReport'}
+                    onClose={() => setModalActive(null)}
+                    title={t('managementReport.title')}
+                    modalType="report"
+                    position="bottom"
+                >
+                    <ManagementReport statuses={STATUSES} onClose={() => setModalActive(null)} />
+                </Modal>
+            ) : (
+                ''
+            )}
 
-      {modalActive === 'add' ? (
-        <Modal
-          isOpen={modalActive === 'add'}
-          onClose={() => setModalActive(null)}
-          title={t('addModal.title')}
-          modalType="add"
-          size="full"
-        >
-          <AddModal
-            riskLevels={RISK_LEVELS}
-            departments={departments}
-            onClose={() => setModalActive(null)}
-          />
-        </Modal>
-      ) : (
-        ''
-      )}
-    </>
-  );
+            {modalActive === 'departmentReport' ? (
+                <Modal
+                    isOpen={modalActive === 'departmentReport'}
+                    onClose={() => setModalActive(null)}
+                    title={t('departmentReport.title')}
+                    modalType="report"
+                    position="bottom"
+                >
+                    <DepartmentReport departments={departments} onClose={() => setModalActive(null)} />
+                </Modal>
+            ) : (
+                ''
+            )}
+
+            {modalActive === 'change' && activeIssueId ? (
+                <Modal
+                    isOpen={modalActive === 'change'}
+                    onClose={() => {
+                        setModalActive(null);
+                        setActiveIssueId(null);
+                    }}
+                    title={t('changeModal.title')}
+                    modalType="change"
+                    position="bottom"
+                >
+                    <ChangeModal
+                        issueId={activeIssueId}
+                        onClose={() => {
+                            setModalActive(null);
+                            setActiveIssueId(null);
+                        }}
+                    />
+                </Modal>
+            ) : (
+                ''
+            )}
+
+            {modalActive === 'add' ? (
+                <Modal
+                    isOpen={modalActive === 'add'}
+                    onClose={() => setModalActive(null)}
+                    title={t('addModal.title')}
+                    modalType="add"
+                    size="full"
+                >
+                    <AddModal
+                        riskLevels={RISK_LEVELS}
+                        departments={departments}
+                        onClose={() => setModalActive(null)}
+                    />
+                </Modal>
+            ) : (
+                ''
+            )}
+        </>
+    );
 };
 
 export default Dashboard;

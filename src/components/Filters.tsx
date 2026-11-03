@@ -7,10 +7,11 @@ import { FilterState } from '../types';
 import Checkbox from './ui/Checkbox';
 import { RISK_LEVELS, STATUSES } from '../const';
 import Close from './icons/Close';
+import { useState } from 'react';
 
 interface FiltersProps {
   filters: FilterState;
-  onChange: (key: keyof FilterState, value: FiltersData | string) => void; // изменение стейта выбранных фильтров
+  onFiltersChange: (key: keyof FilterState, value: FiltersData | string) => void; // изменение стейта выбранных фильтров
   onReset: () => void;
   inspections: string[];
   persons: string[];
@@ -22,7 +23,7 @@ interface FiltersProps {
 
 const Filters = ({
   filters,
-  onChange,
+  onFiltersChange,
   onReset,
   inspections,
   persons,
@@ -32,6 +33,7 @@ const Filters = ({
   years,
 }: FiltersProps) => {
   const { t } = useTranslation();
+  const [checkboxOpen, setCheckboxOpen] = useState<string | null>(null)
 
   const handleButtonClick = <T extends string>(value: T, allItems: T[], key: keyof FilterState) => {
     let newValue: T[];
@@ -45,18 +47,16 @@ const Filters = ({
     if (allItems.length === newValue.length) {
       newValue = [];
     }
-    onChange(key, newValue);
+    onFiltersChange(key, newValue);
   };
 
   const widthClass = 'w-full md:flex-1 min-w-0 max-w-full';
-
   const statusVariants: Record<string, Variants> = {
     open: 'warning',
     closed: 'success',
     removed: 'neutral',
     overdue: 'danger',
   };
-
   const riskLevelVariants: Record<string, Variants> = {
     low: 'success',
     medium: 'warning',
@@ -90,7 +90,7 @@ const Filters = ({
                 id="search"
                 name="search"
                 value={filters.search ?? ''}
-                onChange={(e) => onChange('search', e.target.value)}
+                onChange={(e) => onFiltersChange('search', e.target.value)}
                 className="text-[10px] md:text-[13px] h-8 p-[7px] px-3 text-text-main"
                 wrapperExtraClass={widthClass}
                 placeholder={t('filters.search')}
@@ -98,7 +98,7 @@ const Filters = ({
               <Button
                 type="button"
                 className="border-none h-[36px]"
-                onClick={() => onChange('search', '')}
+                onClick={() => onFiltersChange('search', '')}
               >
                 <Close className="text-text-muted hover:text-accent transition-colors h-5 w-5" />
               </Button>
@@ -107,36 +107,48 @@ const Filters = ({
             {/* ПРОВЕРКИ */}
             <div className="w-full flex gap-3 flex-wrap">
               <Checkbox
+                id={'inspections'}
                 options={inspections}
                 placeholder={'все проверки'}
-                value={filters.inspections ?? ''}
+                value={filters.inspections}
                 className={widthClass}
-                onChange={(data: string[]) => onChange('inspections', data)}
+                onChange={(data: string[]) => onFiltersChange('inspections', data)}
+                isOpen={checkboxOpen === 'inspections'}
+                setCheckboxOpen={setCheckboxOpen}
               />
               {/* ОТДЕЛЫ */}
               <Checkbox
+                id={'departments'}
                 options={departments}
                 placeholder={t('filters.allDepartments')}
                 value={filters.departments}
                 className={widthClass}
-                onChange={(data: string[]) => onChange('departments', data)}
+                onChange={(data: string[]) => onFiltersChange('departments', data)}
+                isOpen={checkboxOpen === 'departments'}
+                setCheckboxOpen={setCheckboxOpen}
               />
               {/* ОТВЕТСТВЕННЫЕ ЛИЦА */}
               <Checkbox
+                id={'persons'}
                 options={persons}
                 placeholder={t('filters.allPersons')}
                 value={filters.persons}
                 className={widthClass}
-                onChange={(data: string[]) => onChange('persons', data)}
+                onChange={(data: string[]) => onFiltersChange('persons', data)}
+                isOpen={checkboxOpen === 'persons'}
+                setCheckboxOpen={setCheckboxOpen}
               />
 
               {/* ГОДЫ ПРОВЕРОК */}
               <Checkbox
+                id={'years'}
                 options={years}
                 className={widthClass}
                 placeholder={t('filters.allYears')}
                 value={filters.inspectionYears}
-                onChange={(years) => onChange('inspectionYears', years)}
+                onChange={(data: string[]) => onFiltersChange('inspectionYears', data)}
+                isOpen={checkboxOpen === 'years'}
+                setCheckboxOpen={setCheckboxOpen}
               />
             </div>
           </div>
@@ -145,7 +157,7 @@ const Filters = ({
             <Button
               type="button"
               isActive={filters.statuses.length === 0}
-              onClick={() => onChange('statuses', [])}
+              onClick={() => onFiltersChange('statuses', [])}
               className="text-[10px] md:text-[12px]"
             >
               {t('filters.allStatuses')}
@@ -172,7 +184,7 @@ const Filters = ({
             <Button
               type="button"
               isActive={filters.riskLevels.length === 0}
-              onClick={() => onChange('riskLevels', [])}
+              onClick={() => onFiltersChange('riskLevels', [])}
               className="text-[10px] md:text-[12px]"
             >
               {t('filters.allRiskLevels')}
