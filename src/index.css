@@ -1,48 +1,48 @@
 @import url('https://googleapis.com');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --breakpoint-xs: max-width(400px);
   --font-sans: 'Rubik', system-ui, sans-serif;
 
-    /* --- Базовые цвета и фоны --- */
-  --color-page-bg: #F8F7F4;       /* главный фон страницы */
-  --color-light: #F4F3EF;         /* светлый фон, в основном идет как background */
-  --color-field-bg: #FFFFFF;      /* фон инпутов и текстовых полей */
-  --color-base-btn-bg: #FFFFFF;
-  --color-modal-bg: #FFFFFF;      /* фон модальных окон */
+  /* --- Базовые цвета и фоны --- */
+  --color-page-bg: #f8f7f4; /* главный фон страницы */
+  --color-light: #f4f3ef; /* светлый фон, в основном идет как background */
+  --color-field-bg: #ffffff; /* фон инпутов и текстовых полей */
+  --color-base-btn-bg: #ffffff;
+  --color-modal-bg: #ffffff; /* фон модальных окон */
   --color-table-header: #374151;
-  --color-card-bg: #FFFFFF;       /* карточки в аналитике и карточки в таблице */
+  --color-card-bg: #ffffff; /* карточки в аналитике и карточки в таблице */
 
   /* --- Бордеры --- */
-  --color-border-warm: #EAE9E2;   /* границы серые */
-  --color-border-dark: #1A1A1A;
-  
+  --color-border-warm: #eae9e2; /* границы серые */
+  --color-border-dark: #1a1a1a;
+
   /* --- Шрифты и текст --- */
-  --color-text-muted: #9E9E9E;    /* второстепенный текст / заголовки - темно-серые */
-  --color-text-main: #1A1A1A;     /* основной текст таблицы (text-text-main) */
-  --color-text-light: #FFFFFF;    /* светлый текст (если нужно выделить на темном фоне) */
+  --color-text-muted: #9e9e9e; /* второстепенный текст / заголовки - темно-серые */
+  --color-text-main: #1a1a1a; /* основной текст таблицы (text-text-main) */
+  --color-text-light: #ffffff; /* светлый текст (если нужно выделить на темном фоне) */
 
   /* --- Акценты --- */
-  --color-accent: #1E40AF;        /* акцентный синий */
-  --color-btn-dark: #11161B;      /* акцентная кнопка «+ Добавить» в шапке */
-  --color-secondary-btn-bg: #9E9E9E;
+  --color-accent: #1e40af; /* акцентный синий */
+  --color-btn-dark: #11161b; /* акцентная кнопка «+ Добавить» в шапке */
+  --color-secondary-btn-bg: #9e9e9e;
 
   /* SUCCESS (Статус: Исполнено / Низкий риск) */
-  --color-success: #166534;   /* Было #166534 (green-800) */
+  --color-success: #166534; /* Было #166534 (green-800) */
 
   /* WARNING (Статус: В работе / Средний риск) */
-  --color-warning: #CBA135;     /* Сделали мягким оранжевым (amber-600) вместо синего */
+  --color-warning: #cba135; /* Сделали мягким оранжевым (amber-600) вместо синего */
 
   /* DANGER (Статус: Просрочено / Высокий риск) */
-  --color-danger: #B91C1C;  /* Сделали насыщенным красным (red-700) вместо бледного rose-300 */
+  --color-danger: #b91c1c; /* Сделали насыщенным красным (red-700) вместо бледного rose-300 */
 
   /* NEUTRAL (Статус: Снято) */
-  --color-neutral: #6B7280; 
+  --color-neutral: #6b7280;
 }
 
 body {
-  background-color: #F8F7F4;
-  color: #1A1A1A;
+  background-color: #f8f7f4;
+  color: #1a1a1a;
   -webkit-font-smoothing: antialiased; /* сглаживание букв */
 }

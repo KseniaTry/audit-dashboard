@@ -1,141 +1,152 @@
-import { useTranslation } from "react-i18next"
-import { twMerge } from "tailwind-merge"
-import { RiskLevels } from "../const"
-import Plus from "./icons/Plus"
-import Input from "./ui/Input"
-import SelectInput from "./ui/SelectInput"
-import Textarea from "./ui/Textarea"
-import Button from "./ui/Button"
+import { useTranslation } from 'react-i18next';
+import { twMerge } from 'tailwind-merge';
+import { RiskLevels } from '../const';
+import Plus from './icons/Plus';
+import Input from './ui/Input';
+import SelectInput from './ui/SelectInput';
+import Textarea from './ui/Textarea';
+import Button from './ui/Button';
 
 interface AddModalProps {
-    riskLevels: RiskLevels[],
-    departments: string[],
-    onClose: () => void
+  riskLevels: RiskLevels[];
+  departments: string[];
+  onClose: () => void;
 }
 
 const AddModal = ({ riskLevels, departments, onClose }: AddModalProps) => {
-    const { t } = useTranslation()
-    const wrapperClass = "flex flex-col flex-wrap gap-2"
+  const { t } = useTranslation();
+  const wrapperClass = 'flex flex-col flex-wrap gap-2';
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log('submit')
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('submit');
+  };
 
-    return (
-        <form>
-            <div className="flex flex-wrap justify-between items-center p-5 gap-3">
-                {/* ВЫБОР ПРОВЕРКИ */}
-                <div className={twMerge(wrapperClass, 'w-full')}>
-                    <ul className="hidden">
-                        {/* поменять на проверки!!!! */}
-                        {departments.map((department) => {
-                            return <li key={department}>{department}</li>
-                        })
-                        }
+  return (
+    <form>
+      <div className="flex flex-wrap justify-between items-center p-5 gap-3">
+        {/* ВЫБОР ПРОВЕРКИ */}
+        <div className={twMerge(wrapperClass, 'w-full')}>
+          <ul className="hidden">
+            {/* поменять на проверки!!!! */}
+            {departments.map((department) => {
+              return <li key={department}>{department}</li>;
+            })}
+          </ul>
+          <Input
+            type={'text'}
+            labelText={t('table.inspection')}
+            id={'inspection'}
+            placeholder="Название проверки"
+            required={true}
+          />
+        </div>
 
-                    </ul>
-                    <Input
-                        type={'text'}
-                        labelText={t('table.inspection')}
-                        id={'inspection'}
-                        placeholder="Название проверки"
-                        required={true} />
-                </div>
+        {/* ДАТА НАЧАЛА ПРОВЕРКИ */}
+        <Input
+          type={'date'}
+          labelText={t('table.startInspectionDate')}
+          id={'date-start'}
+          wrapperExtraClass={'w-[45%]'}
+          required={true}
+        />
 
-                {/* ДАТА НАЧАЛА ПРОВЕРКИ */}
-                <Input
-                    type={'date'}
-                    labelText={t('table.startInspectionDate')}
-                    id={'date-start'}
-                    wrapperExtraClass={'w-[45%]'}
-                    required={true} />
+        {/* ДАТА ОКОНЧАНИЯ ПРОВЕРКИ */}
+        <Input
+          type={'date'}
+          labelText={t('table.endInspectionDate')}
+          id={'date-end'}
+          wrapperExtraClass={'w-[45%]'}
+          required={true}
+        />
 
-                {/* ДАТА ОКОНЧАНИЯ ПРОВЕРКИ */}
-                <Input
-                    type={'date'}
-                    labelText={t('table.endInspectionDate')}
-                    id={'date-end'}
-                    wrapperExtraClass={'w-[45%]'}
-                    required={true} />
+        {/* НАРУШЕНИЕ */}
+        <Textarea
+          labelText={t('table.violation')}
+          name={'violation'}
+          placeholder={t('addModal.violationPlaceholder')}
+          rows={5}
+          required={true}
+          widthClass={'w-full'}
+        />
 
-                {/* НАРУШЕНИЕ */}
-                <Textarea
-                    labelText={t('table.violation')}
-                    name={'violation'}
-                    placeholder={t('addModal.violationPlaceholder')}
-                    rows={5}
-                    required={true}
-                    widthClass={'w-full'} />
+        {/* РЕКОМЕНДАЦИЯ */}
+        <Textarea
+          labelText={t('table.recommendation')}
+          name={'recommendation'}
+          placeholder={t('addModal.recommendationPlaceholder')}
+          rows={5}
+          required={true}
+          widthClass={'w-full'}
+        />
 
-                {/* РЕКОМЕНДАЦИЯ */}
-                <Textarea
-                    labelText={t('table.recommendation')}
-                    name={'recommendation'}
-                    placeholder={t('addModal.recommendationPlaceholder')}
-                    rows={5}
-                    required={true}
-                    widthClass={'w-full'} />
+        {/* УРОВНИ РИСКА */}
+        <SelectInput
+          labelText={t('table.riskLevel')}
+          name={'risk-level'}
+          optionsArrayData={riskLevels}
+          widthClass={'w-[45%]'}
+          translateFn={(word) => t(`riskLevels.${word}`)}
+          required={true}
+        />
 
-                {/* УРОВНИ РИСКА */}
-                <SelectInput
-                    labelText={t('table.riskLevel')}
-                    name={'risk-level'}
-                    optionsArrayData={riskLevels}
-                    widthClass={'w-[45%]'}
-                    translateFn={(word) => t(`riskLevels.${word}`)}
-                    required={true} />
+        {/* ПЛАНОВАЯ ДАТА */}
+        <Input
+          type={'date'}
+          labelText={t('table.scheduledDate')}
+          id={'sheduled-date'}
+          wrapperExtraClass={'w-[45%]'}
+          required={true}
+        />
 
-                {/* ПЛАНОВАЯ ДАТА */}
-                <Input
-                    type={'date'}
-                    labelText={t('table.scheduledDate')}
-                    id={'sheduled-date'}
-                    wrapperExtraClass={'w-[45%]'}
-                    required={true} />
+        {/* ОТВЕТСТВЕННОЕ ССП */}
+        <div className={twMerge(wrapperClass, 'w-full')}>
+          <SelectInput
+            labelText={t('table.responsibleDepartment')}
+            name={'department'}
+            optionsArrayData={departments}
+            required={true}
+          />
+          <Button
+            type="button"
+            className="text-accent bg-accent/10 border-accent hover:bg-field-bg"
+          >
+            <Plus className="w-4 h-4 text-accent" />
+            {t('add')}
+          </Button>
+        </div>
 
-                {/* ОТВЕТСТВЕННОЕ ССП */}
-                <div className={twMerge(wrapperClass, 'w-full')}>
-                    <SelectInput labelText={t('table.responsibleDepartment')} name={'department'} optionsArrayData={departments} required={true} />
-                    <Button
-                        type="button"
-                        className="text-accent bg-accent/10 border-accent hover:bg-field-bg">
-                        <Plus className="w-4 h-4 text-accent" />
-                        {t('add')}
-                    </Button>
-                </div>
+        {/* ОТВЕТСТВЕННОЕ ЛИЦО */}
+        <div className={twMerge(wrapperClass, 'w-full')}>
+          <Input
+            type={'text'}
+            labelText={t('table.responsiblePerson')}
+            id={'responsible'}
+            placeholder={t('addModal.responsiblePerson')}
+            required={true}
+          />
+          <Button
+            type="button"
+            className="text-accent bg-accent/10 border-accent hover:bg-field-bg"
+          >
+            <Plus className="w-4 h-4 text-accent" />
+            {t('add')}
+          </Button>
+        </div>
+      </div>
 
-                {/* ОТВЕТСТВЕННОЕ ЛИЦО */}
-                <div className={twMerge(wrapperClass, 'w-full')}>
-                    <Input type={'text'} labelText={t('table.responsiblePerson')} id={'responsible'} placeholder={t('addModal.responsiblePerson')} required={true} />
-                    <Button
-                        type="button"
-                        className="text-accent bg-accent/10 border-accent hover:bg-field-bg">
-                        <Plus className="w-4 h-4 text-accent" />
-                        {t('add')}
-                    </Button>
-                </div>
-            </div>
+      {/* ФУТЕР: КНОПКИ */}
+      <footer className="flex justify-end items-center gap-3 border-t border-border-warm p-4">
+        <Button type="button" onClick={onClose}>
+          {t('cancel')}
+        </Button>
 
-            {/* ФУТЕР: КНОПКИ */}
-            <footer className="flex justify-end items-center gap-3 border-t border-border-warm p-4">
-                <Button
-                    type='button'
-                    onClick={onClose}
-                >
-                    {t('cancel')}
-                </Button>
+        <Button type="submit" onClick={handleSubmit} variant="secondary">
+          {t('save')}
+        </Button>
+      </footer>
+    </form>
+  );
+};
 
-                <Button
-                    type='submit'
-                    onClick={handleSubmit}
-                    variant="secondary"
-                >
-                    {(t('save'))}
-                </Button>
-            </footer>
-        </form>
-    )
-}
-
-export default AddModal
+export default AddModal;

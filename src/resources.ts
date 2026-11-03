@@ -15,6 +15,8 @@ export const resources = {
       save: 'Сохранить',
       download: 'Скачать .xls',
       reportDate: 'Дата отчета',
+      totalIssues: 'Кол-во записей: ',
+      showMore: 'Показать еще',
       analytics: {
         totalIssues: 'Все',
         totalActiveIssues: 'На контроле',
@@ -53,7 +55,7 @@ export const resources = {
         scheduledDate: 'Плановая дата',
         scheduledDateFull: 'Плановая дата исполнения',
         executionDate: 'Фактическая дата',
-        executionDateFull: 'Фактическая дата исполнения'
+        executionDateFull: 'Фактическая дата исполнения',
       },
       filters: {
         title: 'Фильтры',
@@ -65,7 +67,8 @@ export const resources = {
         allInspections: 'Все проверки',
         allStatuses: 'Все статусы',
         allRiskLevels: 'Все риски',
-        searchComment: '* поиск ощуествляется по категориям "Название проверки", "Нарушение", "Рекомендация"'
+        searchComment:
+          '* поиск ощуествляется по категориям "Название проверки", "Нарушение", "Рекомендация"',
       },
       modals: {
         add: 'Новая запись',
@@ -76,22 +79,22 @@ export const resources = {
         title: 'Добавить рекомендацию',
         responsiblePerson: 'Введите ответственное лицо',
         violationPlaceholder: 'Опишите выявленное нарушение',
-        recommendationPlaceholder: 'Опишите рекомендацию'
+        recommendationPlaceholder: 'Опишите рекомендацию',
       },
       changeModal: {
         title: 'Обновить запись',
         currentStatus: 'Статус после сохранения: ',
         switchToRemoved: 'Отметить как "СНЯТО"',
-        removedChecked: 'Рекомендация снята с контроля'
+        removedChecked: 'Рекомендация снята с контроля',
       },
       departmentReport: {
         title: 'Отчет для ССП',
-        text: 'Выберите ССП — в отчёт войдут все рекомендации, где указанное ССП является ответственным.'
+        text: 'Выберите ССП — в отчёт войдут все рекомендации, где указанное ССП является ответственным.',
       },
       managementReport: {
         title: 'Отчет для руководства',
-        text: 'Файл включает сводную статистику и полный реестр рекомендаций на дату {{reportDate}}.'
-      }
-    }
-  }
-}
+        text: 'Файл включает сводную статистику и полный реестр рекомендаций на дату {{reportDate}}.',
+      },
+    },
+  },
+};

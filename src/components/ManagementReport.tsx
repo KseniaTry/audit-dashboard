@@ -1,76 +1,77 @@
-import { useTranslation } from "react-i18next"
-import { twMerge } from "tailwind-merge"
-import { Statuses } from "../const"
-import Input from "./ui/Input"
-import Button from "./ui/Button"
+import { useTranslation } from 'react-i18next';
+import { twMerge } from 'tailwind-merge';
+import { Statuses } from '../const';
+import Input from './ui/Input';
+import Button from './ui/Button';
 
 interface ManagementReportData {
-    statuses: Statuses[],
-    onClose: () => void
+  statuses: Statuses[];
+  onClose: () => void;
 }
 
 const ManagementReport = ({ statuses, onClose }: ManagementReportData) => {
-    const { t } = useTranslation()
+  const { t } = useTranslation();
 
-    const countBaseClass = "text-[17px] font-bold"
-    const listItemClass = "flex justify-between items-center bg-field-bg p-4 border border-border-warm tracking-wide"
-    const countClass = {
-        open: "text-status-open ",
-        closed: "text-status-closed",
-        removed: "text-text-main",
-        overdue: "text-status-overdue"
-    }
+  const countBaseClass = 'text-[17px] font-bold';
+  const listItemClass =
+    'flex justify-between items-center bg-field-bg p-4 border border-border-warm tracking-wide';
+  const countClass = {
+    open: 'text-status-open ',
+    closed: 'text-status-closed',
+    removed: 'text-text-main',
+    overdue: 'text-status-overdue',
+  };
 
-    return (
-        <form>
-            <div className="flex flex-col flex-wrap p-5 gap-4">
-                <p className="tracking-wide">{t('managementReport.text', { reportDate: '01.01.2026' })}</p>
-                <Input
-                    type={'date'}
-                    labelText={t('reportDate')}
-                    id={'report-date'}
-                    wrapperExtraClass={'w-auto'}
-                    required={true} />
+  return (
+    <form>
+      <div className="flex flex-col flex-wrap p-5 gap-4">
+        <p className="tracking-wide">{t('managementReport.text', { reportDate: '01.01.2026' })}</p>
+        <Input
+          type={'date'}
+          labelText={t('reportDate')}
+          id={'report-date'}
+          wrapperExtraClass={'w-auto'}
+          required={true}
+        />
 
-                <div className="border border-border-warm bg-light p-1">
-                    <h2 className="tracking-widest uppercase text-[14px] p-1 my-2">Предпросмотр статистики</h2>
-                    <ul>
-                        <li className={listItemClass}>
-                            <p>Всего рекомендаций:</p>
-                            <p className={countBaseClass}>19</p>
-                        </li>
-                        {statuses.map((status) => {
-                            return (
-                                <li key={status} className={listItemClass}>
-                                    <p>{t(`statuses.${status}`)}:</p>
-                                    <p className={twMerge(countBaseClass, countClass[status])}>9</p>
-                                </li>
-                            )
-                        })}
-                        <li className={listItemClass}>
-                            <p>Процент исполнения:</p>
-                            <p className={countBaseClass}>45%</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <footer className="flex justify-end items-center gap-3 border-t border-border-warm p-4">
-                <Button
-                    type='button'
-                    onClick={onClose}
-                >
-                    {t('cancel')}
-                </Button>
-                <Button
-                    type='submit'
-                    // onClick={onSubmit}
-                    variant="secondary"
-                >
-                    {t('download')}
-                </Button>
-            </footer>
-        </form>
-    )
-}
+        <div className="border border-border-warm bg-light p-1">
+          <h2 className="tracking-widest uppercase text-[14px] p-1 my-2">
+            Предпросмотр статистики
+          </h2>
+          <ul>
+            <li className={listItemClass}>
+              <p>Всего рекомендаций:</p>
+              <p className={countBaseClass}>19</p>
+            </li>
+            {statuses.map((status) => {
+              return (
+                <li key={status} className={listItemClass}>
+                  <p>{t(`statuses.${status}`)}:</p>
+                  <p className={twMerge(countBaseClass, countClass[status])}>9</p>
+                </li>
+              );
+            })}
+            <li className={listItemClass}>
+              <p>Процент исполнения:</p>
+              <p className={countBaseClass}>45%</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <footer className="flex justify-end items-center gap-3 border-t border-border-warm p-4">
+        <Button type="button" onClick={onClose}>
+          {t('cancel')}
+        </Button>
+        <Button
+          type="submit"
+          // onClick={onSubmit}
+          variant="secondary"
+        >
+          {t('download')}
+        </Button>
+      </footer>
+    </form>
+  );
+};
 
-export default ManagementReport
+export default ManagementReport;
