@@ -9,15 +9,16 @@ import { RootState } from "../store"
 import { setReportDate } from "../slices/issuesSlice"
 
 interface TableData {
-    issues: Issue[] | Issue[][],
+    issues: Issue[],
     onIssueClick: (id: number | null) => void,
     onShowMoreClick: () => void,
     onPaginationClick: (page: number) => void,
     currentPage: number,
-    totalPages: number
+    totalPages: number,
+    totalIssues: number
 }
 
-const Table = ({ issues, onIssueClick, onPaginationClick, onShowMoreClick, currentPage, totalPages }: TableData) => {
+const Table = ({ issues, onIssueClick, onPaginationClick, onShowMoreClick, currentPage, totalPages, totalIssues }: TableData) => {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const reportDate = useSelector((state: RootState) => state.issues.reportDate)
@@ -41,7 +42,7 @@ const Table = ({ issues, onIssueClick, onPaginationClick, onShowMoreClick, curre
                             wrapperExtraClass="flex-row items-center normal-case flex-nowrap"
                             className="w-auto" />
                         <p className="normal-case tracking-widest text-[14px]">{t('totalIssues')}
-                            <span className="font-semibold">{issues.length}</span>
+                            <span className="font-semibold">{totalIssues}</span>
                         </p>
                     </div>
                     <Pagination
@@ -65,9 +66,9 @@ const Table = ({ issues, onIssueClick, onPaginationClick, onShowMoreClick, curre
                         <div>{t('table.scheduledDate')}</div>
                         <div>{t('table.executionDate')}</div>
                     </div>
-                    {issues && issues[currentPage - 1] ?
-                        issues[currentPage - 1].map((issue) => (<Card key={issue.id} issue={issue} onIssueClick={onIssueClick} />)) :
-                        'Loading'}
+                    {issues?.map((issue) => {
+                        return <Card key={issue.id} issue={issue} onIssueClick={onIssueClick} />
+                    })}
                 </div>
                 <Button
                     type='button'

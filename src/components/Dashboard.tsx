@@ -87,10 +87,14 @@ const Dashboard = () => {
     }, [dispatch])
 
     useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768)
+            setCurrentPage(DEFAULT_PAGE)
+        };
         window.addEventListener('resize', handleResize);
+
         return () => window.removeEventListener('resize', handleResize);
-    })
+    }, [])
 
     // ДЛЯ ФИЛЬТРОВ
     // добавление в объект с результатами фильтрации
@@ -128,8 +132,12 @@ const Dashboard = () => {
     }
 
     const visibleIssues = isMobile ?
-        divideIssues(filteredIssues, ITEMS_PER_PAGE) :
-        filteredIssues.slice(0, ITEMS_PER_PAGE * currentPage)
+        filteredIssues.slice(0, ITEMS_PER_PAGE * currentPage) :
+        divideIssues(filteredIssues, ITEMS_PER_PAGE)[currentPage - 1]
+
+
+    console.log(isMobile)
+    console.log(visibleIssues)
 
     // СТИЛИ
     const titleWrapperClass = "flex flex-wrap flex-col-reverse px-4 mt-4"
@@ -166,7 +174,8 @@ const Dashboard = () => {
                 onShowMoreClick={handleShowMoreClick}
                 onPaginationClick={handlePaginationClick}
                 currentPage={currentPage}
-                totalPages={totalPages} />
+                totalPages={totalPages}
+                totalIssues={filteredIssues.length} />
             {/* МОДАЛКИ */}
             {modalActive === 'managementReport' ?
                 <Modal
