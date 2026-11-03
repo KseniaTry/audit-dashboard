@@ -135,10 +135,6 @@ const Dashboard = () => {
         filteredIssues.slice(0, ITEMS_PER_PAGE * currentPage) :
         divideIssues(filteredIssues, ITEMS_PER_PAGE)[currentPage - 1]
 
-
-    console.log(isMobile)
-    console.log(visibleIssues)
-
     // СТИЛИ
     const titleWrapperClass = "flex flex-wrap flex-col-reverse px-4 mt-4"
     const titleClass = "md:text-[40px] w-full text-[23px]"
