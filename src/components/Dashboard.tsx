@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { selectIssuesWithStatuses, setAllIssues, setReportDate } from '../slices/issuesSlice';
 import { format } from 'date-fns';
 import { ModalActiveType, FilterState, Issue, FiltersData } from '../types';
+import { divideIssues, deepEqual } from '../utils';
 import Analytics from './Analytics';
 import Header from './Header';
 import AddModal from './AddModal';
@@ -16,7 +17,6 @@ import Modal from './ui/Modal';
 import ManagementReport from './ManagementReport';
 import Table from './Table';
 import Filters from './Filters';
-import { divideIssues } from '../utils';
 
 const getFilteredIssues = (issues: Issue[], filters: FilterState): Issue[] => {
     const result = issues.filter((issue: Issue) => {
@@ -83,6 +83,7 @@ const Dashboard = () => {
     const [filters, setFilters] = useState<FilterState>(initialFiltersState);
     const [currentPage, setCurrentPage] = useState<number>(DEFAULT_PAGE);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const isFilterActive = !deepEqual(filters, initialFiltersState)
 
     useEffect(() => {
         const currentDate = format(Date.now(), 'yyyy-MM-dd');
@@ -152,7 +153,13 @@ const Dashboard = () => {
                 <h1 className={titleClass}>{t('mainTitle')}</h1>
                 <h2 className={secondTitleClass}>{t('secondTitle')}</h2>
             </div>
-            <Analytics riskLevels={RISK_LEVELS} statuses={STATUSES} years={years} />
+            <Analytics
+                riskLevels={RISK_LEVELS}
+                statuses={STATUSES}
+                years={years}
+                issues={isFilterActive ? filteredIssues : allIssues}
+                isFilterActive={isFilterActive}
+            />
             <Filters
                 filters={filters}
                 onFiltersChange={handleFiltersState}

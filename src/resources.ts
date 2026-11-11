@@ -24,6 +24,8 @@ export const resources = {
         allIssues: 'Все рекомендации',
         allRisks: 'Сводка по рискам',
         allStatuses: 'Сводка по статусам',
+        filteredRisks: 'Сводка по рискам (отфильтровано)',
+        filteredStatuses: 'Свродка по статусам (отфильтровано)'
       },
       reports: {
         reportForDepartments: 'Отчет для ССП',
