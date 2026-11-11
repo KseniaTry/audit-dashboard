@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge';
 import Button from './ui/Button';
 import { useState } from 'react';
 import { format } from 'date-fns';
+import { calculateCount, calculatePercents } from '../utils';
 import { statusVariants, riskLevelVariants, colorClasses } from '../const';
 
 // блок аналитика показывает:
@@ -18,50 +19,6 @@ interface AnalyticsProps {
   issues: Issue[];
   isFilterActive?: boolean;
 }
-
-const calculateRisksPercents = (counts: Record<RiskLevels, number>, totalCount: number) => {
-  if (totalCount === 0) {
-    return { low: 0, medium: 0, high: 0 };
-  }
-
-  return {
-    low: counts.low ? (counts.low / totalCount) * 100 : 0,
-    medium: counts.medium ? (counts.medium / totalCount) * 100 : 0,
-    high: counts.high ? (counts.high / totalCount) * 100 : 0,
-  };
-};
-
-const calculateStatusesPercents = (counts: Record<Statuses, number>, totalCount: number) => {
-  if (totalCount === 0) {
-    return { open: 0, closed: 0, removed: 0, overdue: 0 };
-  }
-  console.log(counts.overdue / totalCount * 100)
-  return {
-    open: counts.open ? (counts.open / totalCount) * 100 : 0,
-    closed: counts.closed ? (counts.closed / totalCount) * 100 : 0,
-    removed: counts.removed ? (counts.removed / totalCount) * 100 : 0,
-    overdue: counts.overdue ? (counts.overdue / totalCount) * 100 : 0,
-  };
-};
-
-const calculateCount = <K extends 'riskLevel' | 'status'>(issues: Issue[], category: K) => {
-  type PropertyValue = Issue[K] & string;
-  return issues.reduce(
-    (acc, issue) => {
-      const key = issue[category] as PropertyValue;
-
-      if (!key) return acc;
-
-      if (key in acc) {
-        acc[key] += 1;
-      } else {
-        acc[key] = 1;
-      }
-      return acc;
-    },
-    {} as Record<PropertyValue, number>,
-  );
-};
 
 const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: AnalyticsProps) => {
   const { t } = useTranslation();
@@ -96,8 +53,8 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
 
   const statusesCounts = calculateCount(targetIssues, 'status')
   const risksCounts = calculateCount(targetIssues, 'riskLevel')
-  const statusesPercents = calculateStatusesPercents(statusesCounts, targetIssues.length)
-  const risksPercents = calculateRisksPercents(risksCounts, targetIssues.length)
+  const statusesPercents = calculatePercents(statuses, statusesCounts, targetIssues.length)
+  const risksPercents = calculatePercents(riskLevels, risksCounts, targetIssues.length)
 
   // стили
   const blockWrapperClass = 'w-full flex flex-wrap gap-[0px]';
@@ -165,7 +122,7 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
               <div key={riskLevel} className={twMerge(cardClass)}>
                 <h3 className={cardTitleClass}>{t(`riskLevels.${riskLevel}`)}</h3>
                 <p className={twMerge(violationCountClass, colorClasses[variant], 'bg-field-bg')}>
-                  {isFilterActive ? `${count}/ ${issues.length}` : count}
+                  {isFilterActive ? `${count} / ${totalIssues}` : count}
                 </p>
               </div>
             );
@@ -207,7 +164,7 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
                 <p
                   className={twMerge(violationCountClass, colorClasses[variant], 'bg-transparent')}
                 >
-                  {isFilterActive ? `${statusCount}/ ${issues.length}` : statusCount}
+                  {isFilterActive ? `${statusCount} / ${totalIssues}` : statusCount}
                 </p>
               </div>
             );

@@ -57,3 +57,32 @@ export const deepEqual = (obj1, obj2): boolean => {
 
   return true;
 }
+
+// analytics для расчета процентов и общего кол-ва issues
+export const calculatePercents = <T extends string>(keys: T[], counts: Record<T, number>, totalCount: number) => {
+  const result = {} as Record<T, number>
+
+  for (const key of keys) {
+    result[key] = totalCount === 0 ? 0 : (counts[key] ?? 0) / totalCount * 100
+  }
+  return result
+}
+
+export const calculateCount = <K extends 'riskLevel' | 'status'>(issues: Issue[], category: K) => {
+  type PropertyValue = Issue[K] & string;
+  return issues.reduce(
+    (acc, issue) => {
+      const key = issue[category] as PropertyValue;
+
+      if (!key) return acc;
+
+      if (key in acc) {
+        acc[key] += 1;
+      } else {
+        acc[key] = 1;
+      }
+      return acc;
+    },
+    {} as Record<PropertyValue, number>,
+  );
+};
