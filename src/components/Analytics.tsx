@@ -1,9 +1,10 @@
-import { Issue, RiskLevels, Statuses, Variants } from '../types';
+import { Issue, RiskLevels, Statuses } from '../types';
 import { useTranslation } from 'react-i18next';
 import { twMerge } from 'tailwind-merge';
 import Button from './ui/Button';
 import { useState } from 'react';
 import { format } from 'date-fns';
+import { statusVariants, riskLevelVariants, colorClasses } from '../const';
 
 // блок аналитика показывает:
 // 1. общую картину по статусам и рискам по всем выданным поручениям за выбранный год. 
@@ -13,30 +14,10 @@ import { format } from 'date-fns';
 interface AnalyticsProps {
   riskLevels: RiskLevels[];
   statuses: Statuses[];
-  years: number[] | string[];
+  years: string[];
   issues: Issue[];
   isFilterActive?: boolean;
 }
-
-const statusVariants: Record<string, Variants> = {
-  open: 'warning',
-  closed: 'success',
-  removed: 'neutral',
-  overdue: 'danger',
-};
-
-const riskLevelVariants: Record<string, Variants> = {
-  low: 'success',
-  medium: 'warning',
-  high: 'danger',
-};
-
-const colorClasses = {
-  warning: 'text-warning bg-warning/30 border-warning',
-  danger: 'text-danger bg-danger/30 border-danger',
-  success: 'text-success bg-success/30 border-success',
-  neutral: 'text-neutral bg-neutral/30 border-neutral',
-};
 
 const calculateRisksPercents = (counts: Record<RiskLevels, number>, totalCount: number) => {
   if (totalCount === 0) {
@@ -84,42 +65,39 @@ const calculateCount = <K extends 'riskLevel' | 'status'>(issues: Issue[], categ
 
 const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: AnalyticsProps) => {
   const { t } = useTranslation();
-  const [activeYear, setActiveYear] = useState<number | null | string>(null);
+  const [activeYear, setActiveYear] = useState<null | string>(null);
   const [tabActive, setTabActive] = useState<'all' | 'active'>('all');
+  let targetIssues: Issue[] // все issues
+  let yearIssues: Issue[] // фильтрованный список по годам 
 
-  const allActiveIssues: Issue[] = issues.reduce((acc, issue) => {
-    if (issue.status === 'open' || issue.status === 'overdue') {
-      acc.push(issue);
-    }
-    return acc;
-  }, [] as Issue[]);
+  // получаем данные по году если включен соответствующий фильтр в аналитике (по годам)
+  if (activeYear !== null && !isFilterActive) {
+    yearIssues = issues.filter(
+      (issue) => format(new Date(issue.startInspectionDate), 'yyyy') === activeYear,
+    );
+  } else {
+    yearIssues = issues
+  }
 
-  // фильтры по табам , общая картина, вычисления только исходя из allIssues
-  // фильтр по годам 
-  const allYearFilteredIssues =
-    activeYear === null
-      ? issues
-      : issues.filter(
-        (issue) => format(new Date(issue.startInspectionDate), 'yyyy') === activeYear,
-      );
+  // получаем только активные issues по статусу open и overdue
+  const activeIssues = yearIssues.filter((issue) => issue.status === 'open' || issue.status === 'overdue')
 
-  // только для таба "все проверки" и "на контроле"
-  const allYearFilteredActiveIssues =
-    activeYear === null
-      ? allActiveIssues
-      : allActiveIssues.filter(
-        (issue) => format(new Date(issue.startInspectionDate), 'yyyy') === activeYear,
-      );
+  // формируем целевой массив issues исходя из включенного фильтра (Filters) и (или) таба active / all
+  if (isFilterActive) {
+    targetIssues = issues
+  } else if (tabActive === 'active') {
+    targetIssues = activeIssues
+  } else {
+    targetIssues = yearIssues
+  }
 
-  const totalIssues = isFilterActive ? issues.length : allYearFilteredIssues.length;
-  const totalActiveIssues = allYearFilteredActiveIssues.length; // активные поручения в зависимости от выбранного таба
+  const totalIssues = yearIssues.length
+  const totalActiveIssues = activeIssues.length; // активные поручения в зависимости от выбранного таба
 
-  const allStatusesCounts = isFilterActive ? calculateCount(issues, 'status') : calculateCount(allYearFilteredIssues, 'status');
-  const allRisksCounts = isFilterActive ? calculateCount(issues, 'riskLevel') : calculateCount(allYearFilteredIssues, 'riskLevel');
-  const activeStatusesCounts = calculateCount(allYearFilteredActiveIssues, 'status'); // только для таба "все проверки" и "на контроле"
-  const activeRisksCounts = calculateCount(allYearFilteredActiveIssues, 'riskLevel'); // только для таба "все проверки" и "на контроле"
-  const statusesCounts = isFilterActive || tabActive === 'all' ? allStatusesCounts : activeStatusesCounts
-  const risksCounts = isFilterActive || tabActive === 'all' ? allRisksCounts : activeRisksCounts
+  const statusesCounts = calculateCount(targetIssues, 'status')
+  const risksCounts = calculateCount(targetIssues, 'riskLevel')
+  const statusesPercents = calculateStatusesPercents(statusesCounts, targetIssues.length)
+  const risksPercents = calculateRisksPercents(risksCounts, targetIssues.length)
 
   // стили
   const blockWrapperClass = 'w-full flex flex-wrap gap-[0px]';
@@ -197,12 +175,10 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
         <div className={stripeWrapperClass}>
           {riskLevels.map((riskLevel) => {
             const variant = riskLevelVariants[riskLevel];
-            const percents = calculateRisksPercents(risksCounts, totalIssues)
-
             return (
               <div
                 key={riskLevel}
-                style={{ width: `${percents[riskLevel]}%` }}
+                style={{ width: `${risksPercents[riskLevel]}%` }}
                 className={twMerge(colorClasses[variant], 'h-full')}
               ></div>
             );
@@ -241,12 +217,10 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
         <div className={stripeWrapperClass}>
           {statuses.map((status) => {
             const variant = statusVariants[status];
-            const percents = calculateStatusesPercents(statusesCounts, totalIssues)
-
             return (
               <div
                 key={status}
-                style={{ width: `${percents[status]}%` }}
+                style={{ width: `${statusesPercents[status]}%` }}
                 className={twMerge(colorClasses[variant], 'h-full')}
               ></div>
             );
