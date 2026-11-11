@@ -1,10 +1,10 @@
-import { Issue } from './const';
+import { Issue } from "./types";
 
 export const mockIssues: Issue[] = [
   // 2024 ГОД
   // --- ИНСПЕКЦИЯ 3: Аудит соблюдения требований ПОД/ФТ (2024 год, 2 нарушения) ---
   {
-    id: 3,
+    id: 'mock-1',
     inspection: 'Аудит соблюдения требований ПОД/ФТ (Росфинмониторинг)',
     startInspectionDate: '2024-08-03',
     endInspectionDate: '2024-08-07',
@@ -20,7 +20,7 @@ export const mockIssues: Issue[] = [
     executionDate: null,
   },
   {
-    id: 15,
+    id: 'mock-2',
     inspection: 'Аудит соблюдения требований ПОД/ФТ (Росфинмониторинг)',
     startInspectionDate: '2024-08-03',
     endInspectionDate: '2024-08-07',
@@ -38,7 +38,7 @@ export const mockIssues: Issue[] = [
 
   // --- ИНСПЕКЦИЯ 5: Инспекция штрафстоянок (2024 год, 1 нарушение) ---
   {
-    id: 5,
+    id: 'mock-3',
     inspection: 'Инспекция хранения изъятого имущества на штрафстоянках',
     startInspectionDate: '2024-07-15',
     endInspectionDate: '2024-07-17',
@@ -56,7 +56,7 @@ export const mockIssues: Issue[] = [
 
   // --- ИНСПЕКЦИЯ 8: Аудит маркетинговых программ (2024 год, 1 нарушение) ---
   {
-    id: 8,
+    id: 'mock-4',
     inspection: 'Аудит маркетинговых программ с автодилерами (Субсидии)',
     startInspectionDate: '2024-07-20',
     endInspectionDate: '2024-07-25',
@@ -74,7 +74,7 @@ export const mockIssues: Issue[] = [
 
   // --- ИНСПЕКЦИЯ 9: Проверка регистрации предметов лизинга (2024 год, 2 нарушения) ---
   {
-    id: 9,
+    id: 'mock-5',
     inspection: 'Проверка регистрации предметов лизинга в госорганах',
     startInspectionDate: '2024-08-05',
     endInspectionDate: '2024-08-07',
@@ -90,7 +90,7 @@ export const mockIssues: Issue[] = [
     executionDate: '2024-08-19',
   },
   {
-    id: 20,
+    id: 'mock-6',
     inspection: 'Проверка регистрации предметов лизинга в госорганах',
     startInspectionDate: '2024-08-05',
     endInspectionDate: '2024-08-07',
@@ -112,7 +112,7 @@ export const mockIssues: Issue[] = [
 
   // --- ИНСПЕКЦИЯ 2: Проверка страхования портфеля спецтехники (2025 год, 3 нарушения) ---
   {
-    id: 2,
+    id: 'mock-7',
     inspection: 'Проверка страхования портфеля спецтехники (КАСКО)',
     startInspectionDate: '2025-05-17',
     endInspectionDate: '2025-05-20',
@@ -128,7 +128,7 @@ export const mockIssues: Issue[] = [
     executionDate: '2025-05-24',
   },
   {
-    id: 13,
+    id: 'mock-8',
     inspection: 'Проверка страхования портфеля спецтехники (КАСКО)',
     startInspectionDate: '2025-05-17',
     endInspectionDate: '2025-05-20',
@@ -144,7 +144,7 @@ export const mockIssues: Issue[] = [
     executionDate: null,
   },
   {
-    id: 14,
+    id: 'mock-9',
     inspection: 'Проверка страхования портфеля спецтехники (КАСКО)',
     startInspectionDate: '2025-05-17',
     endInspectionDate: '2025-05-20',
@@ -162,7 +162,7 @@ export const mockIssues: Issue[] = [
 
   // --- ИНСПЕКЦИЯ 6: Аудит процесса скоринга (2025 год, 3 нарушения) ---
   {
-    id: 6,
+    id: 'mock-10',
     inspection: 'Аудит процесса скоринга и одобрения лизинговых сделок',
     startInspectionDate: '2025-08-11',
     endInspectionDate: '2025-08-14',
@@ -178,7 +178,7 @@ export const mockIssues: Issue[] = [
     executionDate: null,
   },
   {
-    id: 17,
+    id: 'mock-11',
     inspection: 'Аудит процесса скоринга и одобрения лизинговых сделок',
     startInspectionDate: '2025-08-11',
     endInspectionDate: '2025-08-14',
@@ -194,7 +194,7 @@ export const mockIssues: Issue[] = [
     executionDate: null,
   },
   {
-    id: 18,
+    id: 'mock-12',
     inspection: 'Аудит процесса скоринга и одобрения лизинговых сделок',
     startInspectionDate: '2025-08-11',
     endInspectionDate: '2025-08-14',
@@ -212,7 +212,7 @@ export const mockIssues: Issue[] = [
 
   // --- ИНСПЕКЦИЯ 10: Лизинговые сделки с госучастием (2025 год, 2 нарушения) ---
   {
-    id: 10,
+    id: 'mock-13',
     inspection: 'Аудит лизинговых сделок с государственным участием (ЛК-Субсидии Минпромторга)',
     startInspectionDate: '2025-11-12',
     endInspectionDate: '2025-11-14',
@@ -228,7 +228,7 @@ export const mockIssues: Issue[] = [
     executionDate: null,
   },
   {
-    id: 21,
+    id: 'mock-14',
     inspection: 'Аудит лизинговых сделок с государственным участием (ЛК-Субсидии Минпромторга)',
     startInspectionDate: '2025-11-12',
     endInspectionDate: '2025-11-14',
@@ -248,7 +248,7 @@ export const mockIssues: Issue[] = [
   // ==========================================
   // --- ИНСПЕКЦИЯ 1: Аудит мониторинга предметов лизинга (2026 год, 3 нарушения) ---
   {
-    id: 1,
+    id: 'mock-15',
     inspection: 'Аудит мониторинга предметов лизинга (Автотранспорт)',
     startInspectionDate: '2026-08-10',
     endInspectionDate: '2026-08-14',
@@ -264,7 +264,7 @@ export const mockIssues: Issue[] = [
     executionDate: null,
   },
   {
-    id: 11,
+    id: 'mock-16',
     inspection: 'Аудит мониторинга предметов лизинга (Автотранспорт)',
     startInspectionDate: '2026-08-10',
     endInspectionDate: '2026-08-14',
@@ -280,7 +280,7 @@ export const mockIssues: Issue[] = [
     executionDate: null,
   },
   {
-    id: 12,
+    id: 'mock-17',
     inspection: 'Аудит мониторинга предметов лизинга (Автотранспорт)',
     startInspectionDate: '2026-08-10',
     endInspectionDate: '2026-08-14',
@@ -297,7 +297,7 @@ export const mockIssues: Issue[] = [
   },
   // --- ИНСПЕКЦИЯ 4: Анализ работы с дебиторской задолженностью (2026 год, 2 нарушения) ---
   {
-    id: 4,
+    id: 'mock-18',
     inspection: 'Анализ работы с дебиторской задолженностью и цессии',
     startInspectionDate: '2026-08-24',
     endInspectionDate: '2026-08-28',
@@ -313,7 +313,7 @@ export const mockIssues: Issue[] = [
     executionDate: null,
   },
   {
-    id: 16,
+    id: 'mock-19',
     inspection: 'Анализ работы с дебиторской задолженностью и цессии',
     startInspectionDate: '2026-08-24',
     endInspectionDate: '2026-08-28',
@@ -330,7 +330,7 @@ export const mockIssues: Issue[] = [
   },
   // --- ИНСПЕКЦИЯ 7: Проверка чистоты сделок недвижимости (2026 год, 2 нарушения) ---
   {
-    id: 7,
+    id: 'mock-20',
     inspection: 'Проверка чистоты сделок финансового лизинга недвижимости',
     startInspectionDate: '2026-09-01',
     endInspectionDate: '2026-09-03',
@@ -346,7 +346,7 @@ export const mockIssues: Issue[] = [
     executionDate: null,
   },
   {
-    id: 19,
+    id: 'mock-21',
     inspection: 'Проверка чистоты сделок финансового лизинга недвижимости',
     startInspectionDate: '2026-09-01',
     endInspectionDate: '2026-09-03',
@@ -363,7 +363,7 @@ export const mockIssues: Issue[] = [
   },
   // --- ИНСПЕКЦИЯ 11: Технический аудит медицинского оборудования (2026 год, 2 нарушения) ---
   {
-    id: 22,
+    id: 'mock-22',
     inspection: 'Технический аудит переданного в лизинг медицинского оборудования',
     startInspectionDate: '2026-09-07',
     endInspectionDate: '2026-09-11',
@@ -379,7 +379,7 @@ export const mockIssues: Issue[] = [
     executionDate: null,
   },
   {
-    id: 23,
+    id: 'mock-23',
     inspection: 'Технический аудит переданного в лизинг медицинского оборудования',
     startInspectionDate: '2026-09-07',
     endInspectionDate: '2026-09-11',
@@ -396,7 +396,7 @@ export const mockIssues: Issue[] = [
   },
   // --- ИНСПЕКЦИЯ 12: Валютный контроль и ВЭД (2026 год, 3 нарушения) ---
   {
-    id: 24,
+    id: 'mock-24',
     inspection: 'Контроль валютных рисков при импорте китайских станков',
     startInspectionDate: '2026-09-14',
     endInspectionDate: '2026-09-16',
@@ -411,7 +411,7 @@ export const mockIssues: Issue[] = [
     executionDate: null,
   },
   {
-    id: 25,
+    id: 'mock-25',
     inspection: 'Контроль валютных рисков при импорте китайских станков',
     startInspectionDate: '2026-09-14',
     endInspectionDate: '2026-09-16',
@@ -427,7 +427,7 @@ export const mockIssues: Issue[] = [
     executionDate: null,
   },
   {
-    id: 26,
+    id: 'mock-26',
     inspection: 'Контроль валютных рисков при импорте китайских станков',
     startInspectionDate: '2026-09-14',
     endInspectionDate: '2026-09-16',
@@ -444,7 +444,7 @@ export const mockIssues: Issue[] = [
   },
   // --- ИНСПЕКЦИЯ 13: Одиночная инспекция ИТ (2026 год, 1 нарушение) ---
   {
-    id: 27,
+    id: 'mock-27',
     inspection: 'Аудит информационной безопасности личного кабинета лизингополучателя',
     startInspectionDate: '2026-09-21',
     endInspectionDate: '2026-09-23',

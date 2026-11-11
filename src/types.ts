@@ -15,7 +15,7 @@ export interface FilterState {
 }
 
 export type Issue = {
-  id: number;
+  id: string;
   inspection: string;
   startInspectionDate: string;
   endInspectionDate: string;
