@@ -32,7 +32,7 @@ const Modal = ({
       className={`${openClass} fixed inset-0 z-50 ${positionClass} justify-center md:items-center md:p-4 bg-black/20 backdrop-blur-sm`}
     >
       <div
-        className={`w-full h-full md:w-[50%] ${sizeClass} bg-modal-bg border border-border-warm rounded-xl overflow-y-auto`}
+        className={`w-full h-full md:w-[60%] ${sizeClass} bg-modal-bg border border-border-warm rounded-xl overflow-y-auto`}
       >
         {/* ЗАГОЛОВОК */}
         <header className="bg-light p-4 border-b border-b-border-warm">
