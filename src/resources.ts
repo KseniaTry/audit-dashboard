@@ -25,7 +25,7 @@ export const resources = {
         allRisks: 'Сводка по рискам',
         allStatuses: 'Сводка по статусам',
         filteredRisks: 'Сводка по рискам (отфильтровано)',
-        filteredStatuses: 'Свродка по статусам (отфильтровано)'
+        filteredStatuses: 'Сводка по статусам (отфильтровано)'
       },
       reports: {
         reportForDepartments: 'Отчет для ССП',
@@ -38,6 +38,7 @@ export const resources = {
         removed: 'Снято',
       },
       riskLevels: {
+        all: 'Выберите уровень риска',
         high: 'Высокий',
         medium: 'Средний',
         low: 'Низкий',
@@ -79,7 +80,8 @@ export const resources = {
       },
       addModal: {
         title: 'Добавить рекомендацию',
-        responsiblePerson: 'Введите ответственное лицо',
+        addPerson: 'Выберите ответственное лицо',
+        addDepartment: 'Выберите департамент',
         violationPlaceholder: 'Опишите выявленное нарушение',
         recommendationPlaceholder: 'Опишите рекомендацию',
       },
