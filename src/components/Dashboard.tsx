@@ -1,4 +1,4 @@
-import { RISK_LEVELS, STATUSES, ITEMS_PER_PAGE, DEFAULT_PAGE } from '../const';
+import { RISK_LEVELS, STATUSES, ITEMS_PER_PAGE, DEFAULT_PAGE, PERSONS, DEPARTMENTS } from '../const';
 import { mockIssues } from '../mocks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +6,7 @@ import { RootState } from '../store';
 import { useEffect, useState } from 'react';
 import { selectIssuesWithStatuses, setAllIssues, setReportDate } from '../slices/issuesSlice';
 import { format } from 'date-fns';
-import { ModalActiveType, FilterState, Issue, FiltersData } from '../types';
+import { ModalActiveType, FilterState, Issue, FiltersData, AddModalData } from '../types';
 import { divideIssues, deepEqual } from '../utils';
 import Analytics from './Analytics';
 import Header from './Header';
@@ -69,6 +69,7 @@ const getFilteredIssues = (issues: Issue[], filters: FilterState): Issue[] => {
 const Dashboard = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
+
     const initialFiltersState: FilterState = {
         search: '',
         inspections: [],
@@ -78,12 +79,25 @@ const Dashboard = () => {
         statuses: [],
         riskLevels: [],
     };
+    const initialNewData: Issue = {
+        id: '',
+        inspection: '',
+        startInspectionDate: '',
+        endInspectionDate: '',
+        auditViolation: '',
+        recommendation: '',
+        riskLevel: '',
+        responsibleDepartment: [],
+        responsiblePerson: [],
+        scheduledDate: ''
+    }
     const [modalActive, setModalActive] = useState<ModalActiveType>(null);
     const [activeIssueId, setActiveIssueId] = useState<number | null>(null);
     const [filters, setFilters] = useState<FilterState>(initialFiltersState);
     const [currentPage, setCurrentPage] = useState<number>(DEFAULT_PAGE);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const isFilterActive = !deepEqual(filters, initialFiltersState)
+    const [newIssueData, setNewIssueData] = useState<Issue>(initialNewData)
 
     useEffect(() => {
         const currentDate = format(Date.now(), 'yyyy-MM-dd');
@@ -100,6 +114,15 @@ const Dashboard = () => {
 
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    // ADD MODAL
+    // добавление новой записи
+    const updateNewIssueData = (key: keyof Issue, value: AddModalData) => {
+        setNewIssueData((prev) => ({
+            ...prev,
+            [key]: value,
+        }));
+    }
 
     // ДЛЯ ФИЛЬТРОВ
     // добавление в объект с результатами фильтрации
@@ -242,11 +265,15 @@ const Dashboard = () => {
                     title={t('addModal.title')}
                     modalType="add"
                     size="full"
+
                 >
                     <AddModal
                         riskLevels={RISK_LEVELS}
-                        departments={departments}
+                        departments={DEPARTMENTS}
+                        persons={PERSONS}
                         onClose={() => setModalActive(null)}
+                        updateNewIssueData={updateNewIssueData}
+                        newIssueData={newIssueData}
                     />
                 </Modal>
             ) : (
