@@ -5,6 +5,7 @@ interface SelectInputData extends SelectHTMLAttributes<HTMLSelectElement> {
   labelText?: string;
   optionsArrayData: string[];
   widthClass?: string;
+  placeholder?: string; // если нужно добавить какие-то данные помимо переданных optionsArrayData, допустим 'все проверки'/'все риски' и тд 
   translateFn?: (word: string) => string; // если нужно вставить перевод i18n
 }
 
@@ -12,6 +13,7 @@ const SelectInput = ({
   labelText,
   optionsArrayData,
   widthClass,
+  placeholder,
   translateFn,
   className,
   ...props
@@ -31,6 +33,9 @@ const SelectInput = ({
         ''
       )}
       <select className={twMerge(selectClass, className)} {...props}>
+        <option key={placeholder} value={placeholder}>
+          {placeholder}
+        </option>
         {optionsArrayData.map((option) => {
           return (
             <option key={option} value={option}>
