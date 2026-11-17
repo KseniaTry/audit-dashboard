@@ -95,9 +95,12 @@ export const resources = {
         title: 'Добавить рекомендацию',
         addPerson: 'Выберите ответственного',
         addDepartment: 'Выберите департамент',
+        addInspection: 'Выберите проверку',
         violationPlaceholder: 'Опишите выявленное нарушение',
         recommendationPlaceholder: 'Опишите рекомендацию',
         inspectionPlaceholder: 'Название проверки',
+        existedInspection: 'Существующая проверка',
+        newInspection: 'Новая проверка',
       },
       changeModal: {
         title: 'Обновить запись',
