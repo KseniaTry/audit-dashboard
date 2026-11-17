@@ -261,7 +261,10 @@ const Dashboard = () => {
             {modalActive === 'add' ? (
                 <Modal
                     isOpen={modalActive === 'add'}
-                    onClose={() => setModalActive(null)}
+                    onClose={() => {
+                        setModalActive(null)
+                        setNewIssueData(initialNewData)
+                    }}
                     title={t('addModal.title')}
                     modalType="add"
                     size="full"
@@ -271,7 +274,10 @@ const Dashboard = () => {
                         riskLevels={RISK_LEVELS}
                         departments={DEPARTMENTS}
                         persons={PERSONS}
-                        onClose={() => setModalActive(null)}
+                        onClose={() => {
+                            setModalActive(null)
+                            setNewIssueData(initialNewData)
+                        }}
                         updateNewIssueData={updateNewIssueData}
                         newIssueData={newIssueData}
                     />
