@@ -21,12 +21,12 @@ export const resources = {
         inspection: 'Введите название проверки',
         startInspectionDate: 'Введите дату начала проверки',
         endInspectionDate: 'Введите дату окончания проверки',
-        endInspectionDateLength: 'Дата окончания проверки раньше даты начала проверки',
+        endInspectionDateLength: 'Дата окончания проверки раньше даты начала',
         violation: 'Опишите выявленное нарушение',
         recommendation: 'Опишите рекомендацию',
         riskLevel: 'Выберите уровень риска',
         scheduledDate: 'Введите плановую дату исполнения',
-        scheduledDateLength: 'Плановая дата исполнения поручения должна быть позднее даты окончания проверки',
+        scheduledDateLength: 'Плановая дата исполнения рекомендации раньше даты окончания проверки',
         departments: 'Выберите хотя бы одно ответственное ССП',
         persons: 'Выберите хотя бы одно ответственное лицо'
       },
@@ -102,7 +102,7 @@ export const resources = {
         title: 'Обновить запись',
         currentStatus: 'Статус после сохранения: ',
         switchToRemoved: 'Отметить как "СНЯТО"',
-        removedChecked: 'Рекомендация снята с контроля',
+        removedChecked: 'Поручение снято с контроля',
       },
       departmentReport: {
         title: 'Отчет для ССП',
