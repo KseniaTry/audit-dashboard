@@ -1,4 +1,4 @@
-import { Issue } from "./types";
+import { Issue } from './types';
 
 export const mockIssues: Issue[] = [
   // 2024 ГОД

@@ -59,7 +59,6 @@ export const PERSONS: string[] = [
   'Чернов О.Б.',
 ].sort();
 
-
 // pagination
 export const ITEMS_PER_PAGE = 10;
 export const PAGINATION_STUB = '...';

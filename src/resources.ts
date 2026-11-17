@@ -28,7 +28,7 @@ export const resources = {
         scheduledDate: 'Введите плановую дату исполнения',
         scheduledDateLength: 'Плановая дата исполнения рекомендации раньше даты окончания проверки',
         departments: 'Выберите хотя бы одно ответственное ССП',
-        persons: 'Выберите хотя бы одно ответственное лицо'
+        persons: 'Выберите хотя бы одно ответственное лицо',
       },
       analytics: {
         totalIssues: 'Все',
@@ -38,7 +38,7 @@ export const resources = {
         allRisks: 'Сводка по рискам',
         allStatuses: 'Сводка по статусам',
         filteredRisks: 'Сводка по рискам (отфильтровано)',
-        filteredStatuses: 'Сводка по статусам (отфильтровано)'
+        filteredStatuses: 'Сводка по статусам (отфильтровано)',
       },
       reports: {
         reportForDepartments: 'Отчет для ССП',
@@ -97,7 +97,7 @@ export const resources = {
         addDepartment: 'Выберите департамент',
         violationPlaceholder: 'Опишите выявленное нарушение',
         recommendationPlaceholder: 'Опишите рекомендацию',
-        inspectionPlaceholder: 'Название проверки'
+        inspectionPlaceholder: 'Название проверки',
       },
       changeModal: {
         title: 'Обновить запись',

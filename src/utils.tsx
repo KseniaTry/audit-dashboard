@@ -11,14 +11,14 @@ export const getStatus = (
     return 'removed';
   }
 
-  const parsedReportDate = startOfDay(new Date(reportDate))
-  const parsedScheduledDate = parseISO(scheduledDate)
+  const parsedReportDate = startOfDay(new Date(reportDate));
+  const parsedScheduledDate = parseISO(scheduledDate);
   const parsedExecutionDate = executionDate ? parseISO(executionDate) : '';
 
   const isOverdue = isAfter(parsedReportDate, parsedScheduledDate);
 
   if (!executionDate) {
-    return isOverdue ? 'overdue' : 'open'
+    return isOverdue ? 'overdue' : 'open';
   }
 
   const difference = differenceInCalendarDays(parsedExecutionDate, parsedScheduledDate);
@@ -54,17 +54,21 @@ export const deepEqual = (obj1, obj2): boolean => {
   }
 
   return true;
-}
+};
 
 // analytics для расчета процентов и общего кол-ва issues
-export const calculatePercents = <T extends string>(keys: T[], counts: Record<T, number>, totalCount: number) => {
-  const result = {} as Record<T, number>
+export const calculatePercents = <T extends string>(
+  keys: T[],
+  counts: Record<T, number>,
+  totalCount: number,
+) => {
+  const result = {} as Record<T, number>;
 
   for (const key of keys) {
-    result[key] = totalCount === 0 ? 0 : (counts[key] ?? 0) / totalCount * 100
+    result[key] = totalCount === 0 ? 0 : ((counts[key] ?? 0) / totalCount) * 100;
   }
-  return result
-}
+  return result;
+};
 
 export const calculateCount = <K extends 'riskLevel' | 'status'>(issues: Issue[], category: K) => {
   type PropertyValue = Issue[K] & string;

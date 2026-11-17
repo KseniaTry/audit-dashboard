@@ -35,7 +35,7 @@ interface ErrorsData {
   persons?: string;
 }
 
-// стейт errors для валидации кастомных чекбоксов 
+// стейт errors для валидации кастомных чекбоксов
 const errorsInitialState = {
   inspection: '',
   startInspectionDate: '',
@@ -46,67 +46,83 @@ const errorsInitialState = {
   scheduledDate: '',
   departments: '',
   persons: '',
-}
+};
 
-const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueData, newIssueData, resetData }: AddModalProps) => {
+const AddModal = ({
+  riskLevels,
+  departments,
+  persons,
+  onClose,
+  updateNewIssueData,
+  newIssueData,
+  resetData,
+}: AddModalProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [checkboxOpen, setCheckboxOpen] = useState<string | null>(null)
+  const [checkboxOpen, setCheckboxOpen] = useState<string | null>(null);
 
-  const [errors, setErrors] = useState<ErrorsData>(errorsInitialState)
+  const [errors, setErrors] = useState<ErrorsData>(errorsInitialState);
 
   const validateForm = () => {
-    const startDate = parseISO(newIssueData.startInspectionDate)
-    const endDate = parseISO(newIssueData.endInspectionDate)
-    const scheduledDate = parseISO(newIssueData.scheduledDate)
-    const newErrors: ErrorsData = { ...errorsInitialState }
+    const startDate = parseISO(newIssueData.startInspectionDate);
+    const endDate = parseISO(newIssueData.endInspectionDate);
+    const scheduledDate = parseISO(newIssueData.scheduledDate);
+    const newErrors: ErrorsData = { ...errorsInitialState };
 
     if (newIssueData.inspection.trim() === '') {
-      newErrors.inspection = t('errors.inspection')
+      newErrors.inspection = t('errors.inspection');
     }
     if (newIssueData.startInspectionDate === '') {
-      newErrors.startInspectionDate = t('errors.startInspectionDate')
+      newErrors.startInspectionDate = t('errors.startInspectionDate');
     }
     if (newIssueData.endInspectionDate === '') {
-      newErrors.endInspectionDate = t('errors.endInspectionDate')
+      newErrors.endInspectionDate = t('errors.endInspectionDate');
     }
-    if (newIssueData.startInspectionDate !== '' && newIssueData.endInspectionDate !== '' && differenceInDays(endDate, startDate) < 0) {
-      newErrors.endInspectionDate = t('errors.endInspectionDateLength')
+    if (
+      newIssueData.startInspectionDate !== '' &&
+      newIssueData.endInspectionDate !== '' &&
+      differenceInDays(endDate, startDate) < 0
+    ) {
+      newErrors.endInspectionDate = t('errors.endInspectionDateLength');
     }
     if (newIssueData.auditViolation.trim() === '') {
-      newErrors.violation = t('errors.violation')
+      newErrors.violation = t('errors.violation');
     }
     if (newIssueData.recommendation.trim() === '') {
-      newErrors.recommendation = t('errors.recommendation')
+      newErrors.recommendation = t('errors.recommendation');
     }
     if (newIssueData.riskLevel === '') {
-      newErrors.riskLevel = t('errors.riskLevel')
+      newErrors.riskLevel = t('errors.riskLevel');
     }
     if (newIssueData.scheduledDate === '') {
-      newErrors.scheduledDate = t('errors.scheduledDate')
+      newErrors.scheduledDate = t('errors.scheduledDate');
     }
-    if (newIssueData.scheduledDate !== '' && newIssueData.endInspectionDate !== '' && differenceInDays(scheduledDate, endDate) < 0) {
-      newErrors.scheduledDate = t('errors.scheduledDateLength')
+    if (
+      newIssueData.scheduledDate !== '' &&
+      newIssueData.endInspectionDate !== '' &&
+      differenceInDays(scheduledDate, endDate) < 0
+    ) {
+      newErrors.scheduledDate = t('errors.scheduledDateLength');
     }
     if (newIssueData.responsibleDepartment.length === 0) {
-      newErrors.departments = t('errors.departments')
+      newErrors.departments = t('errors.departments');
     }
     if (newIssueData.responsiblePerson.length === 0) {
-      newErrors.persons = t('errors.persons')
+      newErrors.persons = t('errors.persons');
     }
 
-    setErrors(newErrors)
-    return deepEqual(newErrors, errorsInitialState)
-  }
+    setErrors(newErrors);
+    return deepEqual(newErrors, errorsInitialState);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      dispatch(addIssue({ ...newIssueData, id: nanoid() }))
-      resetData()
-      onClose()
+      dispatch(addIssue({ ...newIssueData, id: nanoid() }));
+      resetData();
+      onClose();
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} noValidate>
@@ -118,10 +134,10 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           id={'inspection'}
           value={newIssueData.inspection}
           onChange={(e) => {
-            updateNewIssueData('inspection', e.target.value)
-            setErrors((prev) => ({ ...prev, inspection: '' }))
+            updateNewIssueData('inspection', e.target.value);
+            setErrors((prev) => ({ ...prev, inspection: '' }));
           }}
-          wrapperExtraClass='w-full'
+          wrapperExtraClass="w-full"
           placeholder={t('addModal.inspectionPlaceholder')}
           required={true}
           errorText={errors.inspection}
@@ -135,8 +151,8 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           id={'date-start'}
           value={newIssueData.startInspectionDate}
           onChange={(e) => {
-            updateNewIssueData('startInspectionDate', e.target.value)
-            setErrors((prev) => ({ ...prev, startInspectionDate: '', endInspectionDate: '' }))
+            updateNewIssueData('startInspectionDate', e.target.value);
+            setErrors((prev) => ({ ...prev, startInspectionDate: '', endInspectionDate: '' }));
           }}
           wrapperExtraClass={'md:w-[45%] w-full'}
           required={true}
@@ -150,8 +166,8 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           id={'date-end'}
           value={newIssueData.endInspectionDate}
           onChange={(e) => {
-            updateNewIssueData('endInspectionDate', e.target.value)
-            setErrors((prev) => ({ ...prev, endInspectionDate: '', scheduledDate: '' }))
+            updateNewIssueData('endInspectionDate', e.target.value);
+            setErrors((prev) => ({ ...prev, endInspectionDate: '', scheduledDate: '' }));
           }}
           wrapperExtraClass={'md:w-[45%] w-full'}
           required={true}
@@ -165,8 +181,8 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           placeholder={t('addModal.violationPlaceholder')}
           value={newIssueData.auditViolation}
           onChange={(e) => {
-            updateNewIssueData('auditViolation', e.target.value)
-            setErrors((prev) => ({ ...prev, violation: '' }))
+            updateNewIssueData('auditViolation', e.target.value);
+            setErrors((prev) => ({ ...prev, violation: '' }));
           }}
           rows={5}
           required={true}
@@ -182,8 +198,8 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           placeholder={t('addModal.recommendationPlaceholder')}
           value={newIssueData.recommendation}
           onChange={(e) => {
-            updateNewIssueData('recommendation', e.target.value)
-            setErrors((prev) => ({ ...prev, recommendation: '' }))
+            updateNewIssueData('recommendation', e.target.value);
+            setErrors((prev) => ({ ...prev, recommendation: '' }));
           }}
           rows={5}
           required={true}
@@ -200,8 +216,8 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           placeholder={t('riskLevels.none')}
           value={newIssueData.riskLevel}
           onChange={(e) => {
-            updateNewIssueData('riskLevel', e.target.value)
-            setErrors((prev) => ({ ...prev, riskLevel: '' }))
+            updateNewIssueData('riskLevel', e.target.value);
+            setErrors((prev) => ({ ...prev, riskLevel: '' }));
           }}
           widthClass={'md:w-[45%] w-full'}
           translateFn={(word) => t(`riskLevels.${word}`)}
@@ -216,8 +232,8 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           id={'sheduled-date'}
           value={newIssueData.scheduledDate}
           onChange={(e) => {
-            updateNewIssueData('scheduledDate', e.target.value)
-            setErrors((prev) => ({ ...prev, scheduledDate: '' }))
+            updateNewIssueData('scheduledDate', e.target.value);
+            setErrors((prev) => ({ ...prev, scheduledDate: '' }));
           }}
           wrapperExtraClass={'md:w-[45%] w-full'}
           required={true}
@@ -232,8 +248,8 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           className={'md:text-[15px]'}
           value={newIssueData.responsibleDepartment}
           onChange={(data: string[]) => {
-            updateNewIssueData('responsibleDepartment', data)
-            setErrors((prev) => ({ ...prev, departments: '' }))
+            updateNewIssueData('responsibleDepartment', data);
+            setErrors((prev) => ({ ...prev, departments: '' }));
           }}
           isOpen={checkboxOpen === 'departments'}
           labelText={t('table.responsibleDepartment')}
@@ -252,8 +268,8 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           className={'md:text-[15px]'}
           value={newIssueData.responsiblePerson}
           onChange={(data: string[]) => {
-            updateNewIssueData('responsiblePerson', data)
-            setErrors((prev) => ({ ...prev, persons: '' }))
+            updateNewIssueData('responsiblePerson', data);
+            setErrors((prev) => ({ ...prev, persons: '' }));
           }}
           labelText={t('table.responsiblePerson')}
           isOpen={checkboxOpen === 'person'}
@@ -267,10 +283,13 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
 
       {/* ФУТЕР: КНОПКИ */}
       <footer className="flex justify-end items-center gap-3 border-t border-border-warm p-4">
-        <Button type="button" onClick={() => {
-          resetData()
-          onClose()
-        }}>
+        <Button
+          type="button"
+          onClick={() => {
+            resetData();
+            onClose();
+          }}
+        >
           {t('cancel')}
         </Button>
 
@@ -278,7 +297,7 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           {t('save')}
         </Button>
       </footer>
-    </form >
+    </form>
   );
 };
 

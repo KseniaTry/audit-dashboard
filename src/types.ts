@@ -3,7 +3,7 @@ export type RiskLevels = 'high' | 'medium' | 'low';
 export type Variants = 'danger' | 'warning' | 'success' | 'neutral';
 export type ModalActiveType = 'change' | 'add' | 'departmentReport' | 'managementReport' | null;
 export type FiltersData = string[] | Statuses[] | RiskLevels[];
-export type AddModalData = string | RiskLevels | string[]
+export type AddModalData = string | RiskLevels | string[];
 
 export interface FilterState {
   search: string;

@@ -5,7 +5,7 @@ interface SelectInputData extends SelectHTMLAttributes<HTMLSelectElement> {
   labelText?: string;
   optionsArrayData: string[];
   widthClass?: string;
-  placeholder?: string; // если нужно добавить какие-то данные помимо переданных optionsArrayData, допустим 'все проверки'/'все риски' и тд 
+  placeholder?: string; // если нужно добавить какие-то данные помимо переданных optionsArrayData, допустим 'все проверки'/'все риски' и тд
   translateFn?: (word: string) => string; // если нужно вставить перевод i18n
   errorText?: string;
 }
@@ -23,7 +23,7 @@ const SelectInput = ({
   const wrapperClass = 'flex flex-col flex-wrap gap-2';
   const selectClass =
     'w-full border border-border-warm md:min-w-[150px] border-2 p-2 bg-field-bg uppercase cursor-pointer text-[15px]';
-  const errorClass = errorText === '' ? 'border-border-warm' : 'border-danger/50'
+  const errorClass = errorText === '' ? 'border-border-warm' : 'border-danger/50';
 
   return (
     <div className={twMerge(wrapperClass, widthClass)}>
@@ -31,7 +31,11 @@ const SelectInput = ({
         <label className="tracking-widest uppercase text-[13px]">
           {labelText}
           {props.required && <span className="text-red-500 ml-1">*</span>}
-          {errorText === '' ? '' : <p className='text-danger text-[11px] tracking-normal lowercase'> {errorText}</p>}
+          {errorText === '' ? (
+            ''
+          ) : (
+            <p className="text-danger text-[11px] tracking-normal lowercase"> {errorText}</p>
+          )}
         </label>
       ) : (
         ''

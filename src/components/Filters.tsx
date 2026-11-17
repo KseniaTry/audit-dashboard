@@ -33,7 +33,7 @@ const Filters = ({
   years,
 }: FiltersProps) => {
   const { t } = useTranslation();
-  const [checkboxOpen, setCheckboxOpen] = useState<string | null>(null)
+  const [checkboxOpen, setCheckboxOpen] = useState<string | null>(null);
 
   const handleButtonClick = <T extends string>(value: T, allItems: T[], key: keyof FilterState) => {
     let newValue: T[];

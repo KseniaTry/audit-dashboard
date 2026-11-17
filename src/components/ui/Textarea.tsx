@@ -9,8 +9,9 @@ interface TextareaData extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 
 const Textarea = ({ labelText, widthClass, errorText = '', className, ...props }: TextareaData) => {
   const wrapperClass = 'flex flex-col flex-wrap gap-2';
-  const inputClass = 'w-full border border-border-warm md:min-w-[150px] border-2 p-2 bg-field-bg uppercase cursor-pointer text-[14px]';
-  const errorClass = errorText === '' ? 'border-border-warm' : 'border-danger/50'
+  const inputClass =
+    'w-full border border-border-warm md:min-w-[150px] border-2 p-2 bg-field-bg uppercase cursor-pointer text-[14px]';
+  const errorClass = errorText === '' ? 'border-border-warm' : 'border-danger/50';
 
   return (
     <div className={twMerge(wrapperClass, widthClass)}>
@@ -18,7 +19,11 @@ const Textarea = ({ labelText, widthClass, errorText = '', className, ...props }
         <label className="tracking-widest uppercase text-[15px]">
           {labelText}
           {props.required && <span className="text-danger ml-1">*</span>}
-          {errorText === '' ? '' : <p className='text-danger text-[11px] tracking-normal lowercase'> {errorText}</p>}
+          {errorText === '' ? (
+            ''
+          ) : (
+            <p className="text-danger text-[11px] tracking-normal lowercase"> {errorText}</p>
+          )}
         </label>
       ) : (
         ''

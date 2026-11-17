@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import React from 'react';
 
 interface CheckboxData<T extends string> {
-  id: string, // id должно совпадать с setCheckboxOpen (туда передаем id для переключения чекбоксов и закрытия предыдущего)
+  id: string; // id должно совпадать с setCheckboxOpen (туда передаем id для переключения чекбоксов и закрытия предыдущего)
   options: T[]; // исходные данные (массив ССП / годов / проверок и тд)
   value: T[]; // приходит из state из компонента Filters
   placeholder: string; // исходное значение , например "Все ССП"
@@ -19,13 +19,28 @@ interface CheckboxData<T extends string> {
   errorText?: string; // если выявлена ошибка валидации и нужно показать текст ошибки для пользователя
 }
 
-const Checkbox = <T extends string>({ id, options, value, placeholder, className, onChange, isOpen, setCheckboxOpen, isRequired = false, labelText, isBottom = false, isHeightFitContent = false, errorText }: CheckboxData<T>) => {
+const Checkbox = <T extends string>({
+  id,
+  options,
+  value,
+  placeholder,
+  className,
+  onChange,
+  isOpen,
+  setCheckboxOpen,
+  isRequired = false,
+  labelText,
+  isBottom = false,
+  isHeightFitContent = false,
+  errorText,
+}: CheckboxData<T>) => {
   const { t } = useTranslation();
-  const wrapperClass = 'relative flex items-center px-3 md:text-[13px] md:min-w-[150px] uppercase border border-border-warm border-2 bg-field-bg cursor-pointer';
+  const wrapperClass =
+    'relative flex items-center px-3 md:text-[13px] md:min-w-[150px] uppercase border border-border-warm border-2 bg-field-bg cursor-pointer';
   const isActiveOptionsClass = isOpen ? 'flex' : 'hidden';
   const choosenData = value.length === 0 ? placeholder : value.join(', ');
-  const positionClass = isBottom ? 'bottom-full' : 'top-full'
-  const heightClass = isHeightFitContent ? 'h-fit' : 'h-7 truncate'
+  const positionClass = isBottom ? 'bottom-full' : 'top-full';
+  const heightClass = isHeightFitContent ? 'h-fit' : 'h-7 truncate';
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -53,18 +68,25 @@ const Checkbox = <T extends string>({ id, options, value, placeholder, className
   };
 
   return (
-    <div className='flex flex-col flex-wrap gap-2 w-full'>
-      {labelText ?
+    <div className="flex flex-col flex-wrap gap-2 w-full">
+      {labelText ? (
         <p className="tracking-widest uppercase text-[14px]">
           {labelText}
           {isRequired ? <span className="text-danger ml-1">*</span> : ''}
-          {errorText === '' ? '' : <p className='text-danger text-[11px] tracking-normal lowercase'>{errorText}</p>}
-        </p> : ''
-      }
+          {errorText === '' ? (
+            ''
+          ) : (
+            <p className="text-danger text-[11px] tracking-normal lowercase">{errorText}</p>
+          )}
+        </p>
+      ) : (
+        ''
+      )}
       <fieldset className={twMerge(wrapperClass, className)}>
         <div
-          onClick={() => isOpen ? setCheckboxOpen(null) : setCheckboxOpen(id)}
-          className={twMerge('flex items-center overflow-hidden p-1', heightClass)}>
+          onClick={() => (isOpen ? setCheckboxOpen(null) : setCheckboxOpen(id))}
+          className={twMerge('flex items-center overflow-hidden p-1', heightClass)}
+        >
           {choosenData}
         </div>
         {/* выпадающий список */}
@@ -73,7 +95,7 @@ const Checkbox = <T extends string>({ id, options, value, placeholder, className
           className={twMerge(
             isActiveOptionsClass,
             'absolute z-10 left-[-2px] right-[-2px] mt-[5px] flex-col border border-border-warm border-2 bg-field-bg p-3',
-            positionClass
+            positionClass,
           )}
         >
           <div className="md:max-h-[250px] overflow-auto">
