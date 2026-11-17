@@ -51,7 +51,7 @@ export const resources = {
         removed: 'Снято',
       },
       riskLevels: {
-        all: 'Выберите уровень риска',
+        none: 'Выберите уровень риска',
         high: 'Высокий',
         medium: 'Средний',
         low: 'Низкий',
@@ -97,6 +97,7 @@ export const resources = {
         addDepartment: 'Выберите департамент',
         violationPlaceholder: 'Опишите выявленное нарушение',
         recommendationPlaceholder: 'Опишите рекомендацию',
+        inspectionPlaceholder: 'Название проверки'
       },
       changeModal: {
         title: 'Обновить запись',
