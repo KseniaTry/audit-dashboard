@@ -7,8 +7,8 @@ import SelectInput from './ui/SelectInput';
 import Textarea from './ui/Textarea';
 import Button from './ui/Button';
 import Checkbox from './ui/Checkbox';
-import { useDispatch } from 'react-redux';
-import { addIssue } from '../slices/issuesSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addIssue, selectAllIssues } from '../slices/issuesSlice';
 import { differenceInDays, parseISO } from 'date-fns';
 import { nanoid } from '@reduxjs/toolkit';
 import { deepEqual } from '../utils';
@@ -16,6 +16,7 @@ import { deepEqual } from '../utils';
 interface AddModalProps {
   riskLevels: RiskLevels[];
   departments: string[];
+  inspections: string[];
   persons: string[];
   onClose: () => void;
   updateNewIssueData: (key: keyof Issue, value: AddModalData) => void;
@@ -51,6 +52,7 @@ const errorsInitialState = {
 const AddModal = ({
   riskLevels,
   departments,
+  inspections,
   persons,
   onClose,
   updateNewIssueData,
@@ -60,8 +62,9 @@ const AddModal = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [checkboxOpen, setCheckboxOpen] = useState<string | null>(null);
-
   const [errors, setErrors] = useState<ErrorsData>(errorsInitialState);
+  const [inspectionType, setInspectionType] = useState<'existed' | 'new'>('new');
+  const allIssues = useSelector(selectAllIssues);
 
   const validateForm = () => {
     const startDate = parseISO(newIssueData.startInspectionDate);
@@ -124,25 +127,83 @@ const AddModal = ({
     }
   };
 
+  const handleInspectionType = (type: 'new' | 'existed') => {
+    setInspectionType(type);
+    updateNewIssueData('inspection', '');
+    updateNewIssueData('startInspectionDate', '');
+    updateNewIssueData('endInspectionDate', '');
+    setErrors((prev) => ({
+      ...prev,
+      inspection: '',
+      startInspectionDate: '',
+      endInspectionDate: '',
+    }));
+  };
+
   return (
     <form onSubmit={handleSubmit} noValidate>
       <div className="flex flex-wrap justify-between items-center p-5 gap-3">
         {/* ПРОВЕРКА */}
-        <Input
-          type={'text'}
-          labelText={t('table.inspection')}
-          id={'inspection'}
-          value={newIssueData.inspection}
-          onChange={(e) => {
-            updateNewIssueData('inspection', e.target.value);
-            setErrors((prev) => ({ ...prev, inspection: '' }));
-          }}
-          wrapperExtraClass="w-full"
-          placeholder={t('addModal.inspectionPlaceholder')}
-          required={true}
-          errorText={errors.inspection}
-          className={'normal-case'}
-        />
+        <div className="flex gap-2 p-1">
+          <Button
+            type="button"
+            onClick={() => handleInspectionType('existed')}
+            className="p-1"
+            isActive={inspectionType === 'existed'}
+            disabled={allIssues.length === 0}
+          >
+            {t('addModal.existedInspection')}
+          </Button>
+          <Button
+            type="button"
+            onClick={() => handleInspectionType('new')}
+            className="p-1"
+            isActive={inspectionType === 'new'}
+          >
+            {t('addModal.newInspection')}
+          </Button>
+        </div>
+        {inspectionType === 'new' ? (
+          <Input
+            type={'text'}
+            labelText={t('table.inspection')}
+            id={'inspection'}
+            value={newIssueData.inspection}
+            onChange={(e) => {
+              updateNewIssueData('inspection', e.target.value);
+              setErrors((prev) => ({ ...prev, inspection: '' }));
+            }}
+            wrapperExtraClass="w-full"
+            placeholder={t('addModal.inspectionPlaceholder')}
+            required={true}
+            errorText={errors.inspection}
+            className={'normal-case'}
+          />
+        ) : (
+          <SelectInput
+            labelText={t('table.inspection')}
+            name={'inspection'}
+            optionsArrayData={inspections}
+            placeholder={t('addModal.addInspection')}
+            value={newIssueData.inspection}
+            onChange={(e) => {
+              updateNewIssueData('inspection', e.target.value);
+              setErrors((prev) => ({
+                ...prev,
+                inspection: '',
+                startInspectionDate: '',
+                endInspectionDate: '',
+              }));
+              const inspectionData = allIssues.find(
+                (issue: Issue) => issue.inspection === e.target.value,
+              );
+              updateNewIssueData('startInspectionDate', inspectionData?.startInspectionDate ?? '');
+              updateNewIssueData('endInspectionDate', inspectionData?.endInspectionDate ?? '');
+            }}
+            required={true}
+            errorText={errors.inspection}
+          />
+        )}
 
         {/* ДАТА НАЧАЛА ПРОВЕРКИ */}
         <Input
@@ -157,6 +218,7 @@ const AddModal = ({
           wrapperExtraClass={'md:w-[45%] w-full'}
           required={true}
           errorText={errors.startInspectionDate}
+          disabled={inspectionType === 'existed'}
         />
 
         {/* ДАТА ОКОНЧАНИЯ ПРОВЕРКИ */}
@@ -172,6 +234,7 @@ const AddModal = ({
           wrapperExtraClass={'md:w-[45%] w-full'}
           required={true}
           errorText={errors.endInspectionDate}
+          disabled={inspectionType === 'existed'}
         />
 
         {/* НАРУШЕНИЕ */}
