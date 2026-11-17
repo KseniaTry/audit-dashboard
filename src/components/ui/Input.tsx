@@ -20,6 +20,7 @@ const Input = ({
   const inputClass =
     'w-full border border-border-warm md:min-w-[150px] border-2 p-2 bg-field-bg uppercase cursor-pointer text-[15px]';
   const errorClass = errorText === '' ? 'border-border-warm' : 'border-danger/50';
+  const disabledClass = props.disabled ? 'opacity-50' : '';
 
   return (
     <div className={twMerge(wrapperClass, wrapperExtraClass)}>
@@ -36,7 +37,11 @@ const Input = ({
       ) : (
         ''
       )}
-      <input className={twMerge(inputClass, className, errorClass)} type={type} {...props}></input>
+      <input
+        className={twMerge(inputClass, className, errorClass, disabledClass)}
+        type={type}
+        {...props}
+      ></input>
     </div>
   );
 };
