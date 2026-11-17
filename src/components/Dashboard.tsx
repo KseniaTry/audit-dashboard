@@ -124,6 +124,9 @@ const Dashboard = () => {
         }));
     }
 
+    // сброс данных
+    const resetNewIssueData = () => setNewIssueData(initialNewData)
+
     // ДЛЯ ФИЛЬТРОВ
     // добавление в объект с результатами фильтрации
     const handleFiltersState = (key: keyof FilterState, value: FiltersData | string) => {
@@ -263,7 +266,7 @@ const Dashboard = () => {
                     isOpen={modalActive === 'add'}
                     onClose={() => {
                         setModalActive(null)
-                        setNewIssueData(initialNewData)
+                        resetNewIssueData()
                     }}
                     title={t('addModal.title')}
                     modalType="add"
@@ -280,6 +283,7 @@ const Dashboard = () => {
                         }}
                         updateNewIssueData={updateNewIssueData}
                         newIssueData={newIssueData}
+                        resetData={resetNewIssueData}
                     />
                 </Modal>
             ) : (
