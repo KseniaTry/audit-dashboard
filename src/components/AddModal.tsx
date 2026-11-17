@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { twMerge } from 'tailwind-merge';
 import { Issue, RiskLevels, AddModalData } from '../types';
 import { useState } from 'react';
 import React from 'react';
@@ -54,7 +53,6 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
   }
 
   const [errors, setErrors] = useState<ErrorsData>(errorsInitialState)
-  console.log(newIssueData)
 
   const validateForm = () => {
     const startDate = parseISO(newIssueData.startInspectionDate)
@@ -63,44 +61,42 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
     const newErrors: ErrorsData = { ...errorsInitialState }
 
     if (newIssueData.inspection.trim() === '') {
-      newErrors.inspection = 'Введите название проверки'
+      newErrors.inspection = t('errors.inspection')
     }
     if (newIssueData.startInspectionDate === '') {
-      newErrors.startInspectionDate = 'Введите дату начала проверки'
+      newErrors.startInspectionDate = t('errors.startInspectionDate')
     }
     if (newIssueData.endInspectionDate === '') {
-      newErrors.endInspectionDate = 'Введите дату окончания проверки'
+      newErrors.endInspectionDate = t('errors.endInspectionDate')
     }
     if (differenceInDays(endDate, startDate) < 0) {
-      newErrors.endInspectionDate = 'Дата окончания проверки должна быть позднее даты начала проверки'
+      newErrors.endInspectionDate = t('errors.endInspectionDateLength')
     }
     if (newIssueData.auditViolation.trim() === '') {
-      newErrors.violation = 'Опишите выявленное нарушение'
+      newErrors.violation = t('errors.violation')
     }
     if (newIssueData.recommendation.trim() === '') {
-      newErrors.recommendation = 'Опишите рекомендацию'
+      newErrors.recommendation = t('errors.recommendation')
     }
     if (newIssueData.riskLevel === '') {
-      newErrors.riskLevel = 'Выберите уровень риска'
+      newErrors.riskLevel = t('errors.riskLevel')
     }
     if (newIssueData.scheduledDate === '') {
-      newErrors.scheduledDate = 'Введите плановую дату исполнения поручения'
+      newErrors.scheduledDate = t('errors.scheduledDate')
     }
     if (differenceInDays(scheduledDate, endDate) < 0) {
-      newErrors.endInspectionDate = 'Плановая дата исполнения поручения должна быть позднее даты окончания проверки'
+      newErrors.scheduledDate = t('errors.scheduledDateLength')
     }
     if (newIssueData.responsibleDepartment.length === 0) {
-      newErrors.departments = 'Выберите хотя бы одно ответственное ССП'
+      newErrors.departments = t('errors.departments')
     }
     if (newIssueData.responsiblePerson.length === 0) {
-      newErrors.persons = 'Выберите хотя бы одно ответственное лицо'
+      newErrors.persons = t('errors.persons')
     }
 
     setErrors(newErrors)
     return deepEqual(newErrors, errorsInitialState)
   }
-
-  const wrapperClass = 'flex flex-col flex-wrap gap-2';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,25 +111,22 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
   return (
     <form onSubmit={handleSubmit} noValidate>
       <div className="flex flex-wrap justify-between items-center p-5 gap-3">
-        {/* ВЫБОР ПРОВЕРКИ */}
-        <div className={twMerge(wrapperClass, 'w-full')}>
-          <ul className="hidden">
-            {departments.map((department) => {
-              return <li key={department}>{department}</li>;
-            })}
-          </ul>
-          <Input
-            type={'text'}
-            labelText={t('table.inspection')}
-            id={'inspection'}
-            value={newIssueData.inspection}
-            onChange={(e) => updateNewIssueData('inspection', e.target.value)}
-            placeholder="Название проверки"
-            required={true}
-            className={'normal-case'}
-          />
-          <span className={errors.inspection === '' ? 'hidden' : 'block'}>{errors.inspection}</span>
-        </div>
+        {/* ПРОВЕРКА */}
+        <Input
+          type={'text'}
+          labelText={t('table.inspection')}
+          id={'inspection'}
+          value={newIssueData.inspection}
+          onChange={(e) => {
+            updateNewIssueData('inspection', e.target.value)
+            setErrors((prev) => ({ ...prev, inspection: '' }))
+          }}
+          wrapperExtraClass='w-full'
+          placeholder="Название проверки"
+          required={true}
+          errorText={errors.inspection}
+          className={'normal-case'}
+        />
 
         {/* ДАТА НАЧАЛА ПРОВЕРКИ */}
         <Input
@@ -141,11 +134,14 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           labelText={t('table.startInspectionDate')}
           id={'date-start'}
           value={newIssueData.startInspectionDate}
-          onChange={(e) => updateNewIssueData('startInspectionDate', e.target.value)}
-          wrapperExtraClass={'w-[45%]'}
+          onChange={(e) => {
+            updateNewIssueData('startInspectionDate', e.target.value)
+            setErrors((prev) => ({ ...prev, startInspectionDate: '' }))
+          }}
+          wrapperExtraClass={'md:w-[45%] w-full'}
           required={true}
+          errorText={errors.startInspectionDate}
         />
-        <span className={errors.startInspectionDate === '' ? 'hidden' : 'block'}>{errors.startInspectionDate}</span>
 
         {/* ДАТА ОКОНЧАНИЯ ПРОВЕРКИ */}
         <Input
@@ -153,11 +149,14 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           labelText={t('table.endInspectionDate')}
           id={'date-end'}
           value={newIssueData.endInspectionDate}
-          onChange={(e) => updateNewIssueData('endInspectionDate', e.target.value)}
-          wrapperExtraClass={'w-[45%]'}
+          onChange={(e) => {
+            updateNewIssueData('endInspectionDate', e.target.value)
+            setErrors((prev) => ({ ...prev, endInspectionDate: '' }))
+          }}
+          wrapperExtraClass={'md:w-[45%] w-full'}
           required={true}
+          errorText={errors.endInspectionDate}
         />
-        <span className={errors.endInspectionDate === '' ? 'hidden' : 'block'}>{errors.endInspectionDate}</span>
 
         {/* НАРУШЕНИЕ */}
         <Textarea
@@ -165,13 +164,16 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           name={'violation'}
           placeholder={t('addModal.violationPlaceholder')}
           value={newIssueData.auditViolation}
-          onChange={(e) => updateNewIssueData('auditViolation', e.target.value)}
+          onChange={(e) => {
+            updateNewIssueData('auditViolation', e.target.value)
+            setErrors((prev) => ({ ...prev, violation: '' }))
+          }}
           rows={5}
           required={true}
           widthClass={'w-full'}
           className={'normal-case'}
+          errorText={errors.violation}
         />
-        <span className={errors.violation === '' ? 'hidden' : 'block'}>{errors.violation}</span>
 
         {/* РЕКОМЕНДАЦИЯ */}
         <Textarea
@@ -179,13 +181,16 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           name={'recommendation'}
           placeholder={t('addModal.recommendationPlaceholder')}
           value={newIssueData.recommendation}
-          onChange={(e) => updateNewIssueData('recommendation', e.target.value)}
+          onChange={(e) => {
+            updateNewIssueData('recommendation', e.target.value)
+            setErrors((prev) => ({ ...prev, recommendation: '' }))
+          }}
           rows={5}
           required={true}
           widthClass={'w-full'}
           className={'normal-case'}
+          errorText={errors.recommendation}
         />
-        <span className={errors.recommendation === '' ? 'hidden' : 'block'}>{errors.recommendation}</span>
 
         {/* УРОВНИ РИСКА */}
         <SelectInput
@@ -194,12 +199,15 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           optionsArrayData={riskLevels}
           placeholder={t('riskLevels.all')}
           value={newIssueData.riskLevel}
-          onChange={(e) => updateNewIssueData('riskLevel', e.target.value)}
-          widthClass={'w-[45%]'}
+          onChange={(e) => {
+            updateNewIssueData('riskLevel', e.target.value)
+            setErrors((prev) => ({ ...prev, riskLevel: '' }))
+          }}
+          widthClass={'md:w-[45%] w-full'}
           translateFn={(word) => t(`riskLevels.${word}`)}
           required={true}
+          errorText={errors.riskLevel}
         />
-        <span className={errors.riskLevel === '' ? 'hidden' : 'block'}>{errors.riskLevel}</span>
 
         {/* ПЛАНОВАЯ ДАТА */}
         <Input
@@ -207,53 +215,54 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           labelText={t('table.scheduledDate')}
           id={'sheduled-date'}
           value={newIssueData.scheduledDate}
-          onChange={(e) => updateNewIssueData('scheduledDate', e.target.value)}
-          wrapperExtraClass={'w-[45%]'}
+          onChange={(e) => {
+            updateNewIssueData('scheduledDate', e.target.value)
+            setErrors((prev) => ({ ...prev, scheduledDate: '' }))
+          }}
+          wrapperExtraClass={'md:w-[45%] w-full'}
           required={true}
+          errorText={errors.scheduledDate}
         />
-        <span className={errors.scheduledDate === '' ? 'hidden' : 'block'}>{errors.scheduledDate}</span>
 
         {/* ОТВЕТСТВЕННОЕ ССП */}
-        <div className={twMerge(wrapperClass, 'w-full')}>
-          <p className="tracking-widest uppercase text-[14px]">
-            {t('table.responsibleDepartment')}
-            <span className="text-red-500 ml-1">*</span>
-            <span className={errors.departments === '' ? 'hidden' : 'block'}>{errors.departments}</span>
-          </p>
-          <Checkbox
-            id={'departments'}
-            options={departments}
-            placeholder={t('addModal.addDepartment')}
-            className={'md:text-[15px]'}
-            value={newIssueData.responsibleDepartment}
-            onChange={(data: string[]) => updateNewIssueData('responsibleDepartment', data)}
-            isOpen={checkboxOpen === 'departments'}
-            setCheckboxOpen={setCheckboxOpen}
-            isBottom={true}
-            isHeightFitContent={true}
-          />
-        </div>
+        <Checkbox
+          id={'departments'}
+          options={departments}
+          placeholder={t('addModal.addDepartment')}
+          className={'md:text-[15px]'}
+          value={newIssueData.responsibleDepartment}
+          onChange={(data: string[]) => {
+            updateNewIssueData('responsibleDepartment', data)
+            setErrors((prev) => ({ ...prev, departments: '' }))
+          }}
+          isOpen={checkboxOpen === 'departments'}
+          labelText={t('table.responsibleDepartment')}
+          setCheckboxOpen={setCheckboxOpen}
+          isBottom={true}
+          isHeightFitContent={true}
+          isRequired={true}
+          errorText={errors.departments}
+        />
 
         {/* ОТВЕТСТВЕННОЕ ЛИЦО */}
-        <div className={twMerge(wrapperClass, 'w-full')}>
-          <p className="tracking-widest uppercase text-[14px]">
-            {t('table.responsiblePerson')}
-            <span className="text-red-500 ml-1">*</span>
-            <span className={errors.persons === '' ? 'hidden' : 'block'}>{errors.persons}</span>
-          </p>
-          <Checkbox
-            id={'person'}
-            options={persons}
-            placeholder={t('addModal.addPerson')}
-            className={'md:text-[15px]'}
-            value={newIssueData.responsiblePerson}
-            onChange={(data: string[]) => updateNewIssueData('responsiblePerson', data)}
-            isOpen={checkboxOpen === 'person'}
-            setCheckboxOpen={setCheckboxOpen}
-            isBottom={true}
-            isHeightFitContent={true}
-          />
-        </div>
+        <Checkbox
+          id={'person'}
+          options={persons}
+          placeholder={t('addModal.addPerson')}
+          className={'md:text-[15px]'}
+          value={newIssueData.responsiblePerson}
+          onChange={(data: string[]) => {
+            updateNewIssueData('responsiblePerson', data)
+            setErrors((prev) => ({ ...prev, persons: '' }))
+          }}
+          labelText={t('table.responsiblePerson')}
+          isOpen={checkboxOpen === 'person'}
+          setCheckboxOpen={setCheckboxOpen}
+          isBottom={true}
+          isHeightFitContent={true}
+          isRequired={true}
+          errorText={errors.persons}
+        />
       </div>
 
       {/* ФУТЕР: КНОПКИ */}
@@ -266,7 +275,7 @@ const AddModal = ({ riskLevels, departments, persons, onClose, updateNewIssueDat
           {t('save')}
         </Button>
       </footer>
-    </form>
+    </form >
   );
 };
 
