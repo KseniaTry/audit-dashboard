@@ -12,11 +12,14 @@ interface CheckboxData<T extends string> {
   onChange: (data: T[]) => void;
   isOpen: boolean;
   setCheckboxOpen: (state: string | null) => void;
+  isRequired?: boolean;
+  labelText?: string; // если нужен лейбл (название) для поля
   isBottom?: boolean;
   isHeightFitContent?: boolean;
+  errorText?: string; // если выявлена ошибка валидации и нужно показать текст ошибки для пользователя
 }
 
-const Checkbox = <T extends string>({ id, options, value, placeholder, className, onChange, isOpen, setCheckboxOpen, isBottom = false, isHeightFitContent = false }: CheckboxData<T>) => {
+const Checkbox = <T extends string>({ id, options, value, placeholder, className, onChange, isOpen, setCheckboxOpen, isRequired = false, labelText, isBottom = false, isHeightFitContent = false, errorText }: CheckboxData<T>) => {
   const { t } = useTranslation();
   const wrapperClass = 'relative flex items-center px-3 md:text-[13px] md:min-w-[150px] uppercase border border-border-warm border-2 bg-field-bg cursor-pointer';
   const isActiveOptionsClass = isOpen ? 'flex' : 'hidden';
@@ -50,63 +53,72 @@ const Checkbox = <T extends string>({ id, options, value, placeholder, className
   };
 
   return (
-    <fieldset className={twMerge(wrapperClass, className)}>
-      <div
-        onClick={() => isOpen ? setCheckboxOpen(null) : setCheckboxOpen(id)}
-        className={twMerge('flex items-center overflow-hidden p-1', heightClass)}>
-        {choosenData}
-      </div>
-      {/* выпадающий список */}
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className={twMerge(
-          isActiveOptionsClass,
-          'absolute z-10 left-[-2px] right-[-2px] mt-[5px] flex-col border border-border-warm border-2 bg-field-bg p-3',
-          positionClass
-        )}
-      >
-        <div className="md:max-h-[250px] overflow-auto">
-          <div className="flex gap-2">
-            <input
-              type="checkbox"
-              onChange={(e) => handleChange(e, '')}
-              id={placeholder}
-              name={placeholder}
-              checked={value.length === 0}
-            />
-            <label className="overflow-hidden" htmlFor={placeholder}>
-              {placeholder}
-            </label>
+    <div className='flex flex-col flex-wrap gap-3 w-full'>
+      {labelText ?
+        <p className="relative tracking-widest uppercase text-[14px]">
+          {labelText}
+          {isRequired ? <span className="text-danger ml-1">*</span> : ''}
+          {errorText === '' ? '' : <p className='absolute top-4 text-danger text-[10px] tracking-normal lowercase'>{errorText}</p>}
+        </p> : ''
+      }
+      <fieldset className={twMerge(wrapperClass, className)}>
+        <div
+          onClick={() => isOpen ? setCheckboxOpen(null) : setCheckboxOpen(id)}
+          className={twMerge('flex items-center overflow-hidden p-1', heightClass)}>
+          {choosenData}
+        </div>
+        {/* выпадающий список */}
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className={twMerge(
+            isActiveOptionsClass,
+            'absolute z-10 left-[-2px] right-[-2px] mt-[5px] flex-col border border-border-warm border-2 bg-field-bg p-3',
+            positionClass
+          )}
+        >
+          <div className="md:max-h-[250px] overflow-auto">
+            <div className="flex gap-2">
+              <input
+                type="checkbox"
+                onChange={(e) => handleChange(e, '')}
+                id={placeholder}
+                name={placeholder}
+                checked={value.length === 0}
+              />
+              <label className="overflow-hidden" htmlFor={placeholder}>
+                {placeholder}
+              </label>
+            </div>
+            {options.map((data) => {
+              const isChecked = value.includes(data);
+              return (
+                <div className="flex gap-2 whitespace-nowrap" key={data}>
+                  <input
+                    type="checkbox"
+                    onChange={(e) => handleChange(e, data)}
+                    id={data}
+                    name={data}
+                    checked={isChecked}
+                  />
+                  <label className="overflow-hidden" htmlFor={data}>
+                    {data}
+                  </label>
+                </div>
+              );
+            })}
           </div>
-          {options.map((data) => {
-            const isChecked = value.includes(data);
-            return (
-              <div className="flex gap-2 whitespace-nowrap" key={data}>
-                <input
-                  type="checkbox"
-                  onChange={(e) => handleChange(e, data)}
-                  id={data}
-                  name={data}
-                  checked={isChecked}
-                />
-                <label className="overflow-hidden" htmlFor={data}>
-                  {data}
-                </label>
-              </div>
-            );
-          })}
+          {/* кнопки */}
+          <div className="flex flex-wrap justify-start items-center gap-3 mt-3">
+            <Button type="button" onClick={handleClick} className={isActiveOptionsClass}>
+              {t('ok')}
+            </Button>
+            <Button type="button" onClick={handleClose}>
+              {t('clear')}
+            </Button>
+          </div>
         </div>
-        {/* кнопки */}
-        <div className="flex flex-wrap justify-start items-center gap-3 mt-3">
-          <Button type="button" onClick={handleClick} className={isActiveOptionsClass}>
-            {t('ok')}
-          </Button>
-          <Button type="button" onClick={handleClose}>
-            {t('clear')}
-          </Button>
-        </div>
-      </div>
-    </fieldset>
+      </fieldset>
+    </div>
   );
 };
 
