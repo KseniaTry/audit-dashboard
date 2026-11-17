@@ -11,6 +11,7 @@ const Button = ({ variant = 'primary', isActive, className, ...props }: ButtonDa
     uppercase tracking-widest text-[12px]
     hover:opacity-80 active:scale-95
     transition-all cursor-pointer`;
+  const disabledClass = props.disabled ? 'opacity-70' : ''
 
   const activeColorClass = {
     danger: 'bg-danger text-text-light',
@@ -34,7 +35,7 @@ const Button = ({ variant = 'primary', isActive, className, ...props }: ButtonDa
 
   const variantColorClass = isActive ? activeColorClass[variant] : inactiveColorClass[variant];
 
-  return <button className={twMerge(buttonBaseClass, variantColorClass, className)} {...props} />;
+  return <button className={twMerge(buttonBaseClass, variantColorClass, className, disabledClass)} {...props} />;
 };
 
 export default Button;
