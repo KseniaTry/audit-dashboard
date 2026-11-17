@@ -53,12 +53,12 @@ const Checkbox = <T extends string>({ id, options, value, placeholder, className
   };
 
   return (
-    <div className='flex flex-col flex-wrap gap-3 w-full'>
+    <div className='flex flex-col flex-wrap gap-2 w-full'>
       {labelText ?
-        <p className="relative tracking-widest uppercase text-[14px]">
+        <p className="tracking-widest uppercase text-[14px]">
           {labelText}
           {isRequired ? <span className="text-danger ml-1">*</span> : ''}
-          {errorText === '' ? '' : <p className='absolute top-4 text-danger text-[10px] tracking-normal lowercase'>{errorText}</p>}
+          {errorText === '' ? '' : <p className='text-danger text-[11px] tracking-normal lowercase'>{errorText}</p>}
         </p> : ''
       }
       <fieldset className={twMerge(wrapperClass, className)}>

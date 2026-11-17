@@ -20,7 +20,7 @@ const SelectInput = ({
   className,
   ...props
 }: SelectInputData) => {
-  const wrapperClass = 'flex flex-col flex-wrap gap-3';
+  const wrapperClass = 'flex flex-col flex-wrap gap-2';
   const selectClass =
     'w-full border border-border-warm md:min-w-[150px] border-2 p-2 bg-field-bg uppercase cursor-pointer text-[15px]';
   const errorClass = errorText === '' ? 'border-border-warm' : 'border-danger/50'
@@ -28,10 +28,10 @@ const SelectInput = ({
   return (
     <div className={twMerge(wrapperClass, widthClass)}>
       {labelText ? (
-        <label className="relative tracking-widest uppercase text-[13px]">
+        <label className="tracking-widest uppercase text-[13px]">
           {labelText}
           {props.required && <span className="text-red-500 ml-1">*</span>}
-          {errorText === '' ? '' : <p className='absolute top-4 text-danger text-[10px] tracking-normal lowercase'> {errorText}</p>}
+          {errorText === '' ? '' : <p className='text-danger text-[11px] tracking-normal lowercase'> {errorText}</p>}
         </label>
       ) : (
         ''
