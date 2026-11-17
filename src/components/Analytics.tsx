@@ -68,11 +68,10 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
   const cardTitleClass = 'font-bold uppercase tracking-widest text-[10px] md:text-[16px]';
   const violationCountClass = 'md:text-[27px] tracking-widest text-[20px] font-bold';
   const stripeWrapperClass = 'flex h-[7px] rounded-full overflow-hidden mt-1 w-full';
-  const tabsHiddenClass = isFilterActive ? 'hidden' : 'flex';
 
   return (
     <section className="p-4 flex flex-wrap gap-[20px] w-full">
-      <div className={twMerge('flex flex-col gap-2', tabsHiddenClass)}>
+      <div className='flex flex-col gap-2'>
         {/* ГОДЫ */}
         <div className="flex w-full gap-2 flex-wrap whitespace-normal">
           <Button
@@ -80,6 +79,7 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
             isActive={activeYear === null}
             onClick={() => setActiveYear(null)}
             className="md:text-[12px] text-[10px]"
+            disabled={isFilterActive}
           >
             {t('filters.allYears')}
           </Button>
@@ -91,6 +91,7 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
                 isActive={activeYear === year}
                 onClick={() => setActiveYear(year)}
                 className="md:text-[12px] text-[10px]"
+                disabled={isFilterActive}
               >
                 {year}
               </Button>
@@ -99,13 +100,14 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
         </div>
         {/* ТАБЫ */}
         <div className="flex gap-3">
-          <Button type="button" isActive={tabActive === 'all'} onClick={() => setTabActive('all')}>
+          <Button type="button" isActive={tabActive === 'all'} onClick={() => setTabActive('all')} disabled={isFilterActive}>
             {t('analytics.totalIssues')} <span>({totalIssues})</span>
           </Button>
           <Button
             type="button"
             isActive={tabActive === 'active'}
             onClick={() => setTabActive('active')}
+            disabled={isFilterActive}
           >
             {t('analytics.totalActiveIssues')} <span>({totalActiveIssues})</span>
           </Button>
@@ -121,13 +123,15 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
         <div className={cardsWrapperClass}>
           {riskLevels.map((riskLevel) => {
             const variant = riskLevelVariants[riskLevel];
-            const count = risksCounts[riskLevel] ?? 0;
+            const riskLevelCount = risksCounts[riskLevel] ?? 0;
             return (
               <div key={riskLevel} className={twMerge(cardClass)}>
                 <h3 className={cardTitleClass}>{t(`riskLevels.${riskLevel}`)}</h3>
                 <p className={twMerge(violationCountClass, colorClasses[variant], 'bg-field-bg')}>
-                  {isFilterActive ? `${count} / ${totalIssues}` : count}
+                  {riskLevelCount}
+                  {isFilterActive ? <span className='text-[18px] text-text-main'>/ {totalIssues}</span> : ''}
                 </p>
+
               </div>
             );
           })}
@@ -170,7 +174,8 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
                 <p
                   className={twMerge(violationCountClass, colorClasses[variant], 'bg-transparent')}
                 >
-                  {isFilterActive ? `${statusCount} / ${totalIssues}` : statusCount}
+                  {statusCount}
+                  {isFilterActive ? <span className='text-[18px] text-text-main'>/ {totalIssues}</span> : ''}
                 </p>
               </div>
             );
