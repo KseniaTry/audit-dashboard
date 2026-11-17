@@ -66,21 +66,3 @@ export const selectIssuesWithStatuses = createSelector(
     }));
   },
 );
-
-// export const selectIssueStatusById = createSelector(
-//     [
-//         (state: RootState, id: number) => state.issues.entities[id], // Получаем саму задачу
-//         selectReportDate // Получаем глобальную дату отчета
-//     ],
-//     (issue, reportDate) => {
-//         // if (!issue) return 'scheduled'; // Дефолтное значение, если задача не найдена
-
-//         // Вызываем твою функцию getStatus, передавая параметры из конкретной issue
-//         return getStatus(
-//             issue.scheduledDate,
-//             issue.executionDate,
-//             reportDate,
-//             issue.isRemoved ?? false
-//         );
-//     }
-// );

@@ -1,4 +1,4 @@
-import { differenceInDays, isAfter } from 'date-fns';
+import { differenceInCalendarDays, isAfter, parseISO, startOfDay } from 'date-fns';
 import { Statuses, Issue } from './types';
 
 export const getStatus = (
@@ -11,19 +11,17 @@ export const getStatus = (
     return 'removed';
   }
 
-  const isOverdue = isAfter(reportDate, scheduledDate);
+  const parsedReportDate = startOfDay(new Date(reportDate));
+  const parsedScheduledDate = parseISO(scheduledDate);
+  const parsedExecutionDate = executionDate ? parseISO(executionDate) : '';
 
-  if (executionDate === null && isOverdue) {
-    return 'overdue';
+  const isOverdue = isAfter(parsedReportDate, parsedScheduledDate);
+
+  if (!executionDate) {
+    return isOverdue ? 'overdue' : 'open';
   }
 
-  if (executionDate === null && !isOverdue) {
-    return 'open';
-  }
-
-  const formattedSheduledDate = new Date(scheduledDate);
-  const formattedExecutionDate = executionDate ? new Date(executionDate) : '';
-  const difference = differenceInDays(formattedExecutionDate, formattedSheduledDate);
+  const difference = differenceInCalendarDays(parsedExecutionDate, parsedScheduledDate);
 
   return difference <= 0 ? 'closed' : 'overdue';
 };
@@ -56,17 +54,21 @@ export const deepEqual = (obj1, obj2): boolean => {
   }
 
   return true;
-}
+};
 
 // analytics для расчета процентов и общего кол-ва issues
-export const calculatePercents = <T extends string>(keys: T[], counts: Record<T, number>, totalCount: number) => {
-  const result = {} as Record<T, number>
+export const calculatePercents = <T extends string>(
+  keys: T[],
+  counts: Record<T, number>,
+  totalCount: number,
+) => {
+  const result = {} as Record<T, number>;
 
   for (const key of keys) {
-    result[key] = totalCount === 0 ? 0 : (counts[key] ?? 0) / totalCount * 100
+    result[key] = totalCount === 0 ? 0 : ((counts[key] ?? 0) / totalCount) * 100;
   }
-  return result
-}
+  return result;
+};
 
 export const calculateCount = <K extends 'riskLevel' | 'status'>(issues: Issue[], category: K) => {
   type PropertyValue = Issue[K] & string;

@@ -8,9 +8,9 @@ import { calculateCount, calculatePercents } from '../utils';
 import { statusVariants, riskLevelVariants, colorClasses } from '../const';
 
 // блок аналитика показывает:
-// 1. общую картину по статусам и рискам по всем выданным поручениям за выбранный год. 
+// 1. общую картину по статусам и рискам по всем выданным поручениям за выбранный год.
 // также можно посмотреть, какие поручения сейчас находятся на контроле (статус "в работе" и "просрочено")
-// 2. отфильтрованные поручения. если пользователь выбрал хоть один фильтр, автоматически данные в палени аналитики переключаются на отфильтрованные, 
+// 2. отфильтрованные поручения. если пользователь выбрал хоть один фильтр, автоматически данные в палени аналитики переключаются на отфильтрованные,
 // при этом видно общее количество таких поручений (допустим 2/ 10)
 interface AnalyticsProps {
   riskLevels: RiskLevels[];
@@ -24,8 +24,8 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
   const { t } = useTranslation();
   const [activeYear, setActiveYear] = useState<null | string>(null);
   const [tabActive, setTabActive] = useState<'all' | 'active'>('all');
-  let targetIssues: Issue[] // все issues
-  let yearIssues: Issue[] // фильтрованный список по годам 
+  let targetIssues: Issue[]; // все issues
+  let yearIssues: Issue[]; // фильтрованный список по годам
 
   // получаем данные по году если включен соответствующий фильтр в аналитике (по годам)
   if (activeYear !== null && !isFilterActive) {
@@ -33,28 +33,30 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
       (issue) => format(new Date(issue.startInspectionDate), 'yyyy') === activeYear,
     );
   } else {
-    yearIssues = issues
+    yearIssues = issues;
   }
 
   // получаем только активные issues по статусу open и overdue
-  const activeIssues = yearIssues.filter((issue) => issue.status === 'open' || issue.status === 'overdue')
+  const activeIssues = yearIssues.filter(
+    (issue) => issue.status === 'open' || issue.status === 'overdue',
+  );
 
   // формируем целевой массив issues исходя из включенного фильтра (Filters) и (или) таба active / all
   if (isFilterActive) {
-    targetIssues = issues
+    targetIssues = issues;
   } else if (tabActive === 'active') {
-    targetIssues = activeIssues
+    targetIssues = activeIssues;
   } else {
-    targetIssues = yearIssues
+    targetIssues = yearIssues;
   }
 
-  const totalIssues = yearIssues.length
+  const totalIssues = yearIssues.length;
   const totalActiveIssues = activeIssues.length; // активные поручения в зависимости от выбранного таба
 
-  const statusesCounts = calculateCount(targetIssues, 'status')
-  const risksCounts = calculateCount(targetIssues, 'riskLevel')
-  const statusesPercents = calculatePercents(statuses, statusesCounts, targetIssues.length)
-  const risksPercents = calculatePercents(riskLevels, risksCounts, targetIssues.length)
+  const statusesCounts = calculateCount(targetIssues, 'status');
+  const risksCounts = calculateCount(targetIssues, 'riskLevel');
+  const statusesPercents = calculatePercents(statuses, statusesCounts, targetIssues.length);
+  const risksPercents = calculatePercents(riskLevels, risksCounts, targetIssues.length);
 
   // стили
   const blockWrapperClass = 'w-full flex flex-wrap gap-[0px]';
@@ -66,7 +68,7 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
   const cardTitleClass = 'font-bold uppercase tracking-widest text-[10px] md:text-[16px]';
   const violationCountClass = 'md:text-[27px] tracking-widest text-[20px] font-bold';
   const stripeWrapperClass = 'flex h-[7px] rounded-full overflow-hidden mt-1 w-full';
-  const tabsHiddenClass = isFilterActive ? 'hidden' : 'flex'
+  const tabsHiddenClass = isFilterActive ? 'hidden' : 'flex';
 
   return (
     <section className="p-4 flex flex-wrap gap-[20px] w-full">
@@ -113,7 +115,9 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
       {/* ВСЕ РИСКИ */}
       <div className={blockWrapperClass}>
         {/* блоки */}
-        <h2 className={titleClass}>{isFilterActive ? t('analytics.filteredRisks') : t('analytics.allRisks')}</h2>
+        <h2 className={titleClass}>
+          {isFilterActive ? t('analytics.filteredRisks') : t('analytics.allRisks')}
+        </h2>
         <div className={cardsWrapperClass}>
           {riskLevels.map((riskLevel) => {
             const variant = riskLevelVariants[riskLevel];
@@ -146,7 +150,9 @@ const Analytics = ({ riskLevels, statuses, years, issues, isFilterActive }: Anal
       {/* ВСЕ СТАТУСЫ */}
       <div className={blockWrapperClass}>
         {/* блоки */}
-        <h2 className={titleClass}>{isFilterActive ? t('analytics.filteredStatuses') : t('analytics.allStatuses')}</h2>
+        <h2 className={titleClass}>
+          {isFilterActive ? t('analytics.filteredStatuses') : t('analytics.allStatuses')}
+        </h2>
         <div className={twMerge(cardsWrapperClass, cardsWrapperMobileClass)}>
           {statuses.map((status) => {
             const variant = statusVariants[status];

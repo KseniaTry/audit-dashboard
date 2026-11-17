@@ -17,6 +17,19 @@ export const resources = {
       reportDate: 'Дата отчета',
       totalIssues: 'Кол-во записей: ',
       showMore: 'Показать еще',
+      errors: {
+        inspection: 'Введите название проверки',
+        startInspectionDate: 'Введите дату начала проверки',
+        endInspectionDate: 'Введите дату окончания проверки',
+        endInspectionDateLength: 'Дата окончания проверки раньше даты начала',
+        violation: 'Опишите выявленное нарушение',
+        recommendation: 'Опишите рекомендацию',
+        riskLevel: 'Выберите уровень риска',
+        scheduledDate: 'Введите плановую дату исполнения',
+        scheduledDateLength: 'Плановая дата исполнения рекомендации раньше даты окончания проверки',
+        departments: 'Выберите хотя бы одно ответственное ССП',
+        persons: 'Выберите хотя бы одно ответственное лицо',
+      },
       analytics: {
         totalIssues: 'Все',
         totalActiveIssues: 'На контроле',
@@ -25,7 +38,7 @@ export const resources = {
         allRisks: 'Сводка по рискам',
         allStatuses: 'Сводка по статусам',
         filteredRisks: 'Сводка по рискам (отфильтровано)',
-        filteredStatuses: 'Свродка по статусам (отфильтровано)'
+        filteredStatuses: 'Сводка по статусам (отфильтровано)',
       },
       reports: {
         reportForDepartments: 'Отчет для ССП',
@@ -38,6 +51,7 @@ export const resources = {
         removed: 'Снято',
       },
       riskLevels: {
+        none: 'Выберите уровень риска',
         high: 'Высокий',
         medium: 'Средний',
         low: 'Низкий',
@@ -79,15 +93,20 @@ export const resources = {
       },
       addModal: {
         title: 'Добавить рекомендацию',
-        responsiblePerson: 'Введите ответственное лицо',
+        addPerson: 'Выберите ответственного',
+        addDepartment: 'Выберите департамент',
+        addInspection: 'Выберите проверку',
         violationPlaceholder: 'Опишите выявленное нарушение',
         recommendationPlaceholder: 'Опишите рекомендацию',
+        inspectionPlaceholder: 'Название проверки',
+        existedInspection: 'Существующая проверка',
+        newInspection: 'Новая проверка',
       },
       changeModal: {
         title: 'Обновить запись',
         currentStatus: 'Статус после сохранения: ',
         switchToRemoved: 'Отметить как "СНЯТО"',
-        removedChecked: 'Рекомендация снята с контроля',
+        removedChecked: 'Поручение снято с контроля',
       },
       departmentReport: {
         title: 'Отчет для ССП',

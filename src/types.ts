@@ -3,6 +3,7 @@ export type RiskLevels = 'high' | 'medium' | 'low';
 export type Variants = 'danger' | 'warning' | 'success' | 'neutral';
 export type ModalActiveType = 'change' | 'add' | 'departmentReport' | 'managementReport' | null;
 export type FiltersData = string[] | Statuses[] | RiskLevels[];
+export type AddModalData = string | RiskLevels | string[];
 
 export interface FilterState {
   search: string;
@@ -15,13 +16,13 @@ export interface FilterState {
 }
 
 export type Issue = {
-  id: number;
+  id: string;
   inspection: string;
   startInspectionDate: string;
   endInspectionDate: string;
   auditViolation: string;
   recommendation: string;
-  riskLevel: RiskLevels;
+  riskLevel: RiskLevels | ''; // null для того чтобы добавить в селект "выберите уровень риска" в addModal
   responsibleDepartment: string[];
   responsiblePerson: string[];
   scheduledDate: string;

@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import Download from './icons/Download';
 import Plus from './icons/Plus';
 import Button from './ui/Button';
-import { ModalActiveType } from '../const';
+import { ModalActiveType } from '../types';
 
 interface HeaderData {
   onModalOpen: (type: ModalActiveType) => void;
