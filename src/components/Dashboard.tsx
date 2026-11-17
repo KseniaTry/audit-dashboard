@@ -282,6 +282,7 @@ const Dashboard = () => {
           <AddModal
             riskLevels={RISK_LEVELS}
             departments={DEPARTMENTS}
+            inspections={inspections}
             persons={PERSONS}
             onClose={() => {
               setModalActive(null);
