@@ -17,6 +17,19 @@ export const resources = {
       reportDate: 'Дата отчета',
       totalIssues: 'Кол-во записей: ',
       showMore: 'Показать еще',
+      errors: {
+        inspection: 'Введите название проверки',
+        startInspectionDate: 'Введите дату начала проверки',
+        endInspectionDate: 'Введите дату окончания проверки',
+        endInspectionDateLength: 'Дата окончания проверки раньше даты начала проверки',
+        violation: 'Опишите выявленное нарушение',
+        recommendation: 'Опишите рекомендацию',
+        riskLevel: 'Выберите уровень риска',
+        scheduledDate: 'Введите плановую дату исполнения',
+        scheduledDateLength: 'Плановая дата исполнения поручения должна быть позднее даты окончания проверки',
+        departments: 'Выберите хотя бы одно ответственное ССП',
+        persons: 'Выберите хотя бы одно ответственное лицо'
+      },
       analytics: {
         totalIssues: 'Все',
         totalActiveIssues: 'На контроле',
@@ -80,7 +93,7 @@ export const resources = {
       },
       addModal: {
         title: 'Добавить рекомендацию',
-        addPerson: 'Выберите ответственное лицо',
+        addPerson: 'Выберите ответственного',
         addDepartment: 'Выберите департамент',
         violationPlaceholder: 'Опишите выявленное нарушение',
         recommendationPlaceholder: 'Опишите рекомендацию',
