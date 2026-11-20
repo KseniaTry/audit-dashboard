@@ -6,6 +6,7 @@ interface InputData extends InputHTMLAttributes<HTMLInputElement> {
   labelText?: string;
   wrapperExtraClass?: string;
   errorText?: string;
+  labelClass?: string;
 }
 
 const Input = ({
@@ -13,6 +14,7 @@ const Input = ({
   labelText,
   wrapperExtraClass,
   errorText = '',
+  labelClass,
   className,
   ...props
 }: InputData) => {
@@ -25,13 +27,13 @@ const Input = ({
   return (
     <div className={twMerge(wrapperClass, wrapperExtraClass)}>
       {labelText ? (
-        <label className="tracking-widest text-[14px]">
+        <label className={twMerge("tracking-widest text-[14px]", labelClass)}>
           {labelText}
           {props.required && <span className="text-danger ml-1">*</span>}
           {errorText === '' ? (
             ''
           ) : (
-            <p className=" text-danger text-[11px] tracking-normal lowercase"> {errorText}</p>
+            <p className="text-danger text-[11px] tracking-normal lowercase"> {errorText}</p>
           )}
         </label>
       ) : (
