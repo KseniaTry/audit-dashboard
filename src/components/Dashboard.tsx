@@ -235,7 +235,10 @@ const Dashboard = () => {
           modalType="report"
           position="bottom"
         >
-          <ManagementReport statuses={STATUSES} onClose={() => setModalActive(null)} />
+          <ManagementReport
+            statuses={STATUSES}
+            onClose={() => setModalActive(null)}
+          />
         </Modal>
       ) : (
         ''
