@@ -29,6 +29,8 @@ export const resources = {
         scheduledDateLength: 'Плановая дата исполнения рекомендации раньше даты окончания проверки',
         departments: 'Выберите хотя бы одно ответственное ССП',
         persons: 'Выберите хотя бы одно ответственное лицо',
+        reportDate: 'Выберите дату отчета',
+        singleDepartment: 'Выберите ответственное ССП'
       },
       analytics: {
         totalIssues: 'Все',
