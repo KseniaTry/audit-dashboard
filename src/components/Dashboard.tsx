@@ -13,7 +13,7 @@ import { RootState } from '../store';
 import { useEffect, useState } from 'react';
 import { selectIssuesWithStatuses, setAllIssues, setReportDate } from '../slices/issuesSlice';
 import { format } from 'date-fns';
-import { ModalActiveType, FilterState, Issue, FiltersData, AddModalData } from '../types';
+import { ModalActiveType, FilterState, Issue, FiltersData, AddModalData, DepartmentReportData } from '../types';
 import { divideIssues, deepEqual } from '../utils';
 import Analytics from './Analytics';
 import Header from './Header';
@@ -98,6 +98,12 @@ const Dashboard = () => {
     responsiblePerson: [],
     scheduledDate: '',
   };
+
+  const departmentReportInitialData: DepartmentReportData = {
+    department: '',
+    reportDate: ''
+  }
+
   const [modalActive, setModalActive] = useState<ModalActiveType>(null);
   const [activeIssueId, setActiveIssueId] = useState<number | null>(null);
   const [filters, setFilters] = useState<FilterState>(initialFiltersState);
@@ -105,6 +111,7 @@ const Dashboard = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const isFilterActive = !deepEqual(filters, initialFiltersState);
   const [newIssueData, setNewIssueData] = useState<Issue>(initialNewData);
+  const [departmentReportData, setDepartmentReportData] = useState<DepartmentReportData>(departmentReportInitialData)
 
   useEffect(() => {
     const currentDate = format(Date.now(), 'yyyy-MM-dd');
@@ -122,13 +129,15 @@ const Dashboard = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // DEPARTMENT MODAL
+  const updateDepartmentReportData = (key: keyof DepartmentReportData, newValue: string) => {
+    setDepartmentReportData((prev) => ({ ...prev, [key]: newValue }))
+  }
+
   // ADD MODAL
   // добавление новой записи
   const updateNewIssueData = (key: keyof Issue, value: AddModalData) => {
-    setNewIssueData((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+    setNewIssueData((prev) => ({ ...prev, [key]: value }));
   };
 
   // сброс данных
@@ -156,6 +165,7 @@ const Dashboard = () => {
   const departments = useSelector((state: RootState) => state.issues.departments);
   const years = [...new Set(allYears)];
   const filteredIssues = getFilteredIssues(allIssues, filters);
+  const departmentReportIssues = allIssues.filter((issue) => issue.responsibleDepartment.includes(departmentReportData.department))
 
   // ДЛЯ ТАБЛИЦЫ ПАГИНАЦИЯ
   const totalPages = Math.ceil(allIssues.length / ITEMS_PER_PAGE);
@@ -239,7 +249,12 @@ const Dashboard = () => {
           modalType="report"
           position="bottom"
         >
-          <DepartmentReport departments={departments} onClose={() => setModalActive(null)} />
+          <DepartmentReport
+            departments={departments}
+            onClose={() => setModalActive(null)}
+            issues={departmentReportIssues}
+            departmentReportData={departmentReportData}
+            updateDepartmentReportData={updateDepartmentReportData} />
         </Modal>
       ) : (
         ''

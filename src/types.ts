@@ -30,3 +30,8 @@ export type Issue = {
   status?: Statuses;
   isRemoved?: boolean;
 };
+
+export interface DepartmentReportData {
+  department: string,
+  reportDate: string
+}

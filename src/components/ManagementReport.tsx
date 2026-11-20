@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { twMerge } from 'tailwind-merge';
-import { Statuses } from '../const';
+import { Statuses } from '../types';
 import Input from './ui/Input';
 import Button from './ui/Button';
 
