@@ -35,8 +35,6 @@ const DepartmentReport = ({ departments, onClose, issues, departmentReportData, 
 
   const validateForm = () => {
     const newErrors: DepartmentReportErrorsData = { ...departmentReportErrorsInitial };
-    console.log(departmentReportData.department)
-    console.log(t('filters.allDepartments'))
     if (departmentReportData.department === '') {
       newErrors.department = t('errors.singleDepartment')
     }
