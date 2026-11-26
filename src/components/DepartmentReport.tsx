@@ -7,8 +7,9 @@ import { exportToExcel } from '../exportIssuesToExcel';
 import { Issue } from '../types';
 import { useState } from 'react';
 import { DepartmentReportData } from '../types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setReportDate } from '../slices/issuesSlice';
+import { RootState } from '../store';
 
 interface DepartmentReportProps {
   departments: string[];
@@ -31,6 +32,7 @@ const departmentReportErrorsInitial = {
 const DepartmentReport = ({ departments, onClose, issues, departmentReportData, updateDepartmentReportData }: DepartmentReportProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch()
+  const reportDate = useSelector((state: RootState) => state.issues.reportDate);
   const [errors, setErrors] = useState<DepartmentReportErrorsData>(departmentReportErrorsInitial)
 
   const validateForm = () => {
@@ -38,7 +40,7 @@ const DepartmentReport = ({ departments, onClose, issues, departmentReportData, 
     if (departmentReportData.department === '') {
       newErrors.department = t('errors.singleDepartment')
     }
-    if (departmentReportData.reportDate === '') {
+    if (reportDate === '') {
       newErrors.reportDate = t('errors.reportDate')
     }
     setErrors(newErrors);
@@ -60,9 +62,8 @@ const DepartmentReport = ({ departments, onClose, issues, departmentReportData, 
         <Input
           type="date"
           labelText={t('reportDate')}
-          value={departmentReportData.reportDate}
+          value={reportDate}
           onChange={(e) => {
-            updateDepartmentReportData('reportDate', e.target.value)
             setErrors((prev) => ({ ...prev, reportDate: '' }))
             dispatch(setReportDate(e.target.value))
           }}
@@ -89,7 +90,9 @@ const DepartmentReport = ({ departments, onClose, issues, departmentReportData, 
       </div>
       {/* ФУТЕР: КНОПКИ */}
       <footer className="flex justify-end items-center gap-3 border-t border-border-warm p-4">
-        <Button type="button" onClick={onClose}>
+        <Button
+          type="button"
+          onClick={onClose}>
           {t('cancel')}
         </Button>
         <Button

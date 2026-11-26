@@ -101,9 +101,9 @@ const Dashboard = () => {
 
   const departmentReportInitialData: DepartmentReportData = {
     department: '',
-    reportDate: ''
   }
 
+  const currentDate = format(new Date(), 'yyyy-MM-dd');
   const [modalActive, setModalActive] = useState<ModalActiveType>(null);
   const [activeIssueId, setActiveIssueId] = useState<number | null>(null);
   const [filters, setFilters] = useState<FilterState>(initialFiltersState);
@@ -114,10 +114,9 @@ const Dashboard = () => {
   const [departmentReportData, setDepartmentReportData] = useState<DepartmentReportData>(departmentReportInitialData)
 
   useEffect(() => {
-    const currentDate = format(Date.now(), 'yyyy-MM-dd');
     dispatch(setAllIssues(mockIssues));
     dispatch(setReportDate(currentDate));
-  }, [dispatch]);
+  }, [dispatch, currentDate]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -139,6 +138,12 @@ const Dashboard = () => {
   const updateNewIssueData = (key: keyof Issue, value: AddModalData) => {
     setNewIssueData((prev) => ({ ...prev, [key]: value }));
   };
+
+  // закрытие модалок с отчетами
+  const handleReportClose = () => {
+    setModalActive(null)
+    dispatch(setReportDate(currentDate))
+  }
 
   // сброс данных
   const resetNewIssueData = () => setNewIssueData(initialNewData);
@@ -230,14 +235,14 @@ const Dashboard = () => {
       {modalActive === 'managementReport' ? (
         <Modal
           isOpen={modalActive === 'managementReport'}
-          onClose={() => setModalActive(null)}
+          onClose={handleReportClose}
           title={t('managementReport.title')}
           modalType="report"
           position="bottom"
         >
           <ManagementReport
             statuses={STATUSES}
-            onClose={() => setModalActive(null)}
+            onClose={handleReportClose}
           />
         </Modal>
       ) : (
@@ -247,14 +252,14 @@ const Dashboard = () => {
       {modalActive === 'departmentReport' ? (
         <Modal
           isOpen={modalActive === 'departmentReport'}
-          onClose={() => setModalActive(null)}
+          onClose={handleReportClose}
           title={t('departmentReport.title')}
           modalType="report"
           position="bottom"
         >
           <DepartmentReport
             departments={departments}
-            onClose={() => setModalActive(null)}
+            onClose={handleReportClose}
             issues={departmentReportIssues}
             departmentReportData={departmentReportData}
             updateDepartmentReportData={updateDepartmentReportData} />
