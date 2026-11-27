@@ -33,5 +33,4 @@ export type Issue = {
 
 export interface DepartmentReportData {
   department: string,
-  reportDate: string
 }
