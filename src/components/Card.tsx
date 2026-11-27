@@ -8,9 +8,10 @@ import { twMerge } from 'tailwind-merge';
 interface CardsData {
   issue: Issue;
   onIssueClick: (id: number | null) => void;
+  displayNumber: number,
 }
 
-const Card = ({ issue, onIssueClick }: CardsData) => {
+const Card = ({ issue, onIssueClick, displayNumber }: CardsData) => {
   const { t } = useTranslation();
 
   const cardsClass = `
@@ -71,7 +72,7 @@ const Card = ({ issue, onIssueClick }: CardsData) => {
         <div className="font-bold text-gray-400">
           <p>
             <span className="md:hidden">{t('table.number')}</span>
-            {issue.id}
+            {displayNumber}
           </p>
         </div>
         <div>

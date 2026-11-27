@@ -232,6 +232,7 @@ const Dashboard = () => {
         currentPage={currentPage}
         totalPages={totalPages}
         totalIssues={filteredIssuesByReportDate.length}
+        isMobile={isMobile}
       />
       {/* МОДАЛКИ */}
       {modalActive === 'managementReport' ? (

@@ -7,6 +7,7 @@ import Button from './ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { setReportDate } from '../slices/issuesSlice';
+import { ITEMS_PER_PAGE } from '../const';
 
 interface TableData {
   issues: Issue[];
@@ -16,6 +17,7 @@ interface TableData {
   currentPage: number;
   totalPages: number;
   totalIssues: number;
+  isMobile: boolean;
 }
 
 const Table = ({
@@ -26,6 +28,7 @@ const Table = ({
   currentPage,
   totalPages,
   totalIssues,
+  isMobile
 }: TableData) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -77,8 +80,9 @@ const Table = ({
             <div>{t('table.scheduledDate')}</div>
             <div>{t('table.executionDate')}</div>
           </div>
-          {issues?.map((issue) => {
-            return <Card key={issue.id} issue={issue} onIssueClick={onIssueClick} />;
+          {issues?.map((issue, index) => {
+            const displayNumber = isMobile ? index + 1 : (currentPage - 1) * ITEMS_PER_PAGE + index + 1
+            return <Card key={issue.id} issue={issue} onIssueClick={onIssueClick} displayNumber={displayNumber} />;
           })}
         </div>
         <Button
