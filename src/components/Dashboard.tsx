@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { RootState } from '../store';
 import { useEffect, useState } from 'react';
 import { selectIssuesWithStatuses, setAllIssues, setReportDate } from '../slices/issuesSlice';
-import { format } from 'date-fns';
+import { format, differenceInCalendarDays, parseISO } from 'date-fns';
 import { ModalActiveType, FilterState, Issue, FiltersData, AddModalData, DepartmentReportData } from '../types';
 import { divideIssues, deepEqual } from '../utils';
 import Analytics from './Analytics';
@@ -112,6 +112,7 @@ const Dashboard = () => {
   const isFilterActive = !deepEqual(filters, initialFiltersState);
   const [newIssueData, setNewIssueData] = useState<Issue>(initialNewData);
   const [departmentReportData, setDepartmentReportData] = useState<DepartmentReportData>(departmentReportInitialData)
+  const reportDate = useSelector((state: RootState) => state.issues.reportDate);
 
   useEffect(() => {
     dispatch(setAllIssues(mockIssues));
@@ -169,7 +170,8 @@ const Dashboard = () => {
   const persons = [...new Set(allPersons.flat())];
   const departments = useSelector((state: RootState) => state.issues.departments);
   const years = [...new Set(allYears)];
-  const filteredIssues = getFilteredIssues(allIssues, filters);
+  const filteredIssues = getFilteredIssues(allIssues, filters); // данные после фильтра
+  const filteredIssuesByReportDate = filteredIssues.filter((issue) => differenceInCalendarDays(parseISO(reportDate), parseISO(issue.endInspectionDate)) >= 0)
   const departmentReportIssues = allIssues.filter((issue) => issue.responsibleDepartment.includes(departmentReportData.department))
 
   // ДЛЯ ТАБЛИЦЫ ПАГИНАЦИЯ
@@ -185,8 +187,8 @@ const Dashboard = () => {
   };
 
   const visibleIssues = isMobile
-    ? filteredIssues.slice(0, ITEMS_PER_PAGE * currentPage)
-    : divideIssues(filteredIssues, ITEMS_PER_PAGE)[currentPage - 1];
+    ? filteredIssuesByReportDate.slice(0, ITEMS_PER_PAGE * currentPage)
+    : divideIssues(filteredIssuesByReportDate, ITEMS_PER_PAGE)[currentPage - 1];
 
   // СТИЛИ
   const titleWrapperClass = 'flex flex-wrap flex-col-reverse px-4 mt-4';
@@ -205,7 +207,7 @@ const Dashboard = () => {
         riskLevels={RISK_LEVELS}
         statuses={STATUSES}
         years={years}
-        issues={isFilterActive ? filteredIssues : allIssues}
+        issues={filteredIssuesByReportDate}
         isFilterActive={isFilterActive}
       />
       <Filters
@@ -229,7 +231,7 @@ const Dashboard = () => {
         onPaginationClick={handlePaginationClick}
         currentPage={currentPage}
         totalPages={totalPages}
-        totalIssues={filteredIssues.length}
+        totalIssues={filteredIssuesByReportDate.length}
       />
       {/* МОДАЛКИ */}
       {modalActive === 'managementReport' ? (
